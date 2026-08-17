@@ -1,7 +1,7 @@
-﻿# Global tool configuration.
+# Global tool configuration (claude-sdk branch: Anthropic SDK backend).
 # The checklist definitions (what to verify per category) live in checklists/.
 
-model: gemini-3.7-flash     # any Gemini model id; used for extraction, verification and chat
+model: claude-opus-4-8      # any Claude model id; used for extraction, verification and chat
 max_agent_iterations: 60    # hard stop for the research agent loop
 page_text_limit: 12000      # max characters of page text returned to the model per read
 browser:
@@ -13,7 +13,7 @@ output_dir: output
 checklist_dir: checklists
 
 # Used only to estimate what a run cost (shown in the report and on the console).
-# Defaults approximate Gemini Flash list prices per 1M tokens — check ai.google.dev/pricing.
+# Defaults are Claude Opus 4.8 list prices per 1M tokens — update if you change model or prices move.
 pricing:
-  input_per_mtok: 0.50
-  output_per_mtok: 3.00
+  input_per_mtok: 5.0
+  output_per_mtok: 25.0

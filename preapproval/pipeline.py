@@ -13,7 +13,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Callable, Optional
 
-from google import genai
+from anthropic import Anthropic
 
 from . import __version__
 from .agent import run_verification
@@ -253,7 +253,7 @@ def run_review(
     pdf_path: Path,
     cfg: ToolConfig,
     checklists: dict[str, Checklist],
-    client: genai.Client,
+    client: Anthropic,
     log: Callable[[str], None] = print,
     overrides: Optional[ReviewOverrides] = None,
 ) -> ReviewReport:
@@ -304,7 +304,7 @@ def rerun_review(
     package_dir: Path,
     cfg: ToolConfig,
     checklists: dict[str, Checklist],
-    client: genai.Client,
+    client: Anthropic,
     log: Callable[[str], None] = print,
 ) -> ReviewReport:
     """Re-run the website verification for an existing package.
@@ -340,7 +340,7 @@ def _verify_and_report(
     package_dir: Path,
     cfg: ToolConfig,
     checklists: dict[str, Checklist],
-    client: genai.Client,
+    client: Anthropic,
     run_log: RunLog,
     base_usage: TokenUsage,
     previous: Optional[ReviewReport] = None,

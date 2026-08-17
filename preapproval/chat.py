@@ -10,10 +10,9 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from google import genai
+from anthropic import Anthropic, beta_tool
 
 from .config import Checklist, ToolConfig
-from .llm import new_chat, run_tool_loop
 from .models import ReviewReport, Status
 from .report import render_report
 
@@ -24,7 +23,7 @@ class ChatSession:
     def __init__(
         self,
         package_dir: Path,
-        client: genai.Client,
+        client: Anthropic,
         cfg: ToolConfig,
         checklists: dict[str, Checklist],
     ):
@@ -53,6 +52,7 @@ class ChatSession:
     def build_tools(self) -> list:
         session = self
 
+        @beta_tool
         def list_findings() -> str:
             """List every finding in the report with its current status."""
             lines = []
@@ -61,6 +61,7 @@ class ChatSession:
             lines.append(f"- rate comparison: {session.report.rate_comparison.verdict}")
             return "\n".join(lines)
 
+        @beta_tool
         def set_finding_status(item_id: str, status: str, note: str) -> str:
             """Change the status of a finding (reviewer override).
 
@@ -82,6 +83,7 @@ class ChatSession:
                     return f"{item_id}: {old} -> {status}. Report will be regenerated."
             return f"REJECTED: no finding with item_id {item_id!r}. Use list_findings."
 
+        @beta_tool
         def add_reviewer_note(text: str) -> str:
             """Add a free-text reviewer note to the report.
 
@@ -92,6 +94,7 @@ class ChatSession:
             session.dirty = True
             return "Note added."
 
+        @beta_tool
         def set_rate_verdict(verdict: str, detail: str) -> str:
             """Override the rate-comparison verdict (reviewer decision).
 
@@ -113,11 +116,13 @@ class ChatSession:
             session.dirty = True
             return "Rate verdict updated."
 
+        @beta_tool
         def regenerate_report() -> str:
             """Re-render report.html and save report.json with the current state."""
             session.save()
             return f"Regenerated {session.package_dir / 'report.html'}"
 
+        @beta_tool
         def rerun_website_verification() -> str:
             """Visit the provider's website again and redo the whole website check.
 
@@ -179,8 +184,7 @@ class ChatSession:
 
     def run(self) -> None:
         tools = self.build_tools()
-        # One chat for the whole session: it keeps the conversation history.
-        chat = new_chat(self.client, self.model, self.system_prompt(), tools, max_output_tokens=4096)
+        messages: list = []
         print(
             f"\nChat mode for {self.package_dir.name} — e.g. \"change published_fees to "
             'needs review", "add a note ...", "re-run the website check", "regenerate '
@@ -197,9 +201,25 @@ class ChatSession:
             if user.lower() in {"quit", "exit", "q"}:
                 break
 
-            result = run_tool_loop(chat, tools, user, max_iterations=12, log=lambda m: None)
-            print(f"tool> {result.text}\n")
+            messages.append({"role": "user", "content": user})
+            runner = self.client.beta.messages.tool_runner(
+                model=self.model,
+                max_tokens=2000,
+                system=self.system_prompt(),
+                tools=tools,
+                messages=messages,
+            )
+            reply = ""
+            for message in runner:
+                messages.append({"role": "assistant", "content": message.content})
+                tool_response = runner.generate_tool_call_response()
+                if tool_response is not None:
+                    messages.append(tool_response)
+                for block in message.content:
+                    if block.type == "text" and block.text.strip():
+                        reply = block.text.strip()
+            print(f"tool> {reply}\n")
             if self.dirty:
                 self.save()
-                print("tool> (report.json and report.html updated)\n")
+                print(f"tool> (report.json and report.html updated)\n")
         print("Chat ended.")

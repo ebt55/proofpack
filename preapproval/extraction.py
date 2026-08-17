@@ -1,17 +1,17 @@
 """Read a completed application form (PDF) into structured data.
 
-Uses Gemini's native PDF understanding (handles both digital and scanned forms)
-with a JSON response schema. The wire schema (`ExtractedForm`) is deliberately
-flat — all strings, no optionals — so any model fills every field explicitly;
-it is converted into the richer ApplicationData model here.
+Uses Claude's native PDF understanding (handles both digital and scanned forms)
+with structured outputs. The wire schema (`ExtractedForm`) is deliberately flat —
+all strings, no optionals — because the structured-outputs endpoint rejects
+complex schemas; it is converted into the richer ApplicationData model here.
 """
 
 from __future__ import annotations
 
+import base64
 from pathlib import Path
 
-from google import genai
-from google.genai import types
+from anthropic import Anthropic
 from pydantic import BaseModel, Field
 
 from .models import ApplicationData, FeeAmount, FormAnswer, TokenUsage
@@ -154,28 +154,38 @@ def _to_application(x: ExtractedForm) -> ApplicationData:
 
 
 def extract_application(
-    pdf_path: Path, client: genai.Client, model: str
+    pdf_path: Path, client: Anthropic, model: str
 ) -> tuple[ApplicationData, TokenUsage]:
     """Read the form. Returns the application plus the tokens the call consumed."""
-    response = client.models.generate_content(
+    pdf_b64 = base64.standard_b64encode(pdf_path.read_bytes()).decode()
+
+    response = client.messages.parse(
         model=model,
-        contents=[
-            types.Part.from_bytes(data=pdf_path.read_bytes(), mime_type="application/pdf"),
-            EXTRACTION_PROMPT,
+        max_tokens=8000,
+        output_format=ExtractedForm,
+        messages=[
+            {
+                "role": "user",
+                "content": [
+                    {
+                        "type": "document",
+                        "source": {
+                            "type": "base64",
+                            "media_type": "application/pdf",
+                            "data": pdf_b64,
+                        },
+                    },
+                    {"type": "text", "text": EXTRACTION_PROMPT},
+                ],
+            }
         ],
-        config=types.GenerateContentConfig(
-            response_mime_type="application/json",
-            response_schema=ExtractedForm,
-        ),
     )
-    parsed = response.parsed
-    if not isinstance(parsed, ExtractedForm):
-        # The SDK returns None if its own validation failed; validate the raw JSON ourselves
-        # so the real pydantic error surfaces instead of a silent None.
-        raw = response.text or ""
-        if not raw.strip():
-            raise RuntimeError(f"Extraction returned no structured output for {pdf_path.name}")
-        parsed = ExtractedForm.model_validate_json(raw)
+    parsed = response.parsed_output
+    if parsed is None:
+        raise RuntimeError(
+            f"Extraction returned no structured output for {pdf_path.name} "
+            f"(stop_reason={response.stop_reason})"
+        )
     usage = TokenUsage()
-    usage.add(response.usage_metadata)
+    usage.add(getattr(response, "usage", None))
     return _to_application(parsed), usage

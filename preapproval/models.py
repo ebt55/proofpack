@@ -162,27 +162,25 @@ class TokenUsage(BaseModel):
     cache_creation_input_tokens: int = 0
 
     def add(self, usage: object) -> None:
-        """Accumulate a Gemini `usage_metadata` object (fields absent on some responses).
-
-        Thinking tokens are billed as output, so they are folded into output_tokens.
-        """
+        """Accumulate an SDK usage object (fields absent on some responses)."""
         if usage is None:
             return
         self.requests += 1
-
-        def _n(name: str) -> int:
-            value = getattr(usage, name, None)
-            return value if isinstance(value, int) else 0
-
-        self.input_tokens += _n("prompt_token_count")
-        self.output_tokens += _n("candidates_token_count") + _n("thoughts_token_count")
-        self.cache_read_input_tokens += _n("cached_content_token_count")
+        for field in (
+            "input_tokens",
+            "output_tokens",
+            "cache_read_input_tokens",
+            "cache_creation_input_tokens",
+        ):
+            value = getattr(usage, field, None)
+            if isinstance(value, int):
+                setattr(self, field, getattr(self, field) + value)
 
     def estimated_cost_usd(self, input_per_mtok: float, output_per_mtok: float) -> float:
-        """Rough cost estimate. Cached reads are billed at ~25% of input price."""
+        """Rough cost estimate. Cached reads are billed at ~10% of input price."""
         billed_input = self.input_tokens + self.cache_creation_input_tokens
         cost = (billed_input / 1_000_000) * input_per_mtok
-        cost += (self.cache_read_input_tokens / 1_000_000) * input_per_mtok * 0.25
+        cost += (self.cache_read_input_tokens / 1_000_000) * input_per_mtok * 0.1
         cost += (self.output_tokens / 1_000_000) * output_per_mtok
         return round(cost, 4)
 

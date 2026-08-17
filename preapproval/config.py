@@ -61,7 +61,7 @@ class Checklist:
 
 @dataclass
 class ToolConfig:
-    model: str = "gemini-3.7-flash"
+    model: str = "claude-opus-4-8"
     max_agent_iterations: int = 40
     page_text_limit: int = 12000
     headless: bool = True
@@ -71,8 +71,8 @@ class ToolConfig:
     output_dir: Path = REPO_ROOT / "output"
     checklist_dir: Path = REPO_ROOT / "checklists"
     # Used only to estimate the cost of a run; edit when prices or model change.
-    price_input_per_mtok: float = 0.50
-    price_output_per_mtok: float = 3.00
+    price_input_per_mtok: float = 5.0
+    price_output_per_mtok: float = 25.0
 
 
 def load_config(path: Optional[Path] = None) -> ToolConfig:

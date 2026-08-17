@@ -1,8 +1,8 @@
 """The website-verification agent.
 
-Gemini drives a small set of browser tools through a function-calling loop
-(see llm.py). The critical property: the model can only *decide*; all evidence
-is produced and validated by deterministic code:
+Claude drives a small set of browser tools through the Anthropic SDK tool
+runner. The critical property: the model can only *decide*; all evidence is
+produced and validated by deterministic code:
 
   - `record_finding(status="found")` is REJECTED unless it references a capture
     that actually exists in the evidence store;
@@ -18,12 +18,11 @@ import re
 from dataclasses import dataclass, field
 from typing import Callable, Optional
 
-from google import genai
+from anthropic import Anthropic, beta_tool
 
 from .browser import Browser
 from .config import Checklist, ToolConfig
 from .evidence import EvidenceStore
-from .llm import new_chat, run_tool_loop
 from .models import ApplicationData, Finding, RateComparison, Status, TokenUsage
 
 VALID_AGENT_STATUSES = {"found", "not_found", "needs_review"}
@@ -185,6 +184,7 @@ def _fmt_nav(session: VerifySession, result) -> str:
 def build_tools(session: VerifySession) -> list:
     """Create the agent's tools, closed over this verification session."""
 
+    @beta_tool
     def open_url(url: str) -> str:
         """Navigate the browser to a URL and get the page title plus a text preview.
 
@@ -194,6 +194,7 @@ def build_tools(session: VerifySession) -> list:
         session.log(f"open_url: {url}")
         return _fmt_nav(session, session.browser.navigate(url))
 
+    @beta_tool
     def read_page(offset: int = 0) -> str:
         """Read the visible text of the current page, starting at a character offset.
 
@@ -212,6 +213,7 @@ def build_tools(session: VerifySession) -> list:
             )
         return (chunk or "(page has no visible text)") + suffix
 
+    @beta_tool
     def find_on_page(query: str) -> str:
         """Search the current page's text for a phrase (case-insensitive) and get
         the surrounding context of each match.
@@ -228,6 +230,7 @@ def build_tools(session: VerifySession) -> list:
         out += [f"  {i+1}. ...{m.snippet}..." for i, m in enumerate(matches)]
         return "\n".join(out)
 
+    @beta_tool
     def list_links(filter: str = "") -> str:
         """List links on the current page (text -> URL), optionally filtered.
 
@@ -240,6 +243,7 @@ def build_tools(session: VerifySession) -> list:
             return "No matching links on the current page."
         return "\n".join(f"- {text} -> {href}" for text, href in links)
 
+    @beta_tool
     def capture_page(label: str) -> str:
         """Capture a date-stamped FULL-PAGE screenshot of the current page for the
         audit file. Use for the 'here is the website we reviewed' record and as a
@@ -256,6 +260,7 @@ def build_tools(session: VerifySession) -> list:
         )
         return f"Captured full page -> {record.file} (stamped {record.captured_at})"
 
+    @beta_tool
     def capture_evidence(locate_text: str, label: str) -> str:
         """Capture a date-stamped, labeled screenshot of the page region around a
         piece of text — one targeted capture per confirmed requirement.
@@ -279,6 +284,7 @@ def build_tools(session: VerifySession) -> list:
         )
         return f"Captured -> {record.file} (stamped {record.captured_at})"
 
+    @beta_tool
     def record_finding(
         item_id: str,
         status: str,
@@ -307,6 +313,7 @@ def build_tools(session: VerifySession) -> list:
         """
         return session.apply_finding(item_id, status, note, quote, evidence_file)
 
+    @beta_tool
     def record_rate_comparison(
         published_fee: str,
         verdict: str,
@@ -424,7 +431,7 @@ def run_verification(
     checklist: Checklist,
     browser: Browser,
     store: EvidenceStore,
-    client: genai.Client,
+    client: Anthropic,
     cfg: ToolConfig,
     log: Callable[[str], None] = print,
 ) -> AgentResult:
@@ -437,23 +444,35 @@ def run_verification(
         log=log,
     )
     tools = build_tools(session)
-    chat = new_chat(
-        client,
-        cfg.model,
-        build_system_prompt(app, checklist),
-        tools,
-        max_output_tokens=8192,
+    runner = client.beta.messages.tool_runner(
+        model=cfg.model,
+        max_tokens=6000,
+        system=build_system_prompt(app, checklist),
+        tools=tools,
+        messages=[
+            {
+                "role": "user",
+                "content": (
+                    "Review this application now. Open the URL from the form, verify every "
+                    "listed checklist item, capture the evidence, record the rate "
+                    "comparison, then give your summary."
+                ),
+            }
+        ],
     )
-    result = run_tool_loop(
-        chat,
-        tools,
-        "Review this application now. Open the URL from the form, verify every listed "
-        "checklist item, capture the evidence, record the rate comparison, then give your "
-        "summary.",
-        max_iterations=cfg.max_agent_iterations,
-        log=log,
-    )
-    summary, iterations, usage = result.text, result.iterations, result.usage
+
+    summary = ""
+    iterations = 0
+    usage = TokenUsage()
+    for message in runner:
+        iterations += 1
+        usage.add(getattr(message, "usage", None))
+        for block in message.content:
+            if block.type == "text" and block.text.strip():
+                summary = block.text.strip()
+        if iterations >= cfg.max_agent_iterations:
+            log(f"agent: iteration cap ({cfg.max_agent_iterations}) reached, stopping")
+            break
 
     # Anything the agent failed to record becomes an honest needs_review.
     for item in checklist.website_items:

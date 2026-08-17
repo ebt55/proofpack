@@ -17,25 +17,25 @@ from dotenv import load_dotenv
 from .config import REPO_ROOT, load_checklists, load_config
 
 MISSING_KEY_MESSAGE = """\
-No Gemini API key found.
+No Anthropic API key found.
 
-This tool calls the Gemini API to read the form and verify the website, so it needs a key:
+This tool calls the Claude API to read the form and verify the website, so it needs a key:
 
-  1. Get one at https://aistudio.google.com/apikey
+  1. Get one at https://console.anthropic.com  (Settings -> API keys)
   2. Copy .env.example to .env
-  3. Paste the key into .env as:  GEMINI_API_KEY=...
+  3. Paste the key into .env as:  ANTHROPIC_API_KEY=sk-ant-...
 
-(You can also export GEMINI_API_KEY in your shell instead of using .env.)"""
+(You can also export ANTHROPIC_API_KEY in your shell instead of using .env.)"""
 
 
 def _client():
-    from .llm import make_client
+    from anthropic import Anthropic
 
     load_dotenv(REPO_ROOT / ".env")
-    if not (os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")):
+    if not (os.getenv("ANTHROPIC_API_KEY") or os.getenv("ANTHROPIC_AUTH_TOKEN")):
         print(MISSING_KEY_MESSAGE, file=sys.stderr)
         raise SystemExit(2)
-    return make_client()
+    return Anthropic()
 
 
 def _ask_for(field: str, question: str, options: list[str]) -> str | None:
@@ -138,20 +138,20 @@ def main(argv: list[str] | None = None) -> int:
     p_review = sub.add_parser("review", help="review one or more application PDFs")
     p_review.add_argument("pdf", nargs="+", help="path(s) to completed application PDF(s)")
     p_review.add_argument("--headed", action="store_true", help="show the browser window")
-    p_review.add_argument("--model", help="override the Gemini model id")
+    p_review.add_argument("--model", help="override the Claude model id")
     p_review.add_argument("--out", help="override the output directory")
     p_review.add_argument("--url", help="override/supply the provider URL")
     p_review.set_defaults(func=cmd_review)
 
     p_all = sub.add_parser("review-all", help="review every PDF in samples/")
     p_all.add_argument("--headed", action="store_true", help="show the browser window")
-    p_all.add_argument("--model", help="override the Gemini model id")
+    p_all.add_argument("--model", help="override the Claude model id")
     p_all.add_argument("--out", help="override the output directory")
     p_all.set_defaults(func=cmd_review_all)
 
     p_chat = sub.add_parser("chat", help="adjust a finished report in plain language")
     p_chat.add_argument("package", help="path to a report package (e.g. output/sample-01---...)")
-    p_chat.add_argument("--model", help="override the Gemini model id")
+    p_chat.add_argument("--model", help="override the Claude model id")
     p_chat.set_defaults(func=cmd_chat)
 
     args = parser.parse_args(argv)

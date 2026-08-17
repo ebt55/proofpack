@@ -1,9 +1,15 @@
 # ProofPack
 
+> **Branch `claude-sdk` — the original backend.** This branch runs the same product on
+> **Claude via the Anthropic SDK** (`client.beta.messages.tool_runner` for the research agent and
+> chat mode, `messages.parse` with a PDF document block for extraction). `main` is the **Gemini API**
+> implementation. Everything below the Quickstart is shared; the committed `output/` packages were
+> produced by the Gemini build — regenerate with `verify.py review-all` and an Anthropic key.
+
 [![tests](https://github.com/ebt55/proofpack/actions/workflows/tests.yml/badge.svg)](https://github.com/ebt55/proofpack/actions/workflows/tests.yml)
 [![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![python](https://img.shields.io/badge/python-3.11%20%7C%203.12%20%7C%203.13-blue.svg)](requirements.txt)
-[![built with Gemini](https://img.shields.io/badge/built%20with-Gemini%20API-4285F4.svg)](https://ai.google.dev/)
+[![backend: Anthropic SDK](https://img.shields.io/badge/backend-Anthropic%20SDK-8A63D2.svg)](https://docs.anthropic.com/)
 
 **The AI pre-approval reviewer that brings the receipts.**
 
@@ -16,8 +22,8 @@ A human always makes the final approve/deny decision. The tool never guesses: wh
 can't prove something, it says **"Not Found"** or **"Needs Review"** — and that is a correct
 answer, not a failure.
 
-Runs on the **Gemini API** (`gemini-3.7-flash`) for form reading, the browsing agent and the
-reviewer chat; everything that touches evidence is deterministic Python.
+This branch runs on **Claude** (`claude-opus-4-8`, swap in `config.yaml`) for form reading, the
+browsing agent and the reviewer chat; everything that touches evidence is deterministic Python.
 
 ---
 
@@ -318,9 +324,9 @@ flowchart LR
 
 | Choice | Why this and not the alternative |
 |---|---|
-| **Gemini API + `google-genai` function calling** — *not* LangGraph/CrewAI | The pipeline is linear with exactly **one** agentic step. A framework would add a dependency and hide the loop; ~60 lines in [`llm.py`](preapproval/llm.py) run the tool loop with automatic function calling *disabled*, so this code — not the SDK — executes every call and can refuse it. |
-| **Gemini 3.7 Flash** (swap in `config.yaml`) | Strong judgment on the genuinely hard calls (*is a "contact us for pricing" page a published fee?*) at Flash cost: the seven committed reviews cost **$0.02–$0.19 each**. Any Gemini model id works. |
-| **Gemini PDF understanding + JSON response schema** for the form | Scanned and digital forms parse the same way — no brittle text-position rules — and the result is a **schema-validated object**, not free text to regex. |
+| **Anthropic SDK tool runner** (`@beta_tool` + `client.beta.messages.tool_runner`) — *not* LangGraph/CrewAI | The pipeline is linear with exactly **one** agentic step. The SDK's built-in runner drives the loop; the tools are plain Python closures whose gates can refuse any call. |
+| **Claude Opus 4.8** (swap in `config.yaml`) | Strongest judgment on the genuinely hard calls (*is a "contact us for pricing" page a published fee?*). One line changes it to `claude-sonnet-5` to cut cost for production volume. |
+| **Claude vision + structured outputs** for the form | Scanned and digital forms parse the same way — no brittle text-position rules — and the result is a **schema-validated object**, not free text to regex. |
 | **Playwright** | The evidence requirement picks the tool: full-page captures, region captures around located text, and JS-rendered pages. Selenium is clunkier here; HTTP+BeautifulSoup can't screenshot at all. |
 | **YAML checklists** | The form → checklist → verifiable-subset mapping is **domain knowledge, not code**. A non-engineer can add a category or change an agency's caps. See [docs/ADDING-A-CHECKLIST.md](docs/ADDING-A-CHECKLIST.md). |
 | **CLI + self-contained HTML report** — not a web app (yet) | The reviewer's artifact is the **report**, which opens in any browser and prints for the audit file. A CLI runs anywhere in two commands and makes batch validation (`review-all`) trivial. A hosted queue is the next step (see [docs/BUSINESS.md](docs/BUSINESS.md)). |
@@ -329,7 +335,7 @@ flowchart LR
 
 ## Quickstart
 
-**You need:** Python 3.11+, a [Gemini API key](https://aistudio.google.com/apikey), internet access.
+**You need:** Python 3.11+, an [Anthropic API key](https://console.anthropic.com), internet access.
 
 ```bash
 # 1 · Install (one time)
@@ -339,7 +345,7 @@ python -m venv .venv
 
 # 2 · Add your API key (one time)
 cp .env.example .env        # Windows: copy .env.example .env
-#   …then paste your key into .env as GEMINI_API_KEY=...
+#   …then paste your key into .env as ANTHROPIC_API_KEY=sk-ant-...
 
 # 3 · Review an application
 .venv/bin/python verify.py review samples/01-community-class-gallopnyc.pdf
@@ -532,8 +538,7 @@ A working prototype. Production would need:
 ```
 verify.py                 entry point — review / review-all / chat
 preapproval/
-  llm.py                  Gemini client + the function-calling loop (AFC disabled: we execute tools)
-  extraction.py           PDF → validated fields (Gemini + JSON response schema)
+  extraction.py           PDF → validated fields (Claude structured outputs)
   agent.py                research agent: browser tools, integrity gates, system prompt
   browser.py              Playwright wrapper (navigate · read · find · capture)
   evidence.py             stamping, SHA-256, manifest
