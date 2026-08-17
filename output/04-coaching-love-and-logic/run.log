@@ -1,0 +1,13 @@
+01:55:18  Extracting application from 04-coaching-love-and-logic.pdf ...
+01:55:29    -> coaching | Love and Logic Parenting Online (webinar course) | Love and Logic Institute | https://www.loveandlogic.com/products/love-and-logic-parenting-online
+01:55:29  Verifying on the provider's website (https://www.loveandlogic.com/products/love-and-logic-parenting-online) ...
+01:55:31  open_url: https://www.loveandlogic.com/products/love-and-logic-parenting-online
+01:55:55  read_page: offset=0
+01:55:56  capture_page: 'Full page: Love and Logic Parenting Online product page'
+01:55:58  capture_evidence: 'Price: $125.00 per person' ('Evidence: published course fee')
+01:55:59  capture_evidence: 'Enhance your parenting skills with the Love and Logic Parenting Online webinar' ('Evidence: educational parenting webinar content')
+01:56:01  record_finding: published_fees = found
+01:56:03  record_finding: educational_content = found
+01:56:04  record_rate_comparison: differs from application
+01:56:06  Tokens: 34,228 in / 2,349 out across 10 request(s) — estimated $0.02
+01:56:06  Report package written to output\04-coaching-love-and-logic

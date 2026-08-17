@@ -1,0 +1,20 @@
+01:56:06  Extracting application from 05-hri-laptop-macbook-air.pdf ...
+01:56:10    -> hri | Apple MacBook Air 13-inch laptop | Apple | https://www.apple.com/shop/buy-mac/macbook-air
+01:56:10  Verifying on the provider's website (https://www.apple.com/shop/buy-mac/macbook-air) ...
+01:56:12  open_url: https://www.apple.com/shop/buy-mac/macbook-air
+01:56:39  capture_page: 'Full page: Apple MacBook Air product and pricing page'
+01:56:41  find_on_page: '13-inch'
+01:56:43  read_page: offset=0
+01:56:44  capture_evidence: 'Model. Choose your size.' ('Evidence: MacBook Air 13-inch pricing')
+01:56:47  capture_evidence: 'Brings speed and fluidity to everything you do.' ('Evidence: general-purpose laptop specs')
+01:56:48  find_on_page: 'fluidity'
+01:56:50  capture_evidence: 'Choose your processing power.' ('Evidence: product description and processing power')
+01:56:52  find_on_page: 'Liquid Retina display'
+01:56:53  find_on_page: 'Model. Choose your size.'
+01:56:55  find_on_page: 'Shop MacBook Air'
+01:56:57  record_finding: item_exists_with_price = found
+01:56:59  record_finding: not_excluded = not_found
+01:57:01  record_finding: safety_features_supported = found
+01:57:03  record_rate_comparison: matches application exactly
+01:57:05  Tokens: 113,625 in / 5,147 out across 17 request(s) — estimated $0.07
+01:57:05  Report package written to output\05-hri-laptop-macbook-air

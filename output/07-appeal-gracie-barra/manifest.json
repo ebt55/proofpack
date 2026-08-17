@@ -1,0 +1,45 @@
+{
+  "note": "Every capture below is stamped in-image with its capture time and URL. SHA-256 hashes are computed over the stamped file; recompute to verify the evidence has not been altered.",
+  "captures": [
+    {
+      "file": "evidence/01-full-full-page-gracie-barra-gb1-jiu-jitsu-fun.png",
+      "kind": "full_page",
+      "label": "Full page: Gracie Barra GB1 Jiu-Jitsu Fundamentals class page",
+      "url": "https://graciebarra.com/classes/jiu-jitsu-fundamentals/",
+      "captured_at": "2026-08-18 01:59:21 India Standard Time",
+      "sha256": "cd23f023fe3db661334cd62ab6a74054bb4d172f8d06e1275b1b67a38e6242da"
+    },
+    {
+      "file": "evidence/02-evidence-evidence-open-to-public-beginner-program.png",
+      "kind": "targeted",
+      "label": "Evidence: open to public - beginner program with no experience required",
+      "url": "https://graciebarra.com/classes/jiu-jitsu-fundamentals/",
+      "captured_at": "2026-08-18 01:59:48 India Standard Time",
+      "sha256": "e684caad32e03f946c92e2b4860a159bba6953343e69991f92ba47c75aae1318"
+    },
+    {
+      "file": "evidence/03-evidence-evidence-subject-based-brazilian-jiu-jit.png",
+      "kind": "targeted",
+      "label": "Evidence: subject-based Brazilian Jiu-Jitsu training",
+      "url": "https://graciebarra.com/classes/jiu-jitsu-fundamentals/",
+      "captured_at": "2026-08-18 01:59:50 India Standard Time",
+      "sha256": "3ec7d141532b2a486020cbd47403ed5363634ef25c016401eb930c08dc5eb803"
+    },
+    {
+      "file": "evidence/04-evidence-evidence-non-credit-non-clinical-martial.png",
+      "kind": "targeted",
+      "label": "Evidence: non-credit non-clinical martial arts fitness and self-defence program",
+      "url": "https://graciebarra.com/classes/jiu-jitsu-fundamentals/",
+      "captured_at": "2026-08-18 01:59:51 India Standard Time",
+      "sha256": "d93e1c84cd08cd74f77a8a49076e6298ad7c759c2892097bc92580abd6742a3e"
+    },
+    {
+      "file": "evidence/05-evidence-evidence-not-clinical-martial-arts-train.png",
+      "kind": "targeted",
+      "label": "Evidence: not clinical - martial arts training program",
+      "url": "https://graciebarra.com/classes/jiu-jitsu-fundamentals/",
+      "captured_at": "2026-08-18 01:59:56 India Standard Time",
+      "sha256": "993d29c258767c248cf5cb9022a45779c01ea491c9b4ff85c5f46085b9a684c3"
+    }
+  ]
+}

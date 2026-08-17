@@ -1,0 +1,19 @@
+01:57:33  Extracting application from 06-otps-weighted-blanket-gravity.pdf ...
+01:57:38    -> otps | Gravity Weighted Blanket, 20 lb | Gravity Blankets | https://gravityblankets.com/products/gravity-blanket
+01:57:38  Verifying on the provider's website (https://gravityblankets.com/products/gravity-blanket) ...
+01:57:40  open_url: https://gravityblankets.com/products/gravity-blanket
+01:58:12  read_page: offset=0
+01:58:13  capture_page: 'Full page: Gravity Weighted Blanket product page'
+01:58:16  capture_evidence: 'ORIGINAL WEIGHTED BLANKET' ('Evidence: product exists with visible price')
+01:58:22  find_on_page: '$199.00'
+01:58:24  capture_evidence: 'SAVE 25%' ('Evidence: product exists with visible price')
+01:58:26  capture_evidence: 'Features a premium micro-plush duvet cover and an inner weighted piece containing fine-grade glass beads.' ('Evidence: item description showing sensory weighted blanket not on exclusion list')
+01:58:28  capture_evidence: 'Precise gridded stitching ensures the glass beads remain uniformly distributed' ('Evidence: safety features supported')
+01:58:29  capture_evidence: 'A cover that actually breathes.' ('Evidence: breathable removable cover and 10% body weight recommendation')
+01:58:31  capture_evidence: "We recommend a blanket that's roughly 10% of your body weight" ('Evidence: blanket weight recommendation 10% of body weight')
+01:58:37  record_finding: item_exists_with_price = found
+01:58:38  record_finding: not_excluded = found
+01:58:40  record_finding: safety_features_supported = found
+01:58:42  record_rate_comparison: differs from application
+01:58:44  Tokens: 85,750 in / 5,046 out across 16 request(s) — estimated $0.06
+01:58:44  Report package written to output\06-otps-weighted-blanket-gravity

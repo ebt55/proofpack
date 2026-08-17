@@ -1,0 +1,282 @@
+{
+  "tool_version": "0.1.0",
+  "model": "gemini-3.7-flash",
+  "source_pdf": "06-otps-weighted-blanket-gravity.pdf",
+  "reviewed_at": "2026-08-18T01:58:44+05:30",
+  "category": "otps",
+  "category_display": "Other Than Personal Services (OTPS)",
+  "application": {
+    "category": "otps",
+    "form_title": "Other Than Personal Services (OTPS) Pre-Approval Form",
+    "participant_name": "Elena Vasquez",
+    "participant_age": 22,
+    "fi_coordinator": "R. Patel",
+    "broker": "T. Nguyen",
+    "requested_item": "Gravity Weighted Blanket, 20 lb",
+    "provider_name": "Gravity Blankets",
+    "url": "https://gravityblankets.com/products/gravity-blanket",
+    "fee_text": "$199.00 one-time",
+    "fees": [
+      {
+        "amount": 199.0,
+        "unit": "one-time item price"
+      }
+    ],
+    "duration_text": null,
+    "subject_area": null,
+    "safety_features": "Weight approx. 10% of body weight; breathable removable cover; evenly distributed glass beads",
+    "valued_outcome": "Elena wants to fall asleep without staff sitting with her and wake up less anxious.",
+    "justification": "Sensory regulation and sleep are goals in Elena's Life Plan; a weighted blanket was recommended by her care manager as a non-clinical support.",
+    "denial_date": null,
+    "denial_reason": null,
+    "appeal_justification": null,
+    "form_answers": [
+      {
+        "question": "Is 'Other goods & services that increase independence' approved in the budget?",
+        "answer": "YES"
+      },
+      {
+        "question": "Is 'Other goods & services that increase health and safety' approved in the budget?",
+        "answer": "YES"
+      },
+      {
+        "question": "Is the item related to a need or goal identified in the Life Plan?",
+        "answer": "YES"
+      },
+      {
+        "question": "Will the item increase the independence and/or health and safety of the individual?",
+        "answer": "YES"
+      },
+      {
+        "question": "Is the item exclusively needed for the participant?",
+        "answer": "YES"
+      },
+      {
+        "question": "Can the item be funded through other sources?",
+        "answer": "NO"
+      },
+      {
+        "question": "Was the same item bought already in this budget year?",
+        "answer": "NO"
+      },
+      {
+        "question": "Does the item exist at the linked page with a visible price?",
+        "answer": "YES"
+      },
+      {
+        "question": "Is the item on the OTPS exclusion list? (see guidelines)",
+        "answer": "NO"
+      },
+      {
+        "question": "Are the safety features described on the form supported by the product page?",
+        "answer": "YES"
+      }
+    ]
+  },
+  "rate_comparison": {
+    "form_fee": "$199.00 one-time",
+    "published_fee": "$149.00 (regularly $199.00)",
+    "verdict": "differs from application",
+    "detail": "The application states $199.00, which matches the regular retail price displayed on the website; however, the website currently offers the blanket on sale for $149.00 (25% off).",
+    "evidence_url": "https://gravityblankets.com/products/gravity-blanket",
+    "evidence_files": [
+      "evidence/03-evidence-evidence-product-exists-with-visible-pri.png"
+    ]
+  },
+  "findings": [
+    {
+      "item_id": "item_exists_with_price",
+      "form_question": "(program guideline) The item exists at the linked page, with a visible price",
+      "requirement": "The item exists at the linked page with a visible price",
+      "status": "found",
+      "note": "The Gravity Weighted Blanket (with 20 lb size option) is available on the vendor website at a current sale price of $149.00 (discounted 25% from the regular $199.00 list price).",
+      "quote": "ORIGINAL WEIGHTED BLANKET $149.00 $199.00 SAVE 25%",
+      "evidence_url": "https://gravityblankets.com/products/gravity-blanket",
+      "evidence_files": [
+        "evidence/03-evidence-evidence-product-exists-with-visible-pri.png"
+      ],
+      "source": "agent"
+    },
+    {
+      "item_id": "not_excluded",
+      "form_question": "Is the item on the OTPS exclusion list? (see guidelines)",
+      "requirement": "Item is plausibly NOT on the OTPS exclusion list",
+      "status": "found",
+      "note": "The product is a sensory weighted blanket for sleep and anxiety management and does not match any items on the OTPS exclusion list (such as medical copays, common household supplies, illegal items, or vehicle/housing costs).",
+      "quote": "Features a premium micro-plush duvet cover and an inner weighted piece containing fine-grade glass beads.",
+      "evidence_url": "https://gravityblankets.com/products/gravity-blanket",
+      "evidence_files": [
+        "evidence/04-evidence-evidence-item-description-showing-sensor.png"
+      ],
+      "source": "agent"
+    },
+    {
+      "item_id": "safety_features_supported",
+      "form_question": "Safety features for the item (as described on the form)",
+      "requirement": "Safety features described on the form are supported by the product page",
+      "status": "found",
+      "note": "All claimed safety features are explicitly supported: the site specifies precise gridded stitching for evenly distributed glass beads, details a removable breathable cover, and recommends a blanket weight of roughly 10% of body weight (sizing the 20 lb blanket for 170-230 lb).",
+      "quote": "Precise gridded stitching ensures the glass beads remain uniformly distributed, providing comfort, no matter how you use your weighted blanket.",
+      "evidence_url": "https://gravityblankets.com/products/gravity-blanket",
+      "evidence_files": [
+        "evidence/05-evidence-evidence-safety-features-supported.png"
+      ],
+      "source": "agent"
+    },
+    {
+      "item_id": "cap_budget_year",
+      "form_question": "Program cap: Capped at $3,000 per budget year",
+      "requirement": "Capped at $3,000 per budget year",
+      "status": "pass",
+      "note": "Form states $199 one-time item price — within the Capped at $3,000 per budget year cap.",
+      "quote": null,
+      "evidence_url": null,
+      "evidence_files": [],
+      "source": "deterministic"
+    },
+    {
+      "item_id": "budget_independence_line",
+      "form_question": "Is 'Other goods & services that increase independence' approved in the budget?",
+      "requirement": null,
+      "status": "internal",
+      "note": "Internal — not website-verifiable. Participant budget data lives in internal systems.",
+      "quote": null,
+      "evidence_url": null,
+      "evidence_files": [],
+      "source": "deterministic"
+    },
+    {
+      "item_id": "budget_health_safety_line",
+      "form_question": "Is 'Other goods & services that increase health and safety' approved in the budget?",
+      "requirement": null,
+      "status": "internal",
+      "note": "Internal — not website-verifiable. Participant budget data lives in internal systems.",
+      "quote": null,
+      "evidence_url": null,
+      "evidence_files": [],
+      "source": "deterministic"
+    },
+    {
+      "item_id": "lp_need",
+      "form_question": "Is the item related to a need or goal identified in the Life Plan?",
+      "requirement": null,
+      "status": "internal",
+      "note": "Internal — not website-verifiable. Requires the participant's Life Plan.",
+      "quote": null,
+      "evidence_url": null,
+      "evidence_files": [],
+      "source": "deterministic"
+    },
+    {
+      "item_id": "increases_independence_health",
+      "form_question": "Will the item increase the independence and/or health and safety of the individual?",
+      "requirement": null,
+      "status": "internal",
+      "note": "Internal — not website-verifiable. Individual determination.",
+      "quote": null,
+      "evidence_url": null,
+      "evidence_files": [],
+      "source": "deterministic"
+    },
+    {
+      "item_id": "exclusive_need",
+      "form_question": "Is the item exclusively needed for the participant?",
+      "requirement": null,
+      "status": "internal",
+      "note": "Internal — not website-verifiable. About how the item is used at home.",
+      "quote": null,
+      "evidence_url": null,
+      "evidence_files": [],
+      "source": "deterministic"
+    },
+    {
+      "item_id": "other_funding",
+      "form_question": "Can the item be funded through other sources?",
+      "requirement": null,
+      "status": "internal",
+      "note": "Internal — not website-verifiable. Requires knowledge of other funding sources (care manager attests).",
+      "quote": null,
+      "evidence_url": null,
+      "evidence_files": [],
+      "source": "deterministic"
+    },
+    {
+      "item_id": "already_bought",
+      "form_question": "Was the same item bought already in this budget year?",
+      "requirement": null,
+      "status": "internal",
+      "note": "Internal — not website-verifiable. Requires purchase history.",
+      "quote": null,
+      "evidence_url": null,
+      "evidence_files": [],
+      "source": "deterministic"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "evidence/01-full-full-page-gravity-weighted-blanket-produ.png",
+      "kind": "full_page",
+      "label": "Full page: Gravity Weighted Blanket product page",
+      "url": "https://gravityblankets.com/products/gravity-blanket",
+      "captured_at": "2026-08-18 01:58:14 India Standard Time",
+      "sha256": "68975b53239d17ffa102c6ddeb6f6d5ab12c4371a81511cfedd9467881f1c2f6"
+    },
+    {
+      "file": "evidence/03-evidence-evidence-product-exists-with-visible-pri.png",
+      "kind": "targeted",
+      "label": "Evidence: product exists with visible price",
+      "url": "https://gravityblankets.com/products/gravity-blanket",
+      "captured_at": "2026-08-18 01:58:24 India Standard Time",
+      "sha256": "12d692c1bc95a9888bdbb8d7bff442f4932b43506b7c25bd1d3897fdf3331bdc"
+    },
+    {
+      "file": "evidence/04-evidence-evidence-item-description-showing-sensor.png",
+      "kind": "targeted",
+      "label": "Evidence: item description showing sensory weighted blanket not on exclusion list",
+      "url": "https://gravityblankets.com/products/gravity-blanket",
+      "captured_at": "2026-08-18 01:58:26 India Standard Time",
+      "sha256": "020803f48d895b374488d903dc18fef772499364b78c2b51d8ad43eebe7869ec"
+    },
+    {
+      "file": "evidence/05-evidence-evidence-safety-features-supported.png",
+      "kind": "targeted",
+      "label": "Evidence: safety features supported",
+      "url": "https://gravityblankets.com/products/gravity-blanket",
+      "captured_at": "2026-08-18 01:58:28 India Standard Time",
+      "sha256": "74acd40dfc43db90f8a07efabc1e2cc052b8a44a0c0ab344fbea7097c40d619e"
+    },
+    {
+      "file": "evidence/06-evidence-evidence-breathable-removable-cover-and-.png",
+      "kind": "targeted",
+      "label": "Evidence: breathable removable cover and 10% body weight recommendation",
+      "url": "https://gravityblankets.com/products/gravity-blanket",
+      "captured_at": "2026-08-18 01:58:29 India Standard Time",
+      "sha256": "d885389d84a03e2bcf527a36db8bab9a7ce9f28099a521496ab29caf03f83e73"
+    },
+    {
+      "file": "evidence/07-evidence-evidence-blanket-weight-recommendation-1.png",
+      "kind": "targeted",
+      "label": "Evidence: blanket weight recommendation 10% of body weight",
+      "url": "https://gravityblankets.com/products/gravity-blanket",
+      "captured_at": "2026-08-18 01:58:31 India Standard Time",
+      "sha256": "7b0ae189b13b7b92c9717e0d804ab6b253f450927fc2fc33419066e91216fdab"
+    }
+  ],
+  "agent_summary": "The Gravity Weighted Blanket was verified on the vendor's official website, including the requested 20 lb option. All claimed safety features were corroborated by the product documentation, which confirms evenly distributed fine-grade glass beads in gridded stitching, a breathable removable cover, and weight sizing calibrated to roughly 10% of body weight. The item is an allowable sensory support and does not fall under any OTPS exclusion categories. Reviewer attention is directed to pricing: while the regular price of $199.00 matches the application, the vendor is currently running a 25% discount bringing the published purchase price to $149.00.",
+  "checklist_notes": [
+    "Approval is valid for 3 months, then resubmit.",
+    "Cannot be funded through another source (e.g. Emods/assistive technology).",
+    "Must increase independence and/or health & safety; specific to the disability."
+  ],
+  "reviewer_notes": [],
+  "warnings": [],
+  "usage": {
+    "requests": 16,
+    "input_tokens": 85750,
+    "output_tokens": 5046,
+    "cache_read_input_tokens": 0,
+    "cache_creation_input_tokens": 0
+  },
+  "estimated_cost_usd": 0.058,
+  "review_count": 1
+}

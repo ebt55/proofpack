@@ -1,0 +1,232 @@
+{
+  "tool_version": "0.1.0",
+  "model": "gemini-3.7-flash",
+  "source_pdf": "07-appeal-gracie-barra.pdf",
+  "reviewed_at": "2026-08-18T02:00:11+05:30",
+  "category": "appeal",
+  "category_display": "Pre-Approval Appeal (Community Class)",
+  "application": {
+    "category": "appeal",
+    "form_title": "Pre-Approval Appeals Form — Community Class",
+    "participant_name": "Luis Ortega",
+    "participant_age": 19,
+    "fi_coordinator": "A. Brennan",
+    "broker": "M. Okafor",
+    "requested_item": "GB1 Jiu-Jitsu Fundamentals (beginner adult class)",
+    "provider_name": "Gracie Barra",
+    "url": "https://graciebarra.com/classes/jiu-jitsu-fundamentals/",
+    "fee_text": "Fee per Class / Session: $189 per month (unlimited fundamentals classes)",
+    "fees": [
+      {
+        "amount": 189.0,
+        "unit": "per month"
+      }
+    ],
+    "duration_text": null,
+    "subject_area": null,
+    "safety_features": null,
+    "valued_outcome": null,
+    "justification": null,
+    "denial_date": "08-10-2026",
+    "denial_reason": "Published fees could not be verified on the provider's public website; no rate sheet was attached to the application.",
+    "appeal_justification": "The school confirmed the $189/month fundamentals rate by phone. The class is open to the public and beginners; a weekly schedule is posted at the school.",
+    "form_answers": [
+      {
+        "question": "Is the class open to and attended by the broader public?",
+        "answer": "YES"
+      },
+      {
+        "question": "Does the class have published fees?",
+        "answer": "YES"
+      },
+      {
+        "question": "Are the fees identical for both OPWDD and non-OPWDD individuals?",
+        "answer": "YES"
+      },
+      {
+        "question": "Is the class subject based?",
+        "answer": "YES"
+      },
+      {
+        "question": "Does the class provide college credits?",
+        "answer": "NO"
+      },
+      {
+        "question": "Is the class clinical in nature? (therapy)",
+        "answer": "NO"
+      },
+      {
+        "question": "Is there a published schedule of the class?",
+        "answer": "YES"
+      },
+      {
+        "question": "Justification for Appeal (attached rate sheet / documents)",
+        "answer": "YES"
+      }
+    ]
+  },
+  "rate_comparison": {
+    "form_fee": "Fee per Class / Session: $189 per month (unlimited fundamentals classes)",
+    "published_fee": null,
+    "verdict": "not published",
+    "detail": "No pricing or membership fees are published on the Gracie Barra website. The applicant stated the $189/month rate was obtained via phone confirmation with the local school, but no official rate sheet or public pricing is available on the website.",
+    "evidence_url": null,
+    "evidence_files": []
+  },
+  "findings": [
+    {
+      "item_id": "open_to_public",
+      "form_question": "Is the class open to and attended by the broader public?",
+      "requirement": "Class is open to and attended by the broader public (not restricted to disabled/OPWDD individuals)",
+      "status": "found",
+      "note": "The website confirms the GB1 program is open to the public with no prior experience required. While this confirms public accessibility, it does not refute the original denial reason concerning unverified published fees.",
+      "quote": "The GB1 Program is the foundation of Jiu-Jitsu at Gracie Barra - designed specifically for beginners. With no experience required, this program introduces students to core techniques, self-defence skills, and the philosophy behind our team.",
+      "evidence_url": "https://graciebarra.com/classes/jiu-jitsu-fundamentals/",
+      "evidence_files": [
+        "evidence/02-evidence-evidence-open-to-public-beginner-program.png"
+      ],
+      "source": "agent"
+    },
+    {
+      "item_id": "published_fees",
+      "form_question": "Does the class have published fees?",
+      "requirement": "Class has published fees — a public price is visible on the website",
+      "status": "not_found",
+      "note": "No fees or pricing rates are published anywhere on the provider's website, and visitors are prompted to book a free introductory trial or contact local schools directly. This directly supports the original denial reason.",
+      "quote": null,
+      "evidence_url": "https://graciebarra.com/classes/jiu-jitsu-fundamentals/",
+      "evidence_files": [],
+      "source": "agent"
+    },
+    {
+      "item_id": "fees_identical",
+      "form_question": "Are the fees identical for both OPWDD and non-OPWDD individuals?",
+      "requirement": "Fees are identical for OPWDD and non-OPWDD individuals",
+      "status": "not_found",
+      "note": "Because no fee structure or pricing information is published on the provider's website, identical pricing for OPWDD and non-OPWDD individuals cannot be verified online. This supports the original denial reason.",
+      "quote": null,
+      "evidence_url": "https://graciebarra.com/classes/jiu-jitsu-fundamentals/",
+      "evidence_files": [],
+      "source": "agent"
+    },
+    {
+      "item_id": "subject_based",
+      "form_question": "Is the class subject based?",
+      "requirement": "Class is subject-based (art, dance, martial arts, cooking, etc.)",
+      "status": "found",
+      "note": "The class teaches Brazilian Jiu-Jitsu martial arts techniques and self-defense skills. While this satisfies the subject-based criteria, it does not refute the original denial reason regarding lack of published pricing.",
+      "quote": "Builds a strong foundation in Jiu-Jitsu techniques and self-defence",
+      "evidence_url": "https://graciebarra.com/classes/jiu-jitsu-fundamentals/",
+      "evidence_files": [
+        "evidence/03-evidence-evidence-subject-based-brazilian-jiu-jit.png"
+      ],
+      "source": "agent"
+    },
+    {
+      "item_id": "no_college_credits",
+      "form_question": "Does the class provide college credits?",
+      "requirement": "Class does NOT provide college credits",
+      "status": "found",
+      "note": "The website describes a non-credit community martial arts fitness class with no academic or degree-granting affiliation. While this requirement is satisfied, it does not refute the original denial reason.",
+      "quote": "Whether you’re looking to improve fitness, gain confidence, or simply try something new, GB1 gives you the tools to grow on the mats and beyond.",
+      "evidence_url": "https://graciebarra.com/classes/jiu-jitsu-fundamentals/",
+      "evidence_files": [
+        "evidence/04-evidence-evidence-non-credit-non-clinical-martial.png"
+      ],
+      "source": "agent"
+    },
+    {
+      "item_id": "not_clinical",
+      "form_question": "Is the class clinical in nature? (therapy)",
+      "requirement": "Class is NOT clinical/therapy in nature",
+      "status": "found",
+      "note": "The class is presented as recreational martial arts training focused on personal fitness and self-defense rather than clinical or therapeutic care. This satisfies the checklist requirement but does not refute the original denial reason.",
+      "quote": "GB1 is more than just a training program - it’s your gateway into the world of Jiu-Jitsu. Each class supports both physical and mental wellbeing, offering structure, encouragement, and meaningful progress in every session.",
+      "evidence_url": "https://graciebarra.com/classes/jiu-jitsu-fundamentals/",
+      "evidence_files": [
+        "evidence/05-evidence-evidence-not-clinical-martial-arts-train.png"
+      ],
+      "source": "agent"
+    },
+    {
+      "item_id": "published_schedule",
+      "form_question": "Is there a published schedule of the class?",
+      "requirement": "A published schedule for the class exists",
+      "status": "not_found",
+      "note": "No class days, times, or specific timetables are published on the class page, aligning with the applicant's note that schedules are posted physically at local schools. This lack of an online schedule supports the finding that school-specific scheduling is not verified on the main site.",
+      "quote": null,
+      "evidence_url": "https://graciebarra.com/classes/jiu-jitsu-fundamentals/",
+      "evidence_files": [],
+      "source": "agent"
+    },
+    {
+      "item_id": "justification_review",
+      "form_question": "Justification for Appeal (attached rate sheet / documents)",
+      "requirement": null,
+      "status": "internal",
+      "note": "Internal — not website-verifiable. Attached documents (e.g. a rate sheet obtained from the provider) are reviewed by the appeal committee — the tool only verifies what is on the public website.",
+      "quote": null,
+      "evidence_url": null,
+      "evidence_files": [],
+      "source": "deterministic"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "evidence/01-full-full-page-gracie-barra-gb1-jiu-jitsu-fun.png",
+      "kind": "full_page",
+      "label": "Full page: Gracie Barra GB1 Jiu-Jitsu Fundamentals class page",
+      "url": "https://graciebarra.com/classes/jiu-jitsu-fundamentals/",
+      "captured_at": "2026-08-18 01:59:21 India Standard Time",
+      "sha256": "cd23f023fe3db661334cd62ab6a74054bb4d172f8d06e1275b1b67a38e6242da"
+    },
+    {
+      "file": "evidence/02-evidence-evidence-open-to-public-beginner-program.png",
+      "kind": "targeted",
+      "label": "Evidence: open to public - beginner program with no experience required",
+      "url": "https://graciebarra.com/classes/jiu-jitsu-fundamentals/",
+      "captured_at": "2026-08-18 01:59:48 India Standard Time",
+      "sha256": "e684caad32e03f946c92e2b4860a159bba6953343e69991f92ba47c75aae1318"
+    },
+    {
+      "file": "evidence/03-evidence-evidence-subject-based-brazilian-jiu-jit.png",
+      "kind": "targeted",
+      "label": "Evidence: subject-based Brazilian Jiu-Jitsu training",
+      "url": "https://graciebarra.com/classes/jiu-jitsu-fundamentals/",
+      "captured_at": "2026-08-18 01:59:50 India Standard Time",
+      "sha256": "3ec7d141532b2a486020cbd47403ed5363634ef25c016401eb930c08dc5eb803"
+    },
+    {
+      "file": "evidence/04-evidence-evidence-non-credit-non-clinical-martial.png",
+      "kind": "targeted",
+      "label": "Evidence: non-credit non-clinical martial arts fitness and self-defence program",
+      "url": "https://graciebarra.com/classes/jiu-jitsu-fundamentals/",
+      "captured_at": "2026-08-18 01:59:51 India Standard Time",
+      "sha256": "d93e1c84cd08cd74f77a8a49076e6298ad7c759c2892097bc92580abd6742a3e"
+    },
+    {
+      "file": "evidence/05-evidence-evidence-not-clinical-martial-arts-train.png",
+      "kind": "targeted",
+      "label": "Evidence: not clinical - martial arts training program",
+      "url": "https://graciebarra.com/classes/jiu-jitsu-fundamentals/",
+      "captured_at": "2026-08-18 01:59:56 India Standard Time",
+      "sha256": "993d29c258767c248cf5cb9022a45779c01ea491c9b4ff85c5f46085b9a684c3"
+    }
+  ],
+  "agent_summary": "The provider website verifies that GB1 Jiu-Jitsu Fundamentals is a subject-based, non-clinical, non-credit martial arts program open to the general public with no prior experience required. However, no pricing, membership rates, or specific class schedules are published on the website, which supports the original denial reason regarding unverified published fees. The applicant indicated in their appeal justification that the requested $189 per month rate was obtained by phone and the schedule is posted in-person at the school. Because neither published rates nor identical fee structures are accessible online, the rate comparison cannot be validated from public web sources. The reviewer will need to determine whether offline documentation, such as an official written rate sheet or invoice from the local school location, is sufficient to resolve the appeal.",
+  "checklist_notes": [
+    "A special appeal committee reviews appeals once per month, after reviewing the justification and the provider's website.",
+    "The review below is framed against the stated denial reason: evidence that supports or refutes it is called out explicitly."
+  ],
+  "reviewer_notes": [],
+  "warnings": [],
+  "usage": {
+    "requests": 23,
+    "input_tokens": 185822,
+    "output_tokens": 6287,
+    "cache_read_input_tokens": 8008,
+    "cache_creation_input_tokens": 0
+  },
+  "estimated_cost_usd": 0.1128,
+  "review_count": 1
+}

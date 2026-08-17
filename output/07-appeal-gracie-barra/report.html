@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ProofPack — GB1 Jiu-Jitsu Fundamentals (beginner adult class) (Luis Ortega)</title>
+<style>
+  :root {
+    --ink: #111827; --muted: #6b7280; --line: #e5e7eb; --bg: #f9fafb;
+    --green-bg: #d1fae5; --green-ink: #065f46;
+    --red-bg: #fee2e2;   --red-ink: #991b1b;
+    --amber-bg: #fef3c7; --amber-ink: #92400e;
+    --grey-bg: #f3f4f6;  --grey-ink: #374151;
+    --blue-bg: #dbeafe;  --blue-ink: #1e40af;
+  }
+  * { box-sizing: border-box; }
+  body { font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif; color: var(--ink);
+         margin: 0; background: var(--bg); line-height: 1.5; }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 32px 24px 64px; }
+  header.doc { border-bottom: 3px solid var(--ink); padding-bottom: 16px; margin-bottom: 24px; }
+  header.doc h1 { margin: 0 0 4px; font-size: 26px; }
+  header.doc .sub { color: var(--muted); font-size: 14px; }
+  h2 { font-size: 18px; margin: 32px 0 12px; border-bottom: 1px solid var(--line); padding-bottom: 6px; }
+  table.kv { width: 100%; border-collapse: collapse; font-size: 14px; background: #fff;
+             border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+  table.kv th { text-align: left; width: 220px; color: var(--muted); font-weight: 600;
+                padding: 8px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  table.kv td { padding: 8px 12px; border-bottom: 1px solid var(--line); word-break: break-word; }
+  table.kv tr:last-child th, table.kv tr:last-child td { border-bottom: none; }
+  .chip { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 12.5px;
+          font-weight: 700; letter-spacing: .2px; white-space: nowrap; }
+  .chip.found { background: var(--green-bg); color: var(--green-ink); }
+  .chip.not-found { background: var(--red-bg); color: var(--red-ink); }
+  .chip.needs-review { background: var(--amber-bg); color: var(--amber-ink); }
+  .chip.internal { background: var(--grey-bg); color: var(--grey-ink); }
+  .chip.needs-document { background: var(--blue-bg); color: var(--blue-ink); }
+  .card { background: #fff; border: 1px solid var(--line); border-radius: 8px;
+          padding: 14px 16px; margin-bottom: 12px; }
+  .card .q { font-weight: 600; margin-bottom: 2px; }
+  .card .req { color: var(--muted); font-size: 13px; margin-bottom: 8px; }
+  .card .note { font-size: 14px; margin: 8px 0 0; }
+  blockquote { margin: 10px 0 0; padding: 8px 12px; border-left: 3px solid var(--ink);
+               background: var(--bg); font-size: 13.5px; font-style: italic; }
+  blockquote .src { display: block; font-style: normal; color: var(--muted); font-size: 12px; margin-top: 4px; }
+  .ev-links { margin-top: 8px; font-size: 13px; }
+  .ev-links a { color: #1d4ed8; }
+  .summary { background: #fff; border: 1px solid var(--line); border-left: 4px solid var(--ink);
+             border-radius: 8px; padding: 14px 16px; font-size: 14.5px; white-space: pre-wrap; }
+  .banner { border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; font-size: 14px; }
+  .banner.warn { background: var(--amber-bg); color: var(--amber-ink); border: 1px solid #fcd34d; }
+  .banner.appeal { background: var(--blue-bg); color: var(--blue-ink); border: 1px solid #93c5fd; }
+  .rate { display: flex; gap: 16px; flex-wrap: wrap; }
+  .rate .box { flex: 1 1 240px; background: #fff; border: 1px solid var(--line);
+               border-radius: 8px; padding: 12px 16px; }
+  .rate .box .h { color: var(--muted); font-size: 12px; font-weight: 700; text-transform: uppercase;
+                  letter-spacing: .5px; margin-bottom: 4px; }
+  .rate .box .v { font-size: 15px; font-weight: 600; }
+  figure { margin: 0 0 20px; background: #fff; border: 1px solid var(--line); border-radius: 8px;
+           padding: 12px; }
+  figure img { max-width: 100%; border: 1px solid var(--line); border-radius: 4px; }
+  figcaption { font-size: 12.5px; color: var(--muted); margin-top: 8px; word-break: break-all; }
+  ul.notes { font-size: 13.5px; color: var(--grey-ink); }
+  footer { margin-top: 40px; padding-top: 12px; border-top: 1px solid var(--line);
+           color: var(--muted); font-size: 12.5px; }
+  @media print {
+    body { background: #fff; }
+    .wrap { padding: 0; max-width: none; }
+    figure { break-inside: avoid; }
+    .card { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="doc">
+  <h1>Pre-Approval Website Verification Report</h1>
+  <div class="sub">
+    Pre-Approval Appeal (Community Class) &middot; reviewed 2026-08-18T02:00:11+05:30 &middot;
+    source form: 07-appeal-gracie-barra.pdf &middot; ProofPack v0.1.0 (gemini-3.7-flash)
+  </div>
+</header>
+
+
+
+
+<div class="banner appeal">
+  <strong>APPEAL</strong> — original denial 08-10-2026:
+  &ldquo;Published fees could not be verified on the provider's public website; no rate sheet was attached to the application.&rdquo;<br>
+  Applicant's justification: The school confirmed the $189/month fundamentals rate by phone. The class is open to the public and beginners; a weekly schedule is posted at the school.
+</div>
+
+
+<h2>The request at a glance</h2>
+<table class="kv">
+  <tr><th>Participant</th><td>Luis Ortega (age 19)</td></tr>
+  <tr><th>Category</th><td>Pre-Approval Appeal (Community Class)</td></tr>
+  <tr><th>Requested</th><td>GB1 Jiu-Jitsu Fundamentals (beginner adult class)</td></tr>
+  <tr><th>Provider / Vendor</th><td>Gracie Barra</td></tr>
+  <tr><th>Website / link</th><td><a href="https://graciebarra.com/classes/jiu-jitsu-fundamentals/">https://graciebarra.com/classes/jiu-jitsu-fundamentals/</a></td></tr>
+  <tr><th>Fee on application</th><td>Fee per Class / Session: $189 per month (unlimited fundamentals classes)</td></tr>
+  
+  
+  <tr><th>Review date</th><td>2026-08-18T02:00:11+05:30</td></tr>
+</table>
+
+
+<h2>Summary for the reviewer</h2>
+<div class="summary">The provider website verifies that GB1 Jiu-Jitsu Fundamentals is a subject-based, non-clinical, non-credit martial arts program open to the general public with no prior experience required. However, no pricing, membership rates, or specific class schedules are published on the website, which supports the original denial reason regarding unverified published fees. The applicant indicated in their appeal justification that the requested $189 per month rate was obtained by phone and the schedule is posted in-person at the school. Because neither published rates nor identical fee structures are accessible online, the rate comparison cannot be validated from public web sources. The reviewer will need to determine whether offline documentation, such as an official written rate sheet or invoice from the local school location, is sufficient to resolve the appeal.</div>
+
+
+<h2>Rate comparison</h2>
+<div class="rate">
+  <div class="box"><div class="h">Fee on application</div><div class="v">Fee per Class / Session: $189 per month (unlimited fundamentals classes)</div></div>
+  <div class="box"><div class="h">Fee found on website</div><div class="v">— none published —</div></div>
+  <div class="box"><div class="h">Verdict</div><div class="v"><span class="chip not-found">not published</span></div></div>
+</div>
+<p class="note">No pricing or membership fees are published on the Gracie Barra website. The applicant stated the $189/month rate was obtained via phone confirmation with the local school, but no official rate sheet or public pricing is available on the website.</p>
+
+
+<h2>Website verification — checked on the provider's public website</h2>
+
+<div class="card">
+  <div class="q">Class is open to and attended by the broader public (not restricted to disabled/OPWDD individuals) &nbsp;<span class="chip found">Found</span></div>
+  <div class="req">Form question: Is the class open to and attended by the broader public?</div>
+  <div class="note">The website confirms the GB1 program is open to the public with no prior experience required. While this confirms public accessibility, it does not refute the original denial reason concerning unverified published fees.</div>
+  
+  <blockquote>&ldquo;The GB1 Program is the foundation of Jiu-Jitsu at Gracie Barra - designed specifically for beginners. With no experience required, this program introduces students to core techniques, self-defence skills, and the philosophy behind our team.&rdquo;
+    <span class="src">— https://graciebarra.com/classes/jiu-jitsu-fundamentals/</span>
+  </blockquote>
+  
+  
+  <div class="ev-links">Evidence:
+    <a href="evidence/02-evidence-evidence-open-to-public-beginner-program.png">evidence/02-evidence-evidence-open-to-public-beginner-program.png</a>
+  </div>
+  
+</div>
+
+<div class="card">
+  <div class="q">Class has published fees — a public price is visible on the website &nbsp;<span class="chip not-found">Not Found</span></div>
+  <div class="req">Form question: Does the class have published fees?</div>
+  <div class="note">No fees or pricing rates are published anywhere on the provider's website, and visitors are prompted to book a free introductory trial or contact local schools directly. This directly supports the original denial reason.</div>
+  
+  
+</div>
+
+<div class="card">
+  <div class="q">Fees are identical for OPWDD and non-OPWDD individuals &nbsp;<span class="chip not-found">Not Found</span></div>
+  <div class="req">Form question: Are the fees identical for both OPWDD and non-OPWDD individuals?</div>
+  <div class="note">Because no fee structure or pricing information is published on the provider's website, identical pricing for OPWDD and non-OPWDD individuals cannot be verified online. This supports the original denial reason.</div>
+  
+  
+</div>
+
+<div class="card">
+  <div class="q">Class is subject-based (art, dance, martial arts, cooking, etc.) &nbsp;<span class="chip found">Found</span></div>
+  <div class="req">Form question: Is the class subject based?</div>
+  <div class="note">The class teaches Brazilian Jiu-Jitsu martial arts techniques and self-defense skills. While this satisfies the subject-based criteria, it does not refute the original denial reason regarding lack of published pricing.</div>
+  
+  <blockquote>&ldquo;Builds a strong foundation in Jiu-Jitsu techniques and self-defence&rdquo;
+    <span class="src">— https://graciebarra.com/classes/jiu-jitsu-fundamentals/</span>
+  </blockquote>
+  
+  
+  <div class="ev-links">Evidence:
+    <a href="evidence/03-evidence-evidence-subject-based-brazilian-jiu-jit.png">evidence/03-evidence-evidence-subject-based-brazilian-jiu-jit.png</a>
+  </div>
+  
+</div>
+
+<div class="card">
+  <div class="q">Class does NOT provide college credits &nbsp;<span class="chip found">Found</span></div>
+  <div class="req">Form question: Does the class provide college credits?</div>
+  <div class="note">The website describes a non-credit community martial arts fitness class with no academic or degree-granting affiliation. While this requirement is satisfied, it does not refute the original denial reason.</div>
+  
+  <blockquote>&ldquo;Whether you’re looking to improve fitness, gain confidence, or simply try something new, GB1 gives you the tools to grow on the mats and beyond.&rdquo;
+    <span class="src">— https://graciebarra.com/classes/jiu-jitsu-fundamentals/</span>
+  </blockquote>
+  
+  
+  <div class="ev-links">Evidence:
+    <a href="evidence/04-evidence-evidence-non-credit-non-clinical-martial.png">evidence/04-evidence-evidence-non-credit-non-clinical-martial.png</a>
+  </div>
+  
+</div>
+
+<div class="card">
+  <div class="q">Class is NOT clinical/therapy in nature &nbsp;<span class="chip found">Found</span></div>
+  <div class="req">Form question: Is the class clinical in nature? (therapy)</div>
+  <div class="note">The class is presented as recreational martial arts training focused on personal fitness and self-defense rather than clinical or therapeutic care. This satisfies the checklist requirement but does not refute the original denial reason.</div>
+  
+  <blockquote>&ldquo;GB1 is more than just a training program - it’s your gateway into the world of Jiu-Jitsu. Each class supports both physical and mental wellbeing, offering structure, encouragement, and meaningful progress in every session.&rdquo;
+    <span class="src">— https://graciebarra.com/classes/jiu-jitsu-fundamentals/</span>
+  </blockquote>
+  
+  
+  <div class="ev-links">Evidence:
+    <a href="evidence/05-evidence-evidence-not-clinical-martial-arts-train.png">evidence/05-evidence-evidence-not-clinical-martial-arts-train.png</a>
+  </div>
+  
+</div>
+
+<div class="card">
+  <div class="q">A published schedule for the class exists &nbsp;<span class="chip not-found">Not Found</span></div>
+  <div class="req">Form question: Is there a published schedule of the class?</div>
+  <div class="note">No class days, times, or specific timetables are published on the class page, aligning with the applicant's note that schedules are posted physically at local schools. This lack of an online schedule supports the finding that school-specific scheduling is not verified on the main site.</div>
+  
+  
+</div>
+
+
+
+
+
+
+<h2>Internal items — for the reviewer (not answered by this tool)</h2>
+
+<div class="card">
+  <div class="q">Justification for Appeal (attached rate sheet / documents) &nbsp;<span class="chip internal">Internal</span></div>
+  <div class="note">Internal — not website-verifiable. Attached documents (e.g. a rate sheet obtained from the provider) are reviewed by the appeal committee — the tool only verifies what is on the public website.</div>
+</div>
+
+
+
+<h2>Program notes for this category</h2>
+<ul class="notes">
+  <li>A special appeal committee reviews appeals once per month, after reviewing the justification and the provider's website.</li><li>The review below is framed against the stated denial reason: evidence that supports or refutes it is called out explicitly.</li>
+</ul>
+
+
+
+
+<h2>Evidence captures</h2>
+<p class="ev-links">Each capture is stamped in-image with its capture time and URL.
+Integrity hashes: <a href="manifest.json">manifest.json</a>.</p>
+
+<figure id="evidence/01-full-full-page-gracie-barra-gb1-jiu-jitsu-fun.png">
+  <img src="evidence/01-full-full-page-gracie-barra-gb1-jiu-jitsu-fun.png" alt="Full page: Gracie Barra GB1 Jiu-Jitsu Fundamentals class page">
+  <figcaption>
+    <strong>Full page: Gracie Barra GB1 Jiu-Jitsu Fundamentals class page</strong> (full_page)<br>
+    https://graciebarra.com/classes/jiu-jitsu-fundamentals/<br>
+    Captured 2026-08-18 01:59:21 India Standard Time &middot; SHA-256 cd23f023fe3db661&hellip;
+  </figcaption>
+</figure>
+
+<figure id="evidence/02-evidence-evidence-open-to-public-beginner-program.png">
+  <img src="evidence/02-evidence-evidence-open-to-public-beginner-program.png" alt="Evidence: open to public - beginner program with no experience required">
+  <figcaption>
+    <strong>Evidence: open to public - beginner program with no experience required</strong> (targeted)<br>
+    https://graciebarra.com/classes/jiu-jitsu-fundamentals/<br>
+    Captured 2026-08-18 01:59:48 India Standard Time &middot; SHA-256 e684caad32e03f94&hellip;
+  </figcaption>
+</figure>
+
+<figure id="evidence/03-evidence-evidence-subject-based-brazilian-jiu-jit.png">
+  <img src="evidence/03-evidence-evidence-subject-based-brazilian-jiu-jit.png" alt="Evidence: subject-based Brazilian Jiu-Jitsu training">
+  <figcaption>
+    <strong>Evidence: subject-based Brazilian Jiu-Jitsu training</strong> (targeted)<br>
+    https://graciebarra.com/classes/jiu-jitsu-fundamentals/<br>
+    Captured 2026-08-18 01:59:50 India Standard Time &middot; SHA-256 3ec7d141532b2a48&hellip;
+  </figcaption>
+</figure>
+
+<figure id="evidence/04-evidence-evidence-non-credit-non-clinical-martial.png">
+  <img src="evidence/04-evidence-evidence-non-credit-non-clinical-martial.png" alt="Evidence: non-credit non-clinical martial arts fitness and self-defence program">
+  <figcaption>
+    <strong>Evidence: non-credit non-clinical martial arts fitness and self-defence program</strong> (targeted)<br>
+    https://graciebarra.com/classes/jiu-jitsu-fundamentals/<br>
+    Captured 2026-08-18 01:59:51 India Standard Time &middot; SHA-256 d93e1c84cd08cd74&hellip;
+  </figcaption>
+</figure>
+
+<figure id="evidence/05-evidence-evidence-not-clinical-martial-arts-train.png">
+  <img src="evidence/05-evidence-evidence-not-clinical-martial-arts-train.png" alt="Evidence: not clinical - martial arts training program">
+  <figcaption>
+    <strong>Evidence: not clinical - martial arts training program</strong> (targeted)<br>
+    https://graciebarra.com/classes/jiu-jitsu-fundamentals/<br>
+    Captured 2026-08-18 01:59:56 India Standard Time &middot; SHA-256 993d29c258767c24&hellip;
+  </figcaption>
+</figure>
+
+
+<footer>
+  This report was produced by the Pre-Approval Website-Verification Tool to assist the
+  Pre-Approvals reviewer. It records what was (and was not) visible on the provider's public
+  website on the review date. <strong>It does not approve or deny anything — the final
+  decision is always made by staff.</strong> Items the website cannot answer are listed as
+  Internal and were deliberately not guessed.
+  <br><br>
+  Run cost: 185,822 input + 6,287
+  output tokens across 23 model request(s),
+  estimated $0.11 at the prices set in config.yaml.
+  The agent's full action trail for this review is in <code>run.log</code>.
+</footer>
+
+</div>
+</body>
+</html>

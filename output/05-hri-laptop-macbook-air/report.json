@@ -1,0 +1,308 @@
+{
+  "tool_version": "0.1.0",
+  "model": "gemini-3.7-flash",
+  "source_pdf": "05-hri-laptop-macbook-air.pdf",
+  "reviewed_at": "2026-08-18T01:57:05+05:30",
+  "category": "hri",
+  "category_display": "Household Related Items (HRI)",
+  "application": {
+    "category": "hri",
+    "form_title": "Household Related Items (HRI) Justification Form",
+    "participant_name": "Marcus Bell",
+    "participant_age": 34,
+    "fi_coordinator": "A. Brennan",
+    "broker": "M. Okafor",
+    "requested_item": "Apple MacBook Air 13-inch laptop",
+    "provider_name": "Apple",
+    "url": "https://www.apple.com/shop/buy-mac/macbook-air",
+    "fee_text": "$1,299 one-time",
+    "fees": [
+      {
+        "amount": 1299.0,
+        "unit": "one-time item price"
+      }
+    ],
+    "duration_text": null,
+    "subject_area": null,
+    "safety_features": "None — general-purpose laptop",
+    "valued_outcome": "Marcus wants to manage his own schedule, video-call family and apply for jobs without staff help.",
+    "justification": "A laptop would let Marcus complete online job applications and telehealth check-ins independently from home.",
+    "denial_date": null,
+    "denial_reason": null,
+    "appeal_justification": null,
+    "form_answers": [
+      {
+        "question": "Is Household-Related Items approved in the budget?",
+        "answer": "YES"
+      },
+      {
+        "question": "Is the individual over 18?",
+        "answer": "YES"
+      },
+      {
+        "question": "Is the item related to a need or goal identified in the Life Plan?",
+        "answer": "YES"
+      },
+      {
+        "question": "Will the item increase independence, or substitute for human assistance?",
+        "answer": "YES"
+      },
+      {
+        "question": "Does the item increase safety of the participant in their home environment?",
+        "answer": "NO"
+      },
+      {
+        "question": "Is the item exclusively needed for the participant?",
+        "answer": "YES"
+      },
+      {
+        "question": "Does the item increase the participant's health and safety?",
+        "answer": "NO"
+      },
+      {
+        "question": "Does the individual live in their own home? (for Household support only)",
+        "answer": "YES"
+      },
+      {
+        "question": "Was the same item bought already in this budget year?",
+        "answer": "NO"
+      },
+      {
+        "question": "Can the item be funded through other sources?",
+        "answer": "NO"
+      },
+      {
+        "question": "Does the item exist at the linked page with a visible price?",
+        "answer": "YES"
+      },
+      {
+        "question": "Is the item NOT on the IDGS/HRI exclusion list?",
+        "answer": "YES"
+      }
+    ]
+  },
+  "rate_comparison": {
+    "form_fee": "$1,299 one-time",
+    "published_fee": "$1299",
+    "verdict": "matches application exactly",
+    "detail": "The Apple website lists the 13-inch MacBook Air with pricing starting at $1,299 for a one-time purchase, matching the $1,299 fee stated on the application exactly.",
+    "evidence_url": "https://www.apple.com/shop/buy-mac/macbook-air",
+    "evidence_files": [
+      "evidence/02-evidence-evidence-macbook-air-13-inch-pricing.png"
+    ]
+  },
+  "findings": [
+    {
+      "item_id": "item_exists_with_price",
+      "form_question": "(program guideline) The item exists at the linked page, with a visible price",
+      "requirement": "The item exists at the linked page with a visible price",
+      "status": "found",
+      "note": "The 13-inch MacBook Air is available on Apple's public store page with a starting price of $1,299. The product is active and available for purchase with free shipping or store pickup.",
+      "quote": "Model. Choose your size. 13-inch Footnote 1 Buy from $1299",
+      "evidence_url": "https://www.apple.com/shop/buy-mac/macbook-air",
+      "evidence_files": [
+        "evidence/02-evidence-evidence-macbook-air-13-inch-pricing.png"
+      ],
+      "source": "agent"
+    },
+    {
+      "item_id": "not_excluded",
+      "form_question": "(program guideline) Item is not on the IDGS/HRI exclusion list",
+      "requirement": "Item is plausibly NOT on the HRI exclusion list",
+      "status": "not_found",
+      "note": "The requested item is an Apple MacBook Air 13-inch laptop, which is computer hardware. Computer hardware is an explicitly excluded category under Household Related Items (HRI), so this requirement is not met.",
+      "quote": null,
+      "evidence_url": "https://www.apple.com/shop/buy-mac/macbook-air",
+      "evidence_files": [],
+      "source": "agent"
+    },
+    {
+      "item_id": "safety_features_supported",
+      "form_question": "Safety features for the item (as described on the form)",
+      "requirement": "Safety features described on the form are supported by the product page",
+      "status": "found",
+      "note": "The application states no safety features are claimed as this is a general-purpose laptop. The product page confirms standard consumer laptop specifications with general processing power, memory, and display features, with no specialized safety claims.",
+      "quote": "Both sizes feature the Liquid Retina display, which delivers rich contrast and sharp detail.",
+      "evidence_url": "https://www.apple.com/shop/buy-mac/macbook-air",
+      "evidence_files": [
+        "evidence/04-evidence-evidence-product-description-and-process.png"
+      ],
+      "source": "agent"
+    },
+    {
+      "item_id": "cap_budget_year",
+      "form_question": "Program cap: Capped at $1,500 per budget year",
+      "requirement": "Capped at $1,500 per budget year",
+      "status": "pass",
+      "note": "Form states $1299 one-time item price — within the Capped at $1,500 per budget year cap.",
+      "quote": null,
+      "evidence_url": null,
+      "evidence_files": [],
+      "source": "deterministic"
+    },
+    {
+      "item_id": "eligibility_age",
+      "form_question": "Program guideline: adults (18+) only",
+      "requirement": "Participant is 18 or older (checked against the age stated on the form)",
+      "status": "pass",
+      "note": "Adults-only category; form states age 34 (≥ 18).",
+      "quote": null,
+      "evidence_url": null,
+      "evidence_files": [],
+      "source": "deterministic"
+    },
+    {
+      "item_id": "budget_approved",
+      "form_question": "Is Household-Related Items approved in the budget?",
+      "requirement": null,
+      "status": "internal",
+      "note": "Internal — not website-verifiable. Participant budget data lives in internal systems.",
+      "quote": null,
+      "evidence_url": null,
+      "evidence_files": [],
+      "source": "deterministic"
+    },
+    {
+      "item_id": "over_18",
+      "form_question": "Is the individual over 18?",
+      "requirement": null,
+      "status": "internal",
+      "note": "Internal — not website-verifiable. Checked deterministically from the form's stated age — official proof of age is internal.",
+      "quote": null,
+      "evidence_url": null,
+      "evidence_files": [],
+      "source": "deterministic"
+    },
+    {
+      "item_id": "lp_need",
+      "form_question": "Is the item related to a need or goal identified in the Life Plan?",
+      "requirement": null,
+      "status": "internal",
+      "note": "Internal — not website-verifiable. Requires the participant's Life Plan.",
+      "quote": null,
+      "evidence_url": null,
+      "evidence_files": [],
+      "source": "deterministic"
+    },
+    {
+      "item_id": "increases_independence",
+      "form_question": "Will the item increase independence, or substitute for human assistance?",
+      "requirement": null,
+      "status": "internal",
+      "note": "Internal — not website-verifiable. Depends on the participant's situation.",
+      "quote": null,
+      "evidence_url": null,
+      "evidence_files": [],
+      "source": "deterministic"
+    },
+    {
+      "item_id": "increases_home_safety",
+      "form_question": "Does the item increase safety of the participant in their home environment?",
+      "requirement": null,
+      "status": "internal",
+      "note": "Internal — not website-verifiable. The need is individual; the product's safety features are checked separately on the website.",
+      "quote": null,
+      "evidence_url": null,
+      "evidence_files": [],
+      "source": "deterministic"
+    },
+    {
+      "item_id": "exclusive_need",
+      "form_question": "Is the item exclusively needed for the participant?",
+      "requirement": null,
+      "status": "internal",
+      "note": "Internal — not website-verifiable. About how the item is used at home.",
+      "quote": null,
+      "evidence_url": null,
+      "evidence_files": [],
+      "source": "deterministic"
+    },
+    {
+      "item_id": "health_safety",
+      "form_question": "Does the item increase the participant's health and safety?",
+      "requirement": null,
+      "status": "internal",
+      "note": "Internal — not website-verifiable. Individual determination.",
+      "quote": null,
+      "evidence_url": null,
+      "evidence_files": [],
+      "source": "deterministic"
+    },
+    {
+      "item_id": "own_home",
+      "form_question": "Does the individual live in their own home? (for Household support only)",
+      "requirement": null,
+      "status": "internal",
+      "note": "Internal — not website-verifiable. Residence information is internal.",
+      "quote": null,
+      "evidence_url": null,
+      "evidence_files": [],
+      "source": "deterministic"
+    },
+    {
+      "item_id": "already_bought",
+      "form_question": "Was the same item bought already in this budget year?",
+      "requirement": null,
+      "status": "internal",
+      "note": "Internal — not website-verifiable. Requires purchase history.",
+      "quote": null,
+      "evidence_url": null,
+      "evidence_files": [],
+      "source": "deterministic"
+    },
+    {
+      "item_id": "other_funding",
+      "form_question": "Can the item be funded through other sources?",
+      "requirement": null,
+      "status": "internal",
+      "note": "Internal — not website-verifiable. Requires knowledge of other funding sources (care manager attests).",
+      "quote": null,
+      "evidence_url": null,
+      "evidence_files": [],
+      "source": "deterministic"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "evidence/01-full-full-page-apple-macbook-air-product-and-.png",
+      "kind": "full_page",
+      "label": "Full page: Apple MacBook Air product and pricing page",
+      "url": "https://www.apple.com/shop/buy-mac/macbook-air",
+      "captured_at": "2026-08-18 01:56:39 India Standard Time",
+      "sha256": "eaf48f1a4d012e90c353aa33435e0bc6b484537a446427023517c254732098a5"
+    },
+    {
+      "file": "evidence/02-evidence-evidence-macbook-air-13-inch-pricing.png",
+      "kind": "targeted",
+      "label": "Evidence: MacBook Air 13-inch pricing",
+      "url": "https://www.apple.com/shop/buy-mac/macbook-air",
+      "captured_at": "2026-08-18 01:56:44 India Standard Time",
+      "sha256": "65d3c31c617ae282592108f792f2bfa63b26024140484474b99cd1f8dbf2ba16"
+    },
+    {
+      "file": "evidence/04-evidence-evidence-product-description-and-process.png",
+      "kind": "targeted",
+      "label": "Evidence: product description and processing power",
+      "url": "https://www.apple.com/shop/buy-mac/macbook-air",
+      "captured_at": "2026-08-18 01:56:50 India Standard Time",
+      "sha256": "7675ef8d246c715c388a3a162842bedbdd8effba6676a106d4e9dfa27709a1b4"
+    }
+  ],
+  "agent_summary": "The Apple MacBook Air 13-inch laptop was verified on Apple's official online store at a published base price of $1,299, which matches the one-time purchase price stated on the application exactly. Full-page and targeted screenshots were captured to document the product availability, general specifications, and pricing. The application indicates no specialized safety features, and the product page confirms standard consumer laptop features. However, the requested item constitutes computer hardware, which is explicitly listed on the Household Related Items exclusion list. The reviewer's attention is directed to this exclusion determination for final eligibility assessment.",
+  "checklist_notes": [
+    "Approval is valid for 3 months, then resubmit.",
+    "Landlord-provided items (standard fridge/oven) are not covered.",
+    "Must increase the individual's independence and safety; specific to the disability."
+  ],
+  "reviewer_notes": [],
+  "warnings": [],
+  "usage": {
+    "requests": 17,
+    "input_tokens": 113625,
+    "output_tokens": 5147,
+    "cache_read_input_tokens": 0,
+    "cache_creation_input_tokens": 0
+  },
+  "estimated_cost_usd": 0.0723,
+  "review_count": 1
+}

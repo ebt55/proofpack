@@ -1,0 +1,228 @@
+{
+  "tool_version": "0.1.0",
+  "model": "gemini-3.7-flash",
+  "source_pdf": "04-coaching-love-and-logic.pdf",
+  "reviewed_at": "2026-08-18T01:56:06+05:30",
+  "category": "coaching",
+  "category_display": "Coaching (for Parents/Spouse)",
+  "application": {
+    "category": "coaching",
+    "form_title": "Coaching for Parents/Spouse Pre-approval Form",
+    "participant_name": "Aisha Rahman",
+    "participant_age": 27,
+    "fi_coordinator": "R. Patel",
+    "broker": "T. Nguyen",
+    "requested_item": "Love and Logic Parenting Online (webinar course)",
+    "provider_name": "Love and Logic Institute",
+    "url": "https://www.loveandlogic.com/products/love-and-logic-parenting-online",
+    "fee_text": "Fee per Class: n/a | Fee per Private Class: n/a | Fee per Course: $150",
+    "fees": [
+      {
+        "amount": 150.0,
+        "unit": "per course"
+      }
+    ],
+    "duration_text": "Self-paced online course, approx. 7 hours of video",
+    "subject_area": "Parenting skills — communication, boundaries, de-escalation",
+    "safety_features": null,
+    "valued_outcome": "Aisha's mother wants practical strategies to support Aisha's growing independence at home without daily conflict.",
+    "justification": "The course teaches de-escalation and boundary-setting techniques that directly support Aisha's Life Plan goal of managing her own routine with less prompting.",
+    "denial_date": null,
+    "denial_reason": null,
+    "appeal_justification": null,
+    "form_answers": [
+      {
+        "question": "1. Is coaching education currently approved in the budget?",
+        "answer": "YES"
+      },
+      {
+        "question": "2. Is the individual over 18?",
+        "answer": "YES"
+      },
+      {
+        "question": "3. Does the coaching address the individual's goals being worked on in the LP?",
+        "answer": "YES"
+      },
+      {
+        "question": "4. Can the coaching program be funded by other public programs?",
+        "answer": "NO"
+      },
+      {
+        "question": "5. Do published fees exist for the course/class?",
+        "answer": "YES"
+      },
+      {
+        "question": "6. Is the content a genuine educational/coaching opportunity?",
+        "answer": "YES"
+      }
+    ]
+  },
+  "rate_comparison": {
+    "form_fee": "Fee per Class: n/a | Fee per Private Class: n/a | Fee per Course: $150",
+    "published_fee": "$125.00 per person",
+    "verdict": "differs from application",
+    "detail": "The application requests $150 per course, but the provider's website lists the published price for the course as $125.00 ($125.00 per person).",
+    "evidence_url": "https://www.loveandlogic.com/products/love-and-logic-parenting-online",
+    "evidence_files": [
+      "evidence/02-evidence-evidence-published-course-fee.png"
+    ]
+  },
+  "findings": [
+    {
+      "item_id": "published_fees",
+      "form_question": "(program guideline) Published fees exist for the course/class",
+      "requirement": "Published fees exist for the course/class on the provider's website",
+      "status": "found",
+      "note": "The website lists the published price for the Love and Logic Parenting Online webinar course as $125.00 per person.",
+      "quote": "Price: $125.00 per person",
+      "evidence_url": "https://www.loveandlogic.com/products/love-and-logic-parenting-online",
+      "evidence_files": [
+        "evidence/02-evidence-evidence-published-course-fee.png"
+      ],
+      "source": "agent"
+    },
+    {
+      "item_id": "educational_content",
+      "form_question": "(program guideline) Content is a genuine educational/coaching opportunity",
+      "requirement": "Content is a genuine educational/coaching opportunity (not lodging/travel)",
+      "status": "found",
+      "note": "The offering is a genuine educational parenting webinar course comprising approximately 6 hours of instruction across multiple learning modules.",
+      "quote": "Enhance your parenting skills with the Love and Logic Parenting Online webinar, offering practical solutions to common challenges and fostering a harmonious family environment.",
+      "evidence_url": "https://www.loveandlogic.com/products/love-and-logic-parenting-online",
+      "evidence_files": [
+        "evidence/03-evidence-evidence-educational-parenting-webinar-c.png"
+      ],
+      "source": "agent"
+    },
+    {
+      "item_id": "cap_group_class",
+      "form_question": "Program cap: Tuition ≤ $55 per group class",
+      "requirement": "Tuition ≤ $55 per group class",
+      "status": "needs_review",
+      "note": "No fee on the form could be matched to this cap — reviewer should check.",
+      "quote": null,
+      "evidence_url": null,
+      "evidence_files": [],
+      "source": "deterministic"
+    },
+    {
+      "item_id": "cap_private_class",
+      "form_question": "Program cap: Tuition ≤ $111 per private class",
+      "requirement": "Tuition ≤ $111 per private class",
+      "status": "needs_review",
+      "note": "No fee on the form could be matched to this cap — reviewer should check.",
+      "quote": null,
+      "evidence_url": null,
+      "evidence_files": [],
+      "source": "deterministic"
+    },
+    {
+      "item_id": "cap_program_year",
+      "form_question": "Program cap: Program capped at $500 per year",
+      "requirement": "Program capped at $500 per year",
+      "status": "pass",
+      "note": "Form states $150 per course — within the Program capped at $500 per year cap.",
+      "quote": null,
+      "evidence_url": null,
+      "evidence_files": [],
+      "source": "deterministic"
+    },
+    {
+      "item_id": "eligibility_age",
+      "form_question": "Program guideline: adults (18+) only",
+      "requirement": "Participant is 18 or older (checked against the age stated on the form)",
+      "status": "pass",
+      "note": "Adults-only category; form states age 27 (≥ 18).",
+      "quote": null,
+      "evidence_url": null,
+      "evidence_files": [],
+      "source": "deterministic"
+    },
+    {
+      "item_id": "budget_approved",
+      "form_question": "Is coaching education currently approved in the budget?",
+      "requirement": null,
+      "status": "internal",
+      "note": "Internal — not website-verifiable. Participant budget data lives in internal systems.",
+      "quote": null,
+      "evidence_url": null,
+      "evidence_files": [],
+      "source": "deterministic"
+    },
+    {
+      "item_id": "over_18",
+      "form_question": "Is the individual over 18?",
+      "requirement": null,
+      "status": "internal",
+      "note": "Internal — not website-verifiable. Checked deterministically from the form's stated age (see fee/eligibility checks) — official proof of age is internal.",
+      "quote": null,
+      "evidence_url": null,
+      "evidence_files": [],
+      "source": "deterministic"
+    },
+    {
+      "item_id": "addresses_lp_goals",
+      "form_question": "Does the coaching address the individual's goals being worked on in the LP?",
+      "requirement": null,
+      "status": "internal",
+      "note": "Internal — not website-verifiable. Requires the participant's Life Plan.",
+      "quote": null,
+      "evidence_url": null,
+      "evidence_files": [],
+      "source": "deterministic"
+    },
+    {
+      "item_id": "other_funding",
+      "form_question": "Can the coaching program be funded by other public programs?",
+      "requirement": null,
+      "status": "internal",
+      "note": "Internal — not website-verifiable. Requires knowledge of other funding sources for this participant.",
+      "quote": null,
+      "evidence_url": null,
+      "evidence_files": [],
+      "source": "deterministic"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "evidence/01-full-full-page-love-and-logic-parenting-onlin.png",
+      "kind": "full_page",
+      "label": "Full page: Love and Logic Parenting Online product page",
+      "url": "https://www.loveandlogic.com/products/love-and-logic-parenting-online",
+      "captured_at": "2026-08-18 01:55:56 India Standard Time",
+      "sha256": "e3d4cdcc504cd5f6cb5eabefc12fbb5b8f29f9d9472e0eb40f3e5c30b8f6c4bd"
+    },
+    {
+      "file": "evidence/02-evidence-evidence-published-course-fee.png",
+      "kind": "targeted",
+      "label": "Evidence: published course fee",
+      "url": "https://www.loveandlogic.com/products/love-and-logic-parenting-online",
+      "captured_at": "2026-08-18 01:55:58 India Standard Time",
+      "sha256": "e1a723a065d823bff139c2df8234f73301d0e26b77d82a345123b9d8db574cbb"
+    },
+    {
+      "file": "evidence/03-evidence-evidence-educational-parenting-webinar-c.png",
+      "kind": "targeted",
+      "label": "Evidence: educational parenting webinar content",
+      "url": "https://www.loveandlogic.com/products/love-and-logic-parenting-online",
+      "captured_at": "2026-08-18 01:56:00 India Standard Time",
+      "sha256": "314402fe40f3ecf9e6dfbe22d41dffcb9eaf3f7d6697f121f7ff6569d4aeb8d0"
+    }
+  ],
+  "agent_summary": "The provider website for the Love and Logic Parenting Online webinar course was reviewed and verified. The course content is a genuine educational parenting instruction program offering approximately six hours of streaming video modules and digital workbook materials. A public price is published on the site at $125.00 per person, which differs from the $150.00 requested on the application. The reviewer should note the $25.00 discrepancy between the application amount and the lower published website fee.",
+  "checklist_notes": [
+    "Educational opportunities for parents/spouses that help the individual achieve Life Plan goals.",
+    "May include registration/conference fees. Overnight lodging or travel is NOT reimbursable."
+  ],
+  "reviewer_notes": [],
+  "warnings": [],
+  "usage": {
+    "requests": 10,
+    "input_tokens": 34228,
+    "output_tokens": 2349,
+    "cache_read_input_tokens": 0,
+    "cache_creation_input_tokens": 0
+  },
+  "estimated_cost_usd": 0.0242,
+  "review_count": 1
+}

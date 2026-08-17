@@ -233,6 +233,148 @@ FORMS: list[Form] = [
             ("Is the class being reimbursed directly? (if yes, attach a W9)", "NO"),
         ],
     ),
+    Form(
+        filename="04-coaching-love-and-logic.pdf",
+        title="Coaching for Parents/Spouse Pre-approval Form",
+        subtitle="Use this form to request pre-approval for a parenting / spouse coaching course funded "
+                 "from the participant's Self-Direction budget (adults 18+).",
+        fields=[
+            ("Participant Name", "Aisha Rahman"),
+            ("Participant Age", "27"),
+            ("FI Coordinator", "R. Patel"),
+            ("Broker", "T. Nguyen"),
+            ("Parent / Spouse attending", "Nadia Rahman (mother)"),
+            ("Provider / Organization", "Love and Logic Institute"),
+            ("Course / Class Requested", "Love and Logic Parenting Online (webinar course)"),
+            ("Subject Area", "Parenting skills — communication, boundaries, de-escalation"),
+            ("Link to Webpage / Place of Publication", "https://www.loveandlogic.com/products/love-and-logic-parenting-online"),
+            ("Fee per Class", "n/a"),
+            ("Fee per Private Class", "n/a"),
+            ("Fee per Course", "$150"),
+            ("Duration", "Self-paced online course, approx. 7 hours of video"),
+            ("Valued Outcome", "Aisha's mother wants practical strategies to support Aisha's growing "
+                               "independence at home without daily conflict."),
+            ("Justification for why the requested Item/Service is needed",
+             "The course teaches de-escalation and boundary-setting techniques that directly support "
+             "Aisha's Life Plan goal of managing her own routine with less prompting."),
+        ],
+        checklist_heading="Coaching checklist",
+        checklist=[
+            ("Is coaching education currently approved in the budget?", "YES"),
+            ("Is the individual over 18?", "YES"),
+            ("Does the coaching address the individual's goals being worked on in the LP?", "YES"),
+            ("Can the coaching program be funded by other public programs?", "NO"),
+            ("Do published fees exist for the course/class?", "YES"),
+            ("Is the content a genuine educational/coaching opportunity?", "YES"),
+        ],
+    ),
+    Form(
+        filename="05-hri-laptop-macbook-air.pdf",
+        title="Household Related Items (HRI) Justification Form",
+        subtitle="Use this form to request pre-approval for a household-related item funded from the "
+                 "participant's Self-Direction budget (adults 18+; $1,500 per budget year).",
+        fields=[
+            ("Participant Name", "Marcus Bell"),
+            ("Participant Age", "34"),
+            ("FI Coordinator", "A. Brennan"),
+            ("Broker", "M. Okafor"),
+            ("Item Requested", "Apple MacBook Air 13-inch laptop"),
+            ("Vendor", "Apple"),
+            ("Link to the Item", "https://www.apple.com/shop/buy-mac/macbook-air"),
+            ("Item Price", "$1,299 one-time"),
+            ("Safety features for the item", "None — general-purpose laptop"),
+            ("Valued Outcome", "Marcus wants to manage his own schedule, video-call family and apply "
+                               "for jobs without staff help."),
+            ("Justification for why the requested Item/Service is needed",
+             "A laptop would let Marcus complete online job applications and telehealth check-ins "
+             "independently from home."),
+        ],
+        checklist_heading="HRI checklist",
+        checklist=[
+            ("Is Household-Related Items approved in the budget?", "YES"),
+            ("Is the individual over 18?", "YES"),
+            ("Is the item related to a need or goal identified in the Life Plan?", "YES"),
+            ("Will the item increase independence, or substitute for human assistance?", "YES"),
+            ("Does the item increase safety of the participant in their home environment?", "NO"),
+            ("Is the item exclusively needed for the participant?", "YES"),
+            ("Does the item increase the participant's health and safety?", "NO"),
+            ("Does the individual live in their own home? (for Household support only)", "YES"),
+            ("Was the same item bought already in this budget year?", "NO"),
+            ("Can the item be funded through other sources?", "NO"),
+            ("Does the item exist at the linked page with a visible price?", "YES"),
+            ("Is the item NOT on the IDGS/HRI exclusion list?", "YES"),
+        ],
+        notes=["Broker note: item requested to support employment goals; see attached Life Plan excerpt."],
+    ),
+    Form(
+        filename="06-otps-weighted-blanket-gravity.pdf",
+        title="Other Than Personal Services (OTPS) Pre-Approval Form",
+        subtitle="Use this form to request pre-approval for goods or services that increase independence "
+                 "or health and safety ($3,000 per budget year).",
+        fields=[
+            ("Participant Name", "Elena Vasquez"),
+            ("Participant Age", "22"),
+            ("FI Coordinator", "R. Patel"),
+            ("Broker", "T. Nguyen"),
+            ("Item Requested", "Gravity Weighted Blanket, 20 lb"),
+            ("Vendor", "Gravity Blankets"),
+            ("Link to the Item", "https://gravityblankets.com/products/gravity-blanket"),
+            ("Item Price", "$199.00 one-time"),
+            ("Safety features for the item", "Weight approx. 10% of body weight; breathable removable "
+                                             "cover; evenly distributed glass beads"),
+            ("Valued Outcome", "Elena wants to fall asleep without staff sitting with her and wake up "
+                               "less anxious."),
+            ("Justification for why the requested Item/Service is needed",
+             "Sensory regulation and sleep are goals in Elena's Life Plan; a weighted blanket was "
+             "recommended by her care manager as a non-clinical support."),
+        ],
+        checklist_heading="OTPS checklist",
+        checklist=[
+            ("Is 'Other goods & services that increase independence' approved in the budget?", "YES"),
+            ("Is 'Other goods & services that increase health and safety' approved in the budget?", "YES"),
+            ("Is the item related to a need or goal identified in the Life Plan?", "YES"),
+            ("Will the item increase the independence and/or health and safety of the individual?", "YES"),
+            ("Is the item exclusively needed for the participant?", "YES"),
+            ("Can the item be funded through other sources?", "NO"),
+            ("Was the same item bought already in this budget year?", "NO"),
+            ("Does the item exist at the linked page with a visible price?", "YES"),
+            ("Is the item on the OTPS exclusion list? (see guidelines)", "NO"),
+            ("Are the safety features described on the form supported by the product page?", "YES"),
+        ],
+    ),
+    Form(
+        filename="07-appeal-gracie-barra.pdf",
+        title="Pre-Approval Appeals Form — Community Class",
+        subtitle="Use this form to appeal a denied pre-approval. Attach the original application and "
+                 "any rate sheets or provider documents that support the appeal.",
+        fields=[
+            ("Participant Name", "Luis Ortega"),
+            ("Participant Age", "19"),
+            ("FI Coordinator", "A. Brennan"),
+            ("Broker", "M. Okafor"),
+            ("Provider / Organization", "Gracie Barra"),
+            ("Class Requested", "GB1 Jiu-Jitsu Fundamentals (beginner adult class)"),
+            ("Link to Webpage / Place of Publication", "https://graciebarra.com/classes/jiu-jitsu-fundamentals/"),
+            ("Fee per Class / Session", "$189 per month (unlimited fundamentals classes)"),
+            ("Date of Denial", "08-10-2026"),
+            ("Reason for the denial", "Published fees could not be verified on the provider's public "
+                                      "website; no rate sheet was attached to the application."),
+            ("Justification for Appeal", "The school confirmed the $189/month fundamentals rate by "
+                                         "phone. The class is open to the public and beginners; a "
+                                         "weekly schedule is posted at the school."),
+        ],
+        checklist_heading="Appeal checklist (re-verify)",
+        checklist=[
+            ("Is the class open to and attended by the broader public?", "YES"),
+            ("Does the class have published fees?", "YES"),
+            ("Are the fees identical for both OPWDD and non-OPWDD individuals?", "YES"),
+            ("Is the class subject based?", "YES"),
+            ("Does the class provide college credits?", "NO"),
+            ("Is the class clinical in nature? (therapy)", "NO"),
+            ("Is there a published schedule of the class?", "YES"),
+            ("Justification for Appeal (attached rate sheet / documents)", "YES"),
+        ],
+    ),
 ]
 
 

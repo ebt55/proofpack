@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ProofPack — Gravity Weighted Blanket, 20 lb (Elena Vasquez)</title>
+<style>
+  :root {
+    --ink: #111827; --muted: #6b7280; --line: #e5e7eb; --bg: #f9fafb;
+    --green-bg: #d1fae5; --green-ink: #065f46;
+    --red-bg: #fee2e2;   --red-ink: #991b1b;
+    --amber-bg: #fef3c7; --amber-ink: #92400e;
+    --grey-bg: #f3f4f6;  --grey-ink: #374151;
+    --blue-bg: #dbeafe;  --blue-ink: #1e40af;
+  }
+  * { box-sizing: border-box; }
+  body { font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif; color: var(--ink);
+         margin: 0; background: var(--bg); line-height: 1.5; }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 32px 24px 64px; }
+  header.doc { border-bottom: 3px solid var(--ink); padding-bottom: 16px; margin-bottom: 24px; }
+  header.doc h1 { margin: 0 0 4px; font-size: 26px; }
+  header.doc .sub { color: var(--muted); font-size: 14px; }
+  h2 { font-size: 18px; margin: 32px 0 12px; border-bottom: 1px solid var(--line); padding-bottom: 6px; }
+  table.kv { width: 100%; border-collapse: collapse; font-size: 14px; background: #fff;
+             border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+  table.kv th { text-align: left; width: 220px; color: var(--muted); font-weight: 600;
+                padding: 8px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  table.kv td { padding: 8px 12px; border-bottom: 1px solid var(--line); word-break: break-word; }
+  table.kv tr:last-child th, table.kv tr:last-child td { border-bottom: none; }
+  .chip { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 12.5px;
+          font-weight: 700; letter-spacing: .2px; white-space: nowrap; }
+  .chip.found { background: var(--green-bg); color: var(--green-ink); }
+  .chip.not-found { background: var(--red-bg); color: var(--red-ink); }
+  .chip.needs-review { background: var(--amber-bg); color: var(--amber-ink); }
+  .chip.internal { background: var(--grey-bg); color: var(--grey-ink); }
+  .chip.needs-document { background: var(--blue-bg); color: var(--blue-ink); }
+  .card { background: #fff; border: 1px solid var(--line); border-radius: 8px;
+          padding: 14px 16px; margin-bottom: 12px; }
+  .card .q { font-weight: 600; margin-bottom: 2px; }
+  .card .req { color: var(--muted); font-size: 13px; margin-bottom: 8px; }
+  .card .note { font-size: 14px; margin: 8px 0 0; }
+  blockquote { margin: 10px 0 0; padding: 8px 12px; border-left: 3px solid var(--ink);
+               background: var(--bg); font-size: 13.5px; font-style: italic; }
+  blockquote .src { display: block; font-style: normal; color: var(--muted); font-size: 12px; margin-top: 4px; }
+  .ev-links { margin-top: 8px; font-size: 13px; }
+  .ev-links a { color: #1d4ed8; }
+  .summary { background: #fff; border: 1px solid var(--line); border-left: 4px solid var(--ink);
+             border-radius: 8px; padding: 14px 16px; font-size: 14.5px; white-space: pre-wrap; }
+  .banner { border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; font-size: 14px; }
+  .banner.warn { background: var(--amber-bg); color: var(--amber-ink); border: 1px solid #fcd34d; }
+  .banner.appeal { background: var(--blue-bg); color: var(--blue-ink); border: 1px solid #93c5fd; }
+  .rate { display: flex; gap: 16px; flex-wrap: wrap; }
+  .rate .box { flex: 1 1 240px; background: #fff; border: 1px solid var(--line);
+               border-radius: 8px; padding: 12px 16px; }
+  .rate .box .h { color: var(--muted); font-size: 12px; font-weight: 700; text-transform: uppercase;
+                  letter-spacing: .5px; margin-bottom: 4px; }
+  .rate .box .v { font-size: 15px; font-weight: 600; }
+  figure { margin: 0 0 20px; background: #fff; border: 1px solid var(--line); border-radius: 8px;
+           padding: 12px; }
+  figure img { max-width: 100%; border: 1px solid var(--line); border-radius: 4px; }
+  figcaption { font-size: 12.5px; color: var(--muted); margin-top: 8px; word-break: break-all; }
+  ul.notes { font-size: 13.5px; color: var(--grey-ink); }
+  footer { margin-top: 40px; padding-top: 12px; border-top: 1px solid var(--line);
+           color: var(--muted); font-size: 12.5px; }
+  @media print {
+    body { background: #fff; }
+    .wrap { padding: 0; max-width: none; }
+    figure { break-inside: avoid; }
+    .card { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="doc">
+  <h1>Pre-Approval Website Verification Report</h1>
+  <div class="sub">
+    Other Than Personal Services (OTPS) &middot; reviewed 2026-08-18T01:58:44+05:30 &middot;
+    source form: 06-otps-weighted-blanket-gravity.pdf &middot; ProofPack v0.1.0 (gemini-3.7-flash)
+  </div>
+</header>
+
+
+
+
+
+<h2>The request at a glance</h2>
+<table class="kv">
+  <tr><th>Participant</th><td>Elena Vasquez (age 22)</td></tr>
+  <tr><th>Category</th><td>Other Than Personal Services (OTPS)</td></tr>
+  <tr><th>Requested</th><td>Gravity Weighted Blanket, 20 lb</td></tr>
+  <tr><th>Provider / Vendor</th><td>Gravity Blankets</td></tr>
+  <tr><th>Website / link</th><td><a href="https://gravityblankets.com/products/gravity-blanket">https://gravityblankets.com/products/gravity-blanket</a></td></tr>
+  <tr><th>Fee on application</th><td>$199.00 one-time</td></tr>
+  
+  <tr><th>Safety features (form)</th><td>Weight approx. 10% of body weight; breathable removable cover; evenly distributed glass beads</td></tr>
+  <tr><th>Review date</th><td>2026-08-18T01:58:44+05:30</td></tr>
+</table>
+
+
+<h2>Summary for the reviewer</h2>
+<div class="summary">The Gravity Weighted Blanket was verified on the vendor's official website, including the requested 20 lb option. All claimed safety features were corroborated by the product documentation, which confirms evenly distributed fine-grade glass beads in gridded stitching, a breathable removable cover, and weight sizing calibrated to roughly 10% of body weight. The item is an allowable sensory support and does not fall under any OTPS exclusion categories. Reviewer attention is directed to pricing: while the regular price of $199.00 matches the application, the vendor is currently running a 25% discount bringing the published purchase price to $149.00.</div>
+
+
+<h2>Rate comparison</h2>
+<div class="rate">
+  <div class="box"><div class="h">Fee on application</div><div class="v">$199.00 one-time</div></div>
+  <div class="box"><div class="h">Fee found on website</div><div class="v">$149.00 (regularly $199.00)</div></div>
+  <div class="box"><div class="h">Verdict</div><div class="v"><span class="chip not-found">differs from application</span></div></div>
+</div>
+<p class="note">The application states $199.00, which matches the regular retail price displayed on the website; however, the website currently offers the blanket on sale for $149.00 (25% off).</p>
+
+<p class="ev-links">Evidence:
+  <a href="evidence/03-evidence-evidence-product-exists-with-visible-pri.png">evidence/03-evidence-evidence-product-exists-with-visible-pri.png</a>
+   &middot; seen at <a href="https://gravityblankets.com/products/gravity-blanket">https://gravityblankets.com/products/gravity-blanket</a>
+</p>
+
+
+<h2>Website verification — checked on the provider's public website</h2>
+
+<div class="card">
+  <div class="q">The item exists at the linked page with a visible price &nbsp;<span class="chip found">Found</span></div>
+  <div class="req">Form question: (program guideline) The item exists at the linked page, with a visible price</div>
+  <div class="note">The Gravity Weighted Blanket (with 20 lb size option) is available on the vendor website at a current sale price of $149.00 (discounted 25% from the regular $199.00 list price).</div>
+  
+  <blockquote>&ldquo;ORIGINAL WEIGHTED BLANKET $149.00 $199.00 SAVE 25%&rdquo;
+    <span class="src">— https://gravityblankets.com/products/gravity-blanket</span>
+  </blockquote>
+  
+  
+  <div class="ev-links">Evidence:
+    <a href="evidence/03-evidence-evidence-product-exists-with-visible-pri.png">evidence/03-evidence-evidence-product-exists-with-visible-pri.png</a>
+  </div>
+  
+</div>
+
+<div class="card">
+  <div class="q">Item is plausibly NOT on the OTPS exclusion list &nbsp;<span class="chip found">Found</span></div>
+  <div class="req">Form question: Is the item on the OTPS exclusion list? (see guidelines)</div>
+  <div class="note">The product is a sensory weighted blanket for sleep and anxiety management and does not match any items on the OTPS exclusion list (such as medical copays, common household supplies, illegal items, or vehicle/housing costs).</div>
+  
+  <blockquote>&ldquo;Features a premium micro-plush duvet cover and an inner weighted piece containing fine-grade glass beads.&rdquo;
+    <span class="src">— https://gravityblankets.com/products/gravity-blanket</span>
+  </blockquote>
+  
+  
+  <div class="ev-links">Evidence:
+    <a href="evidence/04-evidence-evidence-item-description-showing-sensor.png">evidence/04-evidence-evidence-item-description-showing-sensor.png</a>
+  </div>
+  
+</div>
+
+<div class="card">
+  <div class="q">Safety features described on the form are supported by the product page &nbsp;<span class="chip found">Found</span></div>
+  <div class="req">Form question: Safety features for the item (as described on the form)</div>
+  <div class="note">All claimed safety features are explicitly supported: the site specifies precise gridded stitching for evenly distributed glass beads, details a removable breathable cover, and recommends a blanket weight of roughly 10% of body weight (sizing the 20 lb blanket for 170-230 lb).</div>
+  
+  <blockquote>&ldquo;Precise gridded stitching ensures the glass beads remain uniformly distributed, providing comfort, no matter how you use your weighted blanket.&rdquo;
+    <span class="src">— https://gravityblankets.com/products/gravity-blanket</span>
+  </blockquote>
+  
+  
+  <div class="ev-links">Evidence:
+    <a href="evidence/05-evidence-evidence-safety-features-supported.png">evidence/05-evidence-evidence-safety-features-supported.png</a>
+  </div>
+  
+</div>
+
+
+
+<h2>Form-level checks (deterministic)</h2>
+
+<div class="card">
+  <div class="q">Capped at $3,000 per budget year &nbsp;<span class="chip found">Pass</span></div>
+  <div class="note">Form states $199 one-time item price — within the Capped at $3,000 per budget year cap.</div>
+</div>
+
+
+
+
+
+<h2>Internal items — for the reviewer (not answered by this tool)</h2>
+
+<div class="card">
+  <div class="q">Is 'Other goods & services that increase independence' approved in the budget? &nbsp;<span class="chip internal">Internal</span></div>
+  <div class="note">Internal — not website-verifiable. Participant budget data lives in internal systems.</div>
+</div>
+
+<div class="card">
+  <div class="q">Is 'Other goods & services that increase health and safety' approved in the budget? &nbsp;<span class="chip internal">Internal</span></div>
+  <div class="note">Internal — not website-verifiable. Participant budget data lives in internal systems.</div>
+</div>
+
+<div class="card">
+  <div class="q">Is the item related to a need or goal identified in the Life Plan? &nbsp;<span class="chip internal">Internal</span></div>
+  <div class="note">Internal — not website-verifiable. Requires the participant's Life Plan.</div>
+</div>
+
+<div class="card">
+  <div class="q">Will the item increase the independence and/or health and safety of the individual? &nbsp;<span class="chip internal">Internal</span></div>
+  <div class="note">Internal — not website-verifiable. Individual determination.</div>
+</div>
+
+<div class="card">
+  <div class="q">Is the item exclusively needed for the participant? &nbsp;<span class="chip internal">Internal</span></div>
+  <div class="note">Internal — not website-verifiable. About how the item is used at home.</div>
+</div>
+
+<div class="card">
+  <div class="q">Can the item be funded through other sources? &nbsp;<span class="chip internal">Internal</span></div>
+  <div class="note">Internal — not website-verifiable. Requires knowledge of other funding sources (care manager attests).</div>
+</div>
+
+<div class="card">
+  <div class="q">Was the same item bought already in this budget year? &nbsp;<span class="chip internal">Internal</span></div>
+  <div class="note">Internal — not website-verifiable. Requires purchase history.</div>
+</div>
+
+
+
+<h2>Program notes for this category</h2>
+<ul class="notes">
+  <li>Approval is valid for 3 months, then resubmit.</li><li>Cannot be funded through another source (e.g. Emods/assistive technology).</li><li>Must increase independence and/or health & safety; specific to the disability.</li>
+</ul>
+
+
+
+
+<h2>Evidence captures</h2>
+<p class="ev-links">Each capture is stamped in-image with its capture time and URL.
+Integrity hashes: <a href="manifest.json">manifest.json</a>.</p>
+
+<figure id="evidence/01-full-full-page-gravity-weighted-blanket-produ.png">
+  <img src="evidence/01-full-full-page-gravity-weighted-blanket-produ.png" alt="Full page: Gravity Weighted Blanket product page">
+  <figcaption>
+    <strong>Full page: Gravity Weighted Blanket product page</strong> (full_page)<br>
+    https://gravityblankets.com/products/gravity-blanket<br>
+    Captured 2026-08-18 01:58:14 India Standard Time &middot; SHA-256 68975b53239d17ff&hellip;
+  </figcaption>
+</figure>
+
+<figure id="evidence/03-evidence-evidence-product-exists-with-visible-pri.png">
+  <img src="evidence/03-evidence-evidence-product-exists-with-visible-pri.png" alt="Evidence: product exists with visible price">
+  <figcaption>
+    <strong>Evidence: product exists with visible price</strong> (targeted)<br>
+    https://gravityblankets.com/products/gravity-blanket<br>
+    Captured 2026-08-18 01:58:24 India Standard Time &middot; SHA-256 12d692c1bc95a988&hellip;
+  </figcaption>
+</figure>
+
+<figure id="evidence/04-evidence-evidence-item-description-showing-sensor.png">
+  <img src="evidence/04-evidence-evidence-item-description-showing-sensor.png" alt="Evidence: item description showing sensory weighted blanket not on exclusion list">
+  <figcaption>
+    <strong>Evidence: item description showing sensory weighted blanket not on exclusion list</strong> (targeted)<br>
+    https://gravityblankets.com/products/gravity-blanket<br>
+    Captured 2026-08-18 01:58:26 India Standard Time &middot; SHA-256 020803f48d895b37&hellip;
+  </figcaption>
+</figure>
+
+<figure id="evidence/05-evidence-evidence-safety-features-supported.png">
+  <img src="evidence/05-evidence-evidence-safety-features-supported.png" alt="Evidence: safety features supported">
+  <figcaption>
+    <strong>Evidence: safety features supported</strong> (targeted)<br>
+    https://gravityblankets.com/products/gravity-blanket<br>
+    Captured 2026-08-18 01:58:28 India Standard Time &middot; SHA-256 74acd40dfc43db90&hellip;
+  </figcaption>
+</figure>
+
+<figure id="evidence/06-evidence-evidence-breathable-removable-cover-and-.png">
+  <img src="evidence/06-evidence-evidence-breathable-removable-cover-and-.png" alt="Evidence: breathable removable cover and 10% body weight recommendation">
+  <figcaption>
+    <strong>Evidence: breathable removable cover and 10% body weight recommendation</strong> (targeted)<br>
+    https://gravityblankets.com/products/gravity-blanket<br>
+    Captured 2026-08-18 01:58:29 India Standard Time &middot; SHA-256 d885389d84a03e2b&hellip;
+  </figcaption>
+</figure>
+
+<figure id="evidence/07-evidence-evidence-blanket-weight-recommendation-1.png">
+  <img src="evidence/07-evidence-evidence-blanket-weight-recommendation-1.png" alt="Evidence: blanket weight recommendation 10% of body weight">
+  <figcaption>
+    <strong>Evidence: blanket weight recommendation 10% of body weight</strong> (targeted)<br>
+    https://gravityblankets.com/products/gravity-blanket<br>
+    Captured 2026-08-18 01:58:31 India Standard Time &middot; SHA-256 7b0ae189b13b7b92&hellip;
+  </figcaption>
+</figure>
+
+
+<footer>
+  This report was produced by the Pre-Approval Website-Verification Tool to assist the
+  Pre-Approvals reviewer. It records what was (and was not) visible on the provider's public
+  website on the review date. <strong>It does not approve or deny anything — the final
+  decision is always made by staff.</strong> Items the website cannot answer are listed as
+  Internal and were deliberately not guessed.
+  <br><br>
+  Run cost: 85,750 input + 5,046
+  output tokens across 16 model request(s),
+  estimated $0.06 at the prices set in config.yaml.
+  The agent's full action trail for this review is in <code>run.log</code>.
+</footer>
+
+</div>
+</body>
+</html>

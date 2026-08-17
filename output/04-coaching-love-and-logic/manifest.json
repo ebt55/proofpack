@@ -1,0 +1,29 @@
+{
+  "note": "Every capture below is stamped in-image with its capture time and URL. SHA-256 hashes are computed over the stamped file; recompute to verify the evidence has not been altered.",
+  "captures": [
+    {
+      "file": "evidence/01-full-full-page-love-and-logic-parenting-onlin.png",
+      "kind": "full_page",
+      "label": "Full page: Love and Logic Parenting Online product page",
+      "url": "https://www.loveandlogic.com/products/love-and-logic-parenting-online",
+      "captured_at": "2026-08-18 01:55:56 India Standard Time",
+      "sha256": "e3d4cdcc504cd5f6cb5eabefc12fbb5b8f29f9d9472e0eb40f3e5c30b8f6c4bd"
+    },
+    {
+      "file": "evidence/02-evidence-evidence-published-course-fee.png",
+      "kind": "targeted",
+      "label": "Evidence: published course fee",
+      "url": "https://www.loveandlogic.com/products/love-and-logic-parenting-online",
+      "captured_at": "2026-08-18 01:55:58 India Standard Time",
+      "sha256": "e1a723a065d823bff139c2df8234f73301d0e26b77d82a345123b9d8db574cbb"
+    },
+    {
+      "file": "evidence/03-evidence-evidence-educational-parenting-webinar-c.png",
+      "kind": "targeted",
+      "label": "Evidence: educational parenting webinar content",
+      "url": "https://www.loveandlogic.com/products/love-and-logic-parenting-online",
+      "captured_at": "2026-08-18 01:56:00 India Standard Time",
+      "sha256": "314402fe40f3ecf9e6dfbe22d41dffcb9eaf3f7d6697f121f7ff6569d4aeb8d0"
+    }
+  ]
+}

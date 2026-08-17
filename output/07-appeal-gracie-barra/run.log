@@ -1,0 +1,26 @@
+01:58:44  Extracting application from 07-appeal-gracie-barra.pdf ...
+01:58:47    -> appeal | GB1 Jiu-Jitsu Fundamentals (beginner adult class) | Gracie Barra | https://graciebarra.com/classes/jiu-jitsu-fundamentals/
+01:58:47  Verifying on the provider's website (https://graciebarra.com/classes/jiu-jitsu-fundamentals/) ...
+01:58:50  open_url: https://graciebarra.com/classes/jiu-jitsu-fundamentals/
+01:59:18  read_page: offset=0
+01:59:20  list_links: filter=''
+01:59:21  capture_page: 'Full page: Gracie Barra GB1 Jiu-Jitsu Fundamentals class page'
+01:59:23  open_url: https://graciebarra.com/classes/
+01:59:31  find_on_page: '$'
+01:59:33  find_on_page: 'price'
+01:59:34  open_url: https://graciebarra.com/find-a-school/
+01:59:45  open_url: https://graciebarra.com/classes/jiu-jitsu-fundamentals/
+01:59:48  capture_evidence: 'The GB1 Program is the foundation of Jiu-Jitsu at Gracie Barra - designed specifically for beginners. With no experience required, this program introduces students to core techniques, self-defence skills, and the philosophy behind our team.' ('Evidence: open to public - beginner program with no experience required')
+01:59:50  capture_evidence: 'Builds a strong foundation in Jiu-Jitsu techniques and self-defence' ('Evidence: subject-based Brazilian Jiu-Jitsu training')
+01:59:51  capture_evidence: 'Whether you’re looking to improve fitness, gain confidence, or simply try something new, GB1 gives you the tools to grow on the mats and beyond.' ('Evidence: non-credit non-clinical martial arts fitness and self-defence program')
+01:59:55  capture_evidence: 'GB1 is more than just a training program - it’s your gateway into the world of Jiu-Jitsu. Each class supports both physical and mental wellbeing, offering structure, encouragement, and meaningful progress in every session.' ('Evidence: not clinical - martial arts training program')
+01:59:58  record_finding: open_to_public = found
+01:59:59  record_finding: published_fees = not_found
+02:00:01  record_finding: fees_identical = not_found
+02:00:02  record_finding: subject_based = found
+02:00:04  record_finding: no_college_credits = found
+02:00:05  record_finding: not_clinical = found
+02:00:07  record_finding: published_schedule = not_found
+02:00:08  record_rate_comparison: not published
+02:00:11  Tokens: 185,822 in / 6,287 out across 23 request(s) — estimated $0.11
+02:00:11  Report package written to output\07-appeal-gracie-barra

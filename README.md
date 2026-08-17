@@ -110,7 +110,7 @@ and follow the same "publicly available at a published price" logic.
 | **Customer** | Fiscal Intermediaries / support brokerage agencies (small non-profits, typically 5–50 reviewers) |
 | **Value** | Reviewer time (20–40 min → ~3 min per application), consistency between reviewers, and an audit file that defends every approval with stamped evidence |
 | **Pricing** | Per review (target **$3 per application**, ~25× the model cost) or **$149 per reviewer seat per month**; pilots run free on 20 anonymized forms |
-| **Cost to serve** | ~$0.07–0.19 of Gemini per review today (measured, see the [validation table](#how-it-was-validated)); the rest is commodity compute |
+| **Cost to serve** | $0.02–$0.19 of Gemini per review today (measured across seven committed runs, see the [validation table](#how-it-was-validated)); the rest is commodity compute |
 | **AI-native operations** | The agent decides which pages to visit, whether each requirement is met and what to tell the reviewer; Python decides what it is *allowed* to claim. Every decision is logged (`run.log`) and every claim is hashed |
 
 Full model, market sizing, impact metrics and pilot plan: **[docs/BUSINESS.md](docs/BUSINESS.md)**.
@@ -319,7 +319,7 @@ flowchart LR
 | Choice | Why this and not the alternative |
 |---|---|
 | **Gemini API + `google-genai` function calling** — *not* LangGraph/CrewAI | The pipeline is linear with exactly **one** agentic step. A framework would add a dependency and hide the loop; ~60 lines in [`llm.py`](preapproval/llm.py) run the tool loop with automatic function calling *disabled*, so this code — not the SDK — executes every call and can refuse it. |
-| **Gemini 3.7 Flash** (swap in `config.yaml`) | Strong judgment on the genuinely hard calls (*is a "contact us for pricing" page a published fee?*) at Flash cost: the three committed reviews cost **$0.07–$0.19 each**. Any Gemini model id works. |
+| **Gemini 3.7 Flash** (swap in `config.yaml`) | Strong judgment on the genuinely hard calls (*is a "contact us for pricing" page a published fee?*) at Flash cost: the seven committed reviews cost **$0.02–$0.19 each**. Any Gemini model id works. |
 | **Gemini PDF understanding + JSON response schema** for the form | Scanned and digital forms parse the same way — no brittle text-position rules — and the result is a **schema-validated object**, not free text to regex. |
 | **Playwright** | The evidence requirement picks the tool: full-page captures, region captures around located text, and JS-rendered pages. Selenium is clunkier here; HTTP+BeautifulSoup can't screenshot at all. |
 | **YAML checklists** | The form → checklist → verifiable-subset mapping is **domain knowledge, not code**. A non-engineer can add a category or change an agency's caps. See [docs/ADDING-A-CHECKLIST.md](docs/ADDING-A-CHECKLIST.md). |
@@ -454,26 +454,35 @@ without a manifest entry. Anyone can re-run it:
 
 ```bash
 .venv/bin/python tests/test_audit_packages.py
-# → 3 package(s) audited, 0 with problems.
+# → 7 package(s) audited, 0 with problems.
 ```
 
 **3 · Human ground-truthing** — the same provider sites were opened in a normal browser to
 confirm the tool's **negatives were true negatives**: Gracie Barra genuinely publishes no
-prices on its class pages, GallopNYC genuinely publishes no schedule. An honest tool has to be
-right about *absence*, and only a human check can confirm that.
+prices on its class pages, GallopNYC genuinely publishes no schedule, Love and Logic really
+lists the course at $125, Gravity really shows a $149 sale price against a $199 list price. An
+honest tool has to be right about *absence* and about *differences*, and only a human check can
+confirm that.
 
-**4 · The sample set spans the outcomes that matter.** The three synthetic forms in
+**4 · The sample set spans the outcomes that matter.** The seven synthetic forms in
 [`samples/`](samples/) (fictional participants, real public providers; regenerate with
-`tools/make_sample_forms.py`) were chosen to exercise a clean match, a price mismatch, and an
-honest negative:
+`tools/make_sample_forms.py`) were chosen to exercise a clean match, price discrepancies, an
+exclusion-list trap, an appeal, and honest negatives — across five of the seven form types:
 
 | # | Sample | Result | Why that's correct | Cost |
 |---|---|---|---|---|
-| 01 | GallopNYC group riding | 6 verified · schedule Not Found · **rate matches exactly** | Public rate table exists; no schedule is published | $0.19 |
+| 01 | GallopNYC group riding (community class) | 6 verified · schedule Not Found · **rate matches exactly** | Public rate table exists; no schedule is published | $0.19 |
 | 02 | Brooklyn Museum membership | Open to public + fee published · **rate differs** ($80 published vs $85 on the form) | Real price exists and doesn't match the form's figure — the reviewer should see that | $0.07 |
-| 03 | Gracie Barra GB1 fundamentals | Public & subject-based verified · **fees Not Found** · rate *not published* | The class page genuinely publishes no prices; the tool refuses to guess one | $0.10 |
+| 03 | Gracie Barra GB1 fundamentals (community class) | Public & subject-based verified · **fees Not Found** · rate *not published* | The class page genuinely publishes no prices; the tool refuses to guess one | $0.10 |
+| 04 | Love and Logic parenting course (coaching) | Fees + educational content verified · **rate differs** ($125 published vs $150 on the form) · $500/yr cap **pass** · adults-only **pass** | The published price is real and lower than the form's — a pricing discrepancy the reviewer must resolve | $0.02 |
+| 05 | **MacBook Air (HRI — the trap)** | Price verified, matches · **not_excluded = Not Found** — *"computer hardware is an explicitly excluded category"* · $1,500 cap pass | The item is real and correctly priced, and still not fundable: the agent flagged the exclusion itself | $0.07 |
+| 06 | Gravity weighted blanket (OTPS) | Item, price and all claimed safety features verified · **rate differs** — *"$149.00 (regularly $199.00)"* | The form quotes list price; the site is running a sale — exactly the nuance a reviewer wants surfaced | $0.06 |
+| 07 | **Appeal** — Gracie Barra denial | Re-checked with priority on the denial reason: fees still **Not Found**, schedule Not Found; the phone-confirmed rate is not on the website | The denial reason was "fees could not be verified" — and they still can't; the evidence supports the original denial | $0.11 |
 
-Costs are the tool's own estimate from Gemini's token counts at Flash list prices.
+Costs are the tool's own estimate from Gemini's token counts at Flash list prices. Not
+covered live: the transition-program form (the CUNY continuing-education sites timed out
+from our network during testing) — its checklist and caps are unit-tested but no package is
+committed yet.
 
 ---
 

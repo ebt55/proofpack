@@ -1,0 +1,29 @@
+{
+  "note": "Every capture below is stamped in-image with its capture time and URL. SHA-256 hashes are computed over the stamped file; recompute to verify the evidence has not been altered.",
+  "captures": [
+    {
+      "file": "evidence/01-full-full-page-apple-macbook-air-product-and-.png",
+      "kind": "full_page",
+      "label": "Full page: Apple MacBook Air product and pricing page",
+      "url": "https://www.apple.com/shop/buy-mac/macbook-air",
+      "captured_at": "2026-08-18 01:56:39 India Standard Time",
+      "sha256": "eaf48f1a4d012e90c353aa33435e0bc6b484537a446427023517c254732098a5"
+    },
+    {
+      "file": "evidence/02-evidence-evidence-macbook-air-13-inch-pricing.png",
+      "kind": "targeted",
+      "label": "Evidence: MacBook Air 13-inch pricing",
+      "url": "https://www.apple.com/shop/buy-mac/macbook-air",
+      "captured_at": "2026-08-18 01:56:44 India Standard Time",
+      "sha256": "65d3c31c617ae282592108f792f2bfa63b26024140484474b99cd1f8dbf2ba16"
+    },
+    {
+      "file": "evidence/04-evidence-evidence-product-description-and-process.png",
+      "kind": "targeted",
+      "label": "Evidence: product description and processing power",
+      "url": "https://www.apple.com/shop/buy-mac/macbook-air",
+      "captured_at": "2026-08-18 01:56:50 India Standard Time",
+      "sha256": "7675ef8d246c715c388a3a162842bedbdd8effba6676a106d4e9dfa27709a1b4"
+    }
+  ]
+}
