@@ -1,0 +1,127 @@
+# Household Related Items (HRI) — checklist definition
+# Questions follow the NY OPWDD Self-Direction pre-approval form for this category.
+
+category: hri
+display_name: Household Related Items (HRI)
+form_title_hints:
+  - "Household Related Items"
+  - "HRI Justification"
+
+adults_only: true
+
+fee_caps:
+  - id: cap_budget_year
+    label: "Capped at $1,500 per budget year"
+    max_amount: 1500
+    unit_keywords: []   # empty = applies to any stated amount for the item
+
+notes:
+  - "Approval is valid for 3 months, then resubmit."
+  - "Landlord-provided items (standard fridge/oven) are not covered."
+  - "Must increase the individual's independence and safety; specific to the disability."
+
+exclusion_list:
+  - "Academic tutoring"
+  - "Automatic pill dispenser / medication system"
+  - "Cell phones / telephones"
+  - "Computer hardware"
+  - "Computer programs / software"
+  - "Leased & purchased vehicles"
+  - "Health-related services / equipment / supplies"
+  - "Parent/participant/staff activity fees, expenses & meals"
+  - "Personal monitoring systems"
+  - "Direct clinician services & therapies (OT, PT, Speech, Psychology) and experimental therapies"
+
+exclusion_keywords:   # deterministic backstop matching against the requested item text
+  - "tutor"
+  - "pill dispenser"
+  - "medication"
+  - "cell phone"
+  - "telephone"
+  - "smartphone"
+  - "computer"
+  - "laptop"
+  - "desktop"
+  - "tablet"
+  - "software"
+  - "vehicle"
+  - "car "
+  - "monitoring system"
+
+items:
+  - id: item_exists_with_price
+    form_question: "(program guideline) The item exists at the linked page, with a visible price"
+    requirement: "The item exists at the linked page with a visible price"
+    kind: website
+    check_hint: >
+      Open the product link, confirm the product matches the item named on the form, and find the
+      visible price. Note availability. If the page is blocked or the product is gone, say so.
+
+  - id: not_excluded
+    form_question: "(program guideline) Item is not on the IDGS/HRI exclusion list"
+    requirement: "Item is plausibly NOT on the HRI exclusion list"
+    kind: website
+    check_hint: >
+      Compare what the product page shows the item to be against the exclusion list in your
+      instructions. If the item IS an excluded category (e.g. a laptop = computer hardware),
+      record this requirement as NOT met and name the matching exclusion.
+
+  - id: safety_features_supported
+    form_question: "Safety features for the item (as described on the form)"
+    requirement: "Safety features described on the form are supported by the product page"
+    kind: website
+    check_hint: >
+      Check each safety feature claimed on the form against the product page's description or
+      specs, and quote the supporting product text.
+
+  # ---- internal items ----
+
+  - id: budget_approved
+    form_question: "Is Household-Related Items approved in the budget?"
+    kind: internal
+    internal_reason: "Participant budget data lives in internal systems."
+
+  - id: over_18
+    form_question: "Is the individual over 18?"
+    kind: internal
+    internal_reason: "Checked deterministically from the form's stated age — official proof of age is internal."
+
+  - id: lp_need
+    form_question: "Is the item related to a need or goal identified in the Life Plan?"
+    kind: internal
+    internal_reason: "Requires the participant's Life Plan."
+
+  - id: increases_independence
+    form_question: "Will the item increase independence, or substitute for human assistance?"
+    kind: internal
+    internal_reason: "Depends on the participant's situation."
+
+  - id: increases_home_safety
+    form_question: "Does the item increase safety of the participant in their home environment?"
+    kind: internal
+    internal_reason: "The need is individual; the product's safety features are checked separately on the website."
+
+  - id: exclusive_need
+    form_question: "Is the item exclusively needed for the participant?"
+    kind: internal
+    internal_reason: "About how the item is used at home."
+
+  - id: health_safety
+    form_question: "Does the item increase the participant's health and safety?"
+    kind: internal
+    internal_reason: "Individual determination."
+
+  - id: own_home
+    form_question: "Does the individual live in their own home? (for Household support only)"
+    kind: internal
+    internal_reason: "Residence information is internal."
+
+  - id: already_bought
+    form_question: "Was the same item bought already in this budget year?"
+    kind: internal
+    internal_reason: "Requires purchase history."
+
+  - id: other_funding
+    form_question: "Can the item be funded through other sources?"
+    kind: internal
+    internal_reason: "Requires knowledge of other funding sources (care manager attests)."

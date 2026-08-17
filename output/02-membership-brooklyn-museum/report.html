@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ProofPack — Individual Membership (one adult) (Samira Haddad)</title>
+<style>
+  :root {
+    --ink: #111827; --muted: #6b7280; --line: #e5e7eb; --bg: #f9fafb;
+    --green-bg: #d1fae5; --green-ink: #065f46;
+    --red-bg: #fee2e2;   --red-ink: #991b1b;
+    --amber-bg: #fef3c7; --amber-ink: #92400e;
+    --grey-bg: #f3f4f6;  --grey-ink: #374151;
+    --blue-bg: #dbeafe;  --blue-ink: #1e40af;
+  }
+  * { box-sizing: border-box; }
+  body { font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif; color: var(--ink);
+         margin: 0; background: var(--bg); line-height: 1.5; }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 32px 24px 64px; }
+  header.doc { border-bottom: 3px solid var(--ink); padding-bottom: 16px; margin-bottom: 24px; }
+  header.doc h1 { margin: 0 0 4px; font-size: 26px; }
+  header.doc .sub { color: var(--muted); font-size: 14px; }
+  h2 { font-size: 18px; margin: 32px 0 12px; border-bottom: 1px solid var(--line); padding-bottom: 6px; }
+  table.kv { width: 100%; border-collapse: collapse; font-size: 14px; background: #fff;
+             border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+  table.kv th { text-align: left; width: 220px; color: var(--muted); font-weight: 600;
+                padding: 8px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  table.kv td { padding: 8px 12px; border-bottom: 1px solid var(--line); word-break: break-word; }
+  table.kv tr:last-child th, table.kv tr:last-child td { border-bottom: none; }
+  .chip { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 12.5px;
+          font-weight: 700; letter-spacing: .2px; white-space: nowrap; }
+  .chip.found { background: var(--green-bg); color: var(--green-ink); }
+  .chip.not-found { background: var(--red-bg); color: var(--red-ink); }
+  .chip.needs-review { background: var(--amber-bg); color: var(--amber-ink); }
+  .chip.internal { background: var(--grey-bg); color: var(--grey-ink); }
+  .chip.needs-document { background: var(--blue-bg); color: var(--blue-ink); }
+  .card { background: #fff; border: 1px solid var(--line); border-radius: 8px;
+          padding: 14px 16px; margin-bottom: 12px; }
+  .card .q { font-weight: 600; margin-bottom: 2px; }
+  .card .req { color: var(--muted); font-size: 13px; margin-bottom: 8px; }
+  .card .note { font-size: 14px; margin: 8px 0 0; }
+  blockquote { margin: 10px 0 0; padding: 8px 12px; border-left: 3px solid var(--ink);
+               background: var(--bg); font-size: 13.5px; font-style: italic; }
+  blockquote .src { display: block; font-style: normal; color: var(--muted); font-size: 12px; margin-top: 4px; }
+  .ev-links { margin-top: 8px; font-size: 13px; }
+  .ev-links a { color: #1d4ed8; }
+  .summary { background: #fff; border: 1px solid var(--line); border-left: 4px solid var(--ink);
+             border-radius: 8px; padding: 14px 16px; font-size: 14.5px; white-space: pre-wrap; }
+  .banner { border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; font-size: 14px; }
+  .banner.warn { background: var(--amber-bg); color: var(--amber-ink); border: 1px solid #fcd34d; }
+  .banner.appeal { background: var(--blue-bg); color: var(--blue-ink); border: 1px solid #93c5fd; }
+  .rate { display: flex; gap: 16px; flex-wrap: wrap; }
+  .rate .box { flex: 1 1 240px; background: #fff; border: 1px solid var(--line);
+               border-radius: 8px; padding: 12px 16px; }
+  .rate .box .h { color: var(--muted); font-size: 12px; font-weight: 700; text-transform: uppercase;
+                  letter-spacing: .5px; margin-bottom: 4px; }
+  .rate .box .v { font-size: 15px; font-weight: 600; }
+  figure { margin: 0 0 20px; background: #fff; border: 1px solid var(--line); border-radius: 8px;
+           padding: 12px; }
+  figure img { max-width: 100%; border: 1px solid var(--line); border-radius: 4px; }
+  figcaption { font-size: 12.5px; color: var(--muted); margin-top: 8px; word-break: break-all; }
+  ul.notes { font-size: 13.5px; color: var(--grey-ink); }
+  footer { margin-top: 40px; padding-top: 12px; border-top: 1px solid var(--line);
+           color: var(--muted); font-size: 12.5px; }
+  @media print {
+    body { background: #fff; }
+    .wrap { padding: 0; max-width: none; }
+    figure { break-inside: avoid; }
+    .card { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="doc">
+  <h1>Pre-Approval Website Verification Report</h1>
+  <div class="sub">
+    Health Club / Organizational Membership &middot; reviewed 2026-08-17T23:38:38+05:30 &middot;
+    source form: 02-membership-brooklyn-museum.pdf &middot; ProofPack v0.1.0 (gemini-3.7-flash)
+  </div>
+</header>
+
+
+
+
+
+<h2>The request at a glance</h2>
+<table class="kv">
+  <tr><th>Participant</th><td>Samira Haddad (age 31)</td></tr>
+  <tr><th>Category</th><td>Health Club / Organizational Membership</td></tr>
+  <tr><th>Requested</th><td>Individual Membership (one adult)</td></tr>
+  <tr><th>Provider / Vendor</th><td>Brooklyn Museum</td></tr>
+  <tr><th>Website / link</th><td><a href="https://www.brooklynmuseum.org/support/membership">https://www.brooklynmuseum.org/support/membership</a></td></tr>
+  <tr><th>Fee on application</th><td>Membership Fee: $85</td></tr>
+  <tr><th>Duration / billing</th><td>Annual (12 months)</td></tr>
+  
+  <tr><th>Review date</th><td>2026-08-17T23:38:38+05:30</td></tr>
+</table>
+
+
+<h2>Summary for the reviewer</h2>
+<div class="summary">I reviewed the Brooklyn Museum membership page at https://www.brooklynmuseum.org/support/membership. The organization is open to the general public, offering clear online registration options without private club or sponsorship restrictions. The website publishes an annual Individual Membership fee of $80 per year, with an available $10 discount for seniors and visitors with disabilities. This published rate differs from the $85 per year listed on the application form. Full-page and targeted evidence screenshots have been captured for the audit file.</div>
+
+
+<h2>Rate comparison</h2>
+<div class="rate">
+  <div class="box"><div class="h">Fee on application</div><div class="v">Membership Fee: $85</div></div>
+  <div class="box"><div class="h">Fee found on website</div><div class="v">$80 per year</div></div>
+  <div class="box"><div class="h">Verdict</div><div class="v"><span class="chip not-found">differs from application</span></div></div>
+</div>
+<p class="note">The website lists the annual Individual Membership at $80 per year (and notes a $10 discount for seniors and visitors with disabilities, making it $70), which differs from the $85 per year listed on the application.</p>
+
+<p class="ev-links">Evidence:
+  <a href="evidence/04-evidence-evidence-published-membership-fees.png">evidence/04-evidence-evidence-published-membership-fees.png</a>
+   &middot; seen at <a href="https://www.brooklynmuseum.org/support/membership">https://www.brooklynmuseum.org/support/membership</a>
+</p>
+
+
+<h2>Website verification — checked on the provider's public website</h2>
+
+<div class="card">
+  <div class="q">Organization is open to the public — not a private/invitation-only club &nbsp;<span class="chip found">Found</span></div>
+  <div class="req">Form question: Is the organization open to the public and not a private/invitation-only club?</div>
+  <div class="note">The Brooklyn Museum offers public memberships with clear online join and renewal options, open to the general public without private invitation or sponsorship requirements.</div>
+  
+  <blockquote>&ldquo;You belong here. Members help make possible the great art, big ideas, and courageous conversations that can only happen at the Brooklyn Museum.&rdquo;
+    <span class="src">— https://www.brooklynmuseum.org/support/membership</span>
+  </blockquote>
+  
+  
+  <div class="ev-links">Evidence:
+    <a href="evidence/02-evidence-evidence-open-to-public-membership.png">evidence/02-evidence-evidence-open-to-public-membership.png</a>
+  </div>
+  
+</div>
+
+<div class="card">
+  <div class="q">Membership fee is published; the published amount is comparable against the form's fee &nbsp;<span class="chip found">Found</span></div>
+  <div class="req">Form question: (program guideline) Membership fee is published</div>
+  <div class="note">The annual Individual Membership is published on the website at $80 per year (with a $10 discount available for adults 65+ and visitors with disabilities).</div>
+  
+  <blockquote>&ldquo;Adults 65+ and visitors with disabilities can save $10 on annual Individual and Dual Memberships.&rdquo;
+    <span class="src">— https://www.brooklynmuseum.org/support/membership</span>
+  </blockquote>
+  
+  
+  <div class="ev-links">Evidence:
+    <a href="evidence/04-evidence-evidence-published-membership-fees.png">evidence/04-evidence-evidence-published-membership-fees.png</a>
+  </div>
+  
+</div>
+
+
+
+
+
+
+<h2>Internal items — for the reviewer (not answered by this tool)</h2>
+
+<div class="card">
+  <div class="q">Is Health-club/Organizational Membership currently approved in the budget? &nbsp;<span class="chip internal">Internal</span></div>
+  <div class="note">Internal — not website-verifiable. Participant budget data lives in internal systems.</div>
+</div>
+
+<div class="card">
+  <div class="q">Does the membership provide opportunity for community inclusion? &nbsp;<span class="chip internal">Internal</span></div>
+  <div class="note">Internal — not website-verifiable. Judgment about the participant's inclusion goals — reviewer decision.</div>
+</div>
+
+<div class="card">
+  <div class="q">Does the membership accommodate the individual's health and/or safety needs? &nbsp;<span class="chip internal">Internal</span></div>
+  <div class="note">Internal — not website-verifiable. Depends on the individual's needs, not on the website.</div>
+</div>
+
+<div class="card">
+  <div class="q">Does the membership increase independence or substitute for human assistance? &nbsp;<span class="chip internal">Internal</span></div>
+  <div class="note">Internal — not website-verifiable. Depends on the participant's Life Plan and situation.</div>
+</div>
+
+<div class="card">
+  <div class="q">Is the membership provided exclusively toward the benefit of the participant? (not family) &nbsp;<span class="chip internal">Internal</span></div>
+  <div class="note">Internal — not website-verifiable. Whether the membership is single vs family is partly visible on the website, but exclusive use is a reviewer determination.</div>
+</div>
+
+
+
+<h2>Program notes for this category</h2>
+<ul class="notes">
+  <li>IDGS memberships do NOT cover family or dual memberships (or a share of one).</li>
+</ul>
+
+
+
+
+<h2>Evidence captures</h2>
+<p class="ev-links">Each capture is stamped in-image with its capture time and URL.
+Integrity hashes: <a href="manifest.json">manifest.json</a>.</p>
+
+<figure id="evidence/01-full-full-page-brooklyn-museum-membership-lev.png">
+  <img src="evidence/01-full-full-page-brooklyn-museum-membership-lev.png" alt="Full page: Brooklyn Museum membership levels and pricing">
+  <figcaption>
+    <strong>Full page: Brooklyn Museum membership levels and pricing</strong> (full_page)<br>
+    https://www.brooklynmuseum.org/support/membership<br>
+    Captured 2026-08-17 23:37:35 India Standard Time &middot; SHA-256 145c6e4a4a1375f0&hellip;
+  </figcaption>
+</figure>
+
+<figure id="evidence/02-evidence-evidence-open-to-public-membership.png">
+  <img src="evidence/02-evidence-evidence-open-to-public-membership.png" alt="Evidence: open to public membership">
+  <figcaption>
+    <strong>Evidence: open to public membership</strong> (targeted)<br>
+    https://www.brooklynmuseum.org/support/membership<br>
+    Captured 2026-08-17 23:37:41 India Standard Time &middot; SHA-256 869c77908e3debeb&hellip;
+  </figcaption>
+</figure>
+
+<figure id="evidence/04-evidence-evidence-published-membership-fees.png">
+  <img src="evidence/04-evidence-evidence-published-membership-fees.png" alt="Evidence: published membership fees">
+  <figcaption>
+    <strong>Evidence: published membership fees</strong> (targeted)<br>
+    https://www.brooklynmuseum.org/support/membership<br>
+    Captured 2026-08-17 23:37:51 India Standard Time &middot; SHA-256 30eac8e2b99b5081&hellip;
+  </figcaption>
+</figure>
+
+<figure id="evidence/05-evidence-evidence-membership-levels.png">
+  <img src="evidence/05-evidence-evidence-membership-levels.png" alt="Evidence: membership levels">
+  <figcaption>
+    <strong>Evidence: membership levels</strong> (targeted)<br>
+    https://www.brooklynmuseum.org/support/membership<br>
+    Captured 2026-08-17 23:37:53 India Standard Time &middot; SHA-256 ab2c6dc433875048&hellip;
+  </figcaption>
+</figure>
+
+
+<footer>
+  This report was produced by the Pre-Approval Website-Verification Tool to assist the
+  Pre-Approvals reviewer. It records what was (and was not) visible on the provider's public
+  website on the review date. <strong>It does not approve or deny anything — the final
+  decision is always made by staff.</strong> Items the website cannot answer are listed as
+  Internal and were deliberately not guessed.
+  <br><br>
+  Run cost: 108,739 input + 4,646
+  output tokens across 21 model request(s),
+  estimated $0.07 at the prices set in config.yaml.
+  The agent's full action trail for this review is in <code>run.log</code>.
+</footer>
+
+</div>
+</body>
+</html>

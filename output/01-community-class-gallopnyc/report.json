@@ -1,0 +1,404 @@
+{
+  "tool_version": "0.1.0",
+  "model": "gemini-3.7-flash",
+  "source_pdf": "01-community-class-gallopnyc.pdf",
+  "reviewed_at": "2026-08-17T23:36:09+05:30",
+  "category": "community_class",
+  "category_display": "Community Classes",
+  "application": {
+    "category": "community_class",
+    "form_title": "Community Class Pre-approval Checklist",
+    "participant_name": "Jordan Ellis",
+    "participant_age": 24,
+    "fi_coordinator": "R. Patel",
+    "broker": "M. Okafor",
+    "requested_item": "Recreational Riding — 30-Minute Group Lesson",
+    "provider_name": "GallopNYC (Sunrise Stables)",
+    "url": "https://www.gallopnyc.org/recreational-riding",
+    "fee_text": "Fee per Class / Session: $80 per session",
+    "fees": [
+      {
+        "amount": 80.0,
+        "unit": "per session"
+      }
+    ],
+    "duration_text": "30 minutes",
+    "subject_area": "Horseback riding (recreational, group instruction)",
+    "safety_features": null,
+    "valued_outcome": "Jordan wants to build core strength and balance and take part in a community activity with peers outside the day program.",
+    "justification": "Riding supports Jordan's Life Plan goal of increasing physical stamina and community participation; the lessons are open group classes at a public stable.",
+    "denial_date": null,
+    "denial_reason": null,
+    "appeal_justification": null,
+    "form_answers": [
+      {
+        "question": "1. Are community classes currently approved in the budget?",
+        "answer": "YES"
+      },
+      {
+        "question": "2. Is the class open to and attended by the broader public?",
+        "answer": "YES"
+      },
+      {
+        "question": "3. Does the class have published fees? (attach link / advertised flyer)",
+        "answer": "YES"
+      },
+      {
+        "question": "4. Are the fees identical for both OPWDD and non-OPWDD individuals?",
+        "answer": "YES"
+      },
+      {
+        "question": "5. Is the class subject based? (Art, Dance, Martial Arts, Cooking)",
+        "answer": "YES"
+      },
+      {
+        "question": "6. Does the class provide college credits?",
+        "answer": "NO"
+      },
+      {
+        "question": "7. Is the class clinical in nature? (therapy)",
+        "answer": "NO"
+      },
+      {
+        "question": "8. Is there a published schedule of the class? (please attach)",
+        "answer": "NO"
+      },
+      {
+        "question": "9. Does the class provide opportunity for community inclusion?",
+        "answer": "YES"
+      },
+      {
+        "question": "10. Does the class accommodate the individual's health and/or safety needs?",
+        "answer": "YES"
+      },
+      {
+        "question": "11. Does the class increase independence or substitute for human assistance?",
+        "answer": "YES"
+      },
+      {
+        "question": "12. Is the class provided exclusively for the benefit of the participant?",
+        "answer": "YES"
+      },
+      {
+        "question": "13. Is the class given in a setting accessed only by people with Developmental Disabilities?",
+        "answer": "NO"
+      },
+      {
+        "question": "14. Is the class run by OPWDD or a provider-agency staff acting in their official capacities?",
+        "answer": "NO"
+      },
+      {
+        "question": "15. Is the class located on grounds where OPWDD services are normally provided?",
+        "answer": "NO"
+      },
+      {
+        "question": "16. Does the class duplicate any Medicaid state plan or HCBS waiver services?",
+        "answer": "NO"
+      },
+      {
+        "question": "17. Does the class duplicate services given through Board of Education for school-aged children?",
+        "answer": "NO"
+      },
+      {
+        "question": "18. Is the class being reimbursed directly? (if yes, attach a W9)",
+        "answer": "NO"
+      }
+    ]
+  },
+  "rate_comparison": {
+    "form_fee": "Fee per Class / Session: $80 per session",
+    "published_fee": "30-Minute Group - $80",
+    "verdict": "matches application exactly",
+    "detail": "The website lists the rate for a 30-minute group lesson as $80, which matches the fee of $80 per session requested on the application.",
+    "evidence_url": "https://gallopnyc.org/recreational-riding",
+    "evidence_files": [
+      "evidence/03-evidence-evidence-published-fees.png"
+    ]
+  },
+  "findings": [
+    {
+      "item_id": "open_to_public",
+      "form_question": "Is the class open to and attended by the broader public?",
+      "requirement": "Class is open to and attended by the broader public (not restricted to disabled/OPWDD individuals)",
+      "status": "found",
+      "note": "The recreational riding program is explicitly offered to the public for children and adults of all skill levels.",
+      "quote": "However, we offer a limited number of riding lessons to the public. Our lessons are available for children and adults of all skill levels and experience.",
+      "evidence_url": "https://gallopnyc.org/recreational-riding",
+      "evidence_files": [
+        "evidence/02-evidence-evidence-open-to-public.png"
+      ],
+      "source": "agent"
+    },
+    {
+      "item_id": "published_fees",
+      "form_question": "Does the class have published fees? (attach link / advertised flyer)",
+      "requirement": "Class has published fees — a public price is visible on the website",
+      "status": "found",
+      "note": "Pricing is published directly on the recreational riding page, listing a 30-minute group lesson at $80.",
+      "quote": "30-Minute Group - $80",
+      "evidence_url": "https://gallopnyc.org/recreational-riding",
+      "evidence_files": [
+        "evidence/03-evidence-evidence-published-fees.png"
+      ],
+      "source": "agent"
+    },
+    {
+      "item_id": "fees_identical",
+      "form_question": "Are the fees identical for both OPWDD and non-OPWDD individuals?",
+      "requirement": "Fees are identical for OPWDD and non-OPWDD individuals (no special/segregated pricing)",
+      "status": "found",
+      "note": "A single standard pricing schedule is published for all participants with no separate or segregated pricing for individuals with disabilities or OPWDD participants.",
+      "quote": "30-Minute Group - $80",
+      "evidence_url": "https://gallopnyc.org/recreational-riding",
+      "evidence_files": [
+        "evidence/05-evidence-evidence-fees-identical.png"
+      ],
+      "source": "agent"
+    },
+    {
+      "item_id": "subject_based",
+      "form_question": "Is the class subject based? (Art, Dance, Martial Arts, Cooking)",
+      "requirement": "Class is subject-based (art, dance, martial arts, cooking, riding, etc.)",
+      "status": "found",
+      "note": "The program offers instruction in horseback riding and horse education at Sunrise Stables.",
+      "quote": "We offer limited public riding lessons, including private and group lessons, and events as part of our horse education programs.",
+      "evidence_url": "https://gallopnyc.org/recreational-riding",
+      "evidence_files": [
+        "evidence/06-evidence-evidence-subject-based-horse-riding-less.png"
+      ],
+      "source": "agent"
+    },
+    {
+      "item_id": "no_college_credits",
+      "form_question": "Does the class provide college credits?",
+      "requirement": "Class does NOT provide college credits",
+      "status": "found",
+      "note": "The lessons are community horse education and recreational riding lessons with no academic accreditation or college credit offered.",
+      "quote": "Our lessons are available for children and adults of all skill levels and experience.",
+      "evidence_url": "https://gallopnyc.org/recreational-riding",
+      "evidence_files": [
+        "evidence/07-evidence-evidence-no-college-credits.png"
+      ],
+      "source": "agent"
+    },
+    {
+      "item_id": "not_clinical",
+      "form_question": "Is the class clinical in nature? (therapy)",
+      "requirement": "Class is NOT clinical/therapy in nature",
+      "status": "found",
+      "note": "Recreational riding is offered as public riding lessons and horse education, separate from GallopNYC's therapeutic riding services.",
+      "quote": "Revenue from our recreational riding lessons is used to support tuition scholarships for our therapeutic riding students, ensuring that those facing financial barriers can take part in our program.",
+      "evidence_url": "https://gallopnyc.org/recreational-riding",
+      "evidence_files": [
+        "evidence/08-evidence-evidence-recreational-riding-distinct-fr.png"
+      ],
+      "source": "agent"
+    },
+    {
+      "item_id": "published_schedule",
+      "form_question": "Is there a published schedule of the class? (please attach)",
+      "requirement": "A published schedule for the class exists (days/times or session calendar)",
+      "status": "not_found",
+      "note": "No timetable, specific days, or class hours are published on the website; prospective riders sign up through an online form or contact the organization to arrange enrollment.",
+      "quote": null,
+      "evidence_url": "https://gallopnyc.org/recreational-riding",
+      "evidence_files": [],
+      "source": "agent"
+    },
+    {
+      "item_id": "budget_approved",
+      "form_question": "Are community classes currently approved in the budget?",
+      "requirement": null,
+      "status": "internal",
+      "note": "Internal — not website-verifiable. Participant budget data lives in internal systems.",
+      "quote": null,
+      "evidence_url": null,
+      "evidence_files": [],
+      "source": "deterministic"
+    },
+    {
+      "item_id": "community_inclusion",
+      "form_question": "Does the class provide opportunity for community inclusion?",
+      "requirement": null,
+      "status": "internal",
+      "note": "Internal — not website-verifiable. Judgment about the participant's inclusion goals — reviewer decision.",
+      "quote": null,
+      "evidence_url": null,
+      "evidence_files": [],
+      "source": "deterministic"
+    },
+    {
+      "item_id": "health_safety_needs",
+      "form_question": "Does the class accommodate the individual's health and/or safety needs?",
+      "requirement": null,
+      "status": "internal",
+      "note": "Internal — not website-verifiable. Depends on the individual's needs, not on the website.",
+      "quote": null,
+      "evidence_url": null,
+      "evidence_files": [],
+      "source": "deterministic"
+    },
+    {
+      "item_id": "increases_independence",
+      "form_question": "Does the class increase independence or substitute for human assistance?",
+      "requirement": null,
+      "status": "internal",
+      "note": "Internal — not website-verifiable. Depends on the participant's Life Plan and situation.",
+      "quote": null,
+      "evidence_url": null,
+      "evidence_files": [],
+      "source": "deterministic"
+    },
+    {
+      "item_id": "exclusive_benefit",
+      "form_question": "Is the class provided exclusively for the benefit of the participant?",
+      "requirement": null,
+      "status": "internal",
+      "note": "Internal — not website-verifiable. About how the purchase is used, not the provider's website.",
+      "quote": null,
+      "evidence_url": null,
+      "evidence_files": [],
+      "source": "deterministic"
+    },
+    {
+      "item_id": "dd_only_setting",
+      "form_question": "Is the class given in a setting accessed only by people with Developmental Disabilities?",
+      "requirement": null,
+      "status": "internal",
+      "note": "Internal — not website-verifiable. Related to the 'open to the public' website check, but the definitive answer is a reviewer judgment.",
+      "quote": null,
+      "evidence_url": null,
+      "evidence_files": [],
+      "source": "deterministic"
+    },
+    {
+      "item_id": "opwdd_staff",
+      "form_question": "Is the class run by OPWDD or a provider-agency staff acting in their official capacities?",
+      "requirement": null,
+      "status": "internal",
+      "note": "Internal — not website-verifiable. Provider staffing/agency relationships are not reliably published.",
+      "quote": null,
+      "evidence_url": null,
+      "evidence_files": [],
+      "source": "deterministic"
+    },
+    {
+      "item_id": "opwdd_grounds",
+      "form_question": "Is the class located on grounds where OPWDD services are normally provided?",
+      "requirement": null,
+      "status": "internal",
+      "note": "Internal — not website-verifiable. Requires knowledge of OPWDD-certified locations.",
+      "quote": null,
+      "evidence_url": null,
+      "evidence_files": [],
+      "source": "deterministic"
+    },
+    {
+      "item_id": "duplicates_medicaid",
+      "form_question": "Does the class duplicate any Medicaid state plan or HCBS waiver services?",
+      "requirement": null,
+      "status": "internal",
+      "note": "Internal — not website-verifiable. Requires the participant's service records.",
+      "quote": null,
+      "evidence_url": null,
+      "evidence_files": [],
+      "source": "deterministic"
+    },
+    {
+      "item_id": "duplicates_boe",
+      "form_question": "Does the class duplicate services given through Board of Education for school-aged children?",
+      "requirement": null,
+      "status": "internal",
+      "note": "Internal — not website-verifiable. Requires the participant's education records.",
+      "quote": null,
+      "evidence_url": null,
+      "evidence_files": [],
+      "source": "deterministic"
+    },
+    {
+      "item_id": "reimbursed_directly",
+      "form_question": "Is the class being reimbursed directly? (if yes, attach a W9)",
+      "requirement": null,
+      "status": "internal",
+      "note": "Internal — not website-verifiable. Payment mechanics + W9 are internal paperwork.",
+      "quote": null,
+      "evidence_url": null,
+      "evidence_files": [],
+      "source": "deterministic"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "evidence/01-full-full-page-gallopnyc-recreational-riding.png",
+      "kind": "full_page",
+      "label": "Full page: GallopNYC Recreational Riding",
+      "url": "https://gallopnyc.org/recreational-riding",
+      "captured_at": "2026-08-17 23:34:42 India Standard Time",
+      "sha256": "4e53077c3279fc8550433a2d6d8ed37886eab0ecef86546c9a98d4268d9710d9"
+    },
+    {
+      "file": "evidence/02-evidence-evidence-open-to-public.png",
+      "kind": "targeted",
+      "label": "Evidence: open to public",
+      "url": "https://gallopnyc.org/recreational-riding",
+      "captured_at": "2026-08-17 23:34:44 India Standard Time",
+      "sha256": "4f7bc49845e6b9c88a5de1fbf41c897bd4a5867b4d74bc1517a5fd5fba1314ab"
+    },
+    {
+      "file": "evidence/03-evidence-evidence-published-fees.png",
+      "kind": "targeted",
+      "label": "Evidence: published fees",
+      "url": "https://gallopnyc.org/recreational-riding",
+      "captured_at": "2026-08-17 23:34:45 India Standard Time",
+      "sha256": "a62f68d47944c2b681d26942bfd21daaf8010fbd8b7f5be9181371b75c8c9436"
+    },
+    {
+      "file": "evidence/05-evidence-evidence-fees-identical.png",
+      "kind": "targeted",
+      "label": "Evidence: fees identical",
+      "url": "https://gallopnyc.org/recreational-riding",
+      "captured_at": "2026-08-17 23:35:37 India Standard Time",
+      "sha256": "28551fe5c032c678400f73bd49528c239f64683fd59863be9e1cf6700264d441"
+    },
+    {
+      "file": "evidence/06-evidence-evidence-subject-based-horse-riding-less.png",
+      "kind": "targeted",
+      "label": "Evidence: subject-based horse riding lesson",
+      "url": "https://gallopnyc.org/recreational-riding",
+      "captured_at": "2026-08-17 23:35:39 India Standard Time",
+      "sha256": "d1426f6955fc69522c9571d3de0d0e126a1dc76e24511b980e201d9cd4058189"
+    },
+    {
+      "file": "evidence/07-evidence-evidence-no-college-credits.png",
+      "kind": "targeted",
+      "label": "Evidence: no college credits",
+      "url": "https://gallopnyc.org/recreational-riding",
+      "captured_at": "2026-08-17 23:35:41 India Standard Time",
+      "sha256": "cb4f52c51b355f2f3d7b3d071aefbdf2193a8e8cb24ba3d04f7963647274ec74"
+    },
+    {
+      "file": "evidence/08-evidence-evidence-recreational-riding-distinct-fr.png",
+      "kind": "targeted",
+      "label": "Evidence: recreational riding distinct from therapy",
+      "url": "https://gallopnyc.org/recreational-riding",
+      "captured_at": "2026-08-17 23:35:43 India Standard Time",
+      "sha256": "5d981c404386d12ae98a310f41ac623d0b3a18707b64d441ec2c6f267b639574"
+    }
+  ],
+  "agent_summary": "GallopNYC publishes information on its website for Recreational Riding at Sunrise Stables, confirming that group and private riding lessons are open to the general public across all skill levels and ages. The published fee for a 30-minute group lesson is $80 per session, which matches the application fee exactly with uniform pricing for all participants. The class is subject-based horse instruction and horsemanship, does not grant college credits, and is structured separately from the organization's clinical therapeutic riding programs. However, a published schedule detailing specific class days or times is not available on the website, as enrollment is handled on a semester basis via a registration form and email inquiry.",
+  "checklist_notes": [
+    "Invoice guideline: more than 2 sessions/day (up to 60 min each) or more than 7 sessions/week at one provider requires prior approval.",
+    "Classes must relate to a habilitative need in the Life Plan — not purely recreational."
+  ],
+  "reviewer_notes": [],
+  "warnings": [],
+  "usage": {
+    "requests": 37,
+    "input_tokens": 333126,
+    "output_tokens": 6177,
+    "cache_read_input_tokens": 23946,
+    "cache_creation_input_tokens": 0
+  },
+  "estimated_cost_usd": 0.1881,
+  "review_count": 1
+}

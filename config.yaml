@@ -1,0 +1,19 @@
+﻿# Global tool configuration.
+# The checklist definitions (what to verify per category) live in checklists/.
+
+model: gemini-3.7-flash     # any Gemini model id; used for extraction, verification and chat
+max_agent_iterations: 60    # hard stop for the research agent loop
+page_text_limit: 12000      # max characters of page text returned to the model per read
+browser:
+  headless: true            # set false (or use --headed) for sites with bot detection
+  viewport_width: 1280
+  viewport_height: 1200
+  navigation_timeout_ms: 30000
+output_dir: output
+checklist_dir: checklists
+
+# Used only to estimate what a run cost (shown in the report and on the console).
+# Defaults approximate Gemini Flash list prices per 1M tokens — check ai.google.dev/pricing.
+pricing:
+  input_per_mtok: 0.50
+  output_per_mtok: 3.00

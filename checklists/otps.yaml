@@ -1,0 +1,111 @@
+# Other Than Personal Services (OTPS) — checklist definition
+# Questions follow the NY OPWDD Self-Direction pre-approval form for this category.
+
+category: otps
+display_name: Other Than Personal Services (OTPS)
+form_title_hints:
+  - "Other Than Personal Services"
+  - "OTPS"
+
+adults_only: false
+
+fee_caps:
+  - id: cap_budget_year
+    label: "Capped at $3,000 per budget year"
+    max_amount: 3000
+    unit_keywords: []
+
+notes:
+  - "Approval is valid for 3 months, then resubmit."
+  - "Cannot be funded through another source (e.g. Emods/assistive technology)."
+  - "Must increase independence and/or health & safety; specific to the disability."
+
+exclusion_list:
+  - "Medical visit co-pays"
+  - "Hospitalization / nursing-home expenses"
+  - "Illegal items / activities"
+  - "Cable television"
+  - "Common household supplies (paper towels, wipes, soap)"
+  - "Experimental treatments / experimental therapies"
+  - "Landlord / homeowner repairs"
+  - "A self-directing person's activity fees/supplies for an activity or community class"
+  - "Rental cars (not vehicles leased in the participant's name)"
+  - "Vehicle purchases / payments"
+  - "Legal fees"
+  - "Housing costs above the housing subsidy"
+
+exclusion_keywords:
+  - "co-pay"
+  - "copay"
+  - "cable"
+  - "paper towel"
+  - "wipes"
+  - "soap"
+  - "rental car"
+  - "vehicle"
+  - "legal fee"
+  - "rent "
+  - "repair"
+
+items:
+  - id: item_exists_with_price
+    form_question: "(program guideline) The item exists at the linked page, with a visible price"
+    requirement: "The item exists at the linked page with a visible price"
+    kind: website
+    check_hint: >
+      Open the product link, confirm the product matches the item named on the form, and find the
+      visible price. Note availability. If the page is blocked or the product is gone, say so.
+
+  - id: not_excluded
+    form_question: "Is the item on the OTPS exclusion list? (see guidelines)"
+    requirement: "Item is plausibly NOT on the OTPS exclusion list"
+    kind: website
+    check_hint: >
+      Compare what the product page shows the item to be against the OTPS exclusion list in your
+      instructions. If the item IS an excluded category, record this requirement as NOT met and
+      name the matching exclusion.
+
+  - id: safety_features_supported
+    form_question: "Safety features for the item (as described on the form)"
+    requirement: "Safety features described on the form are supported by the product page"
+    kind: website
+    check_hint: >
+      Check each safety feature claimed on the form against the product page's description or
+      specs, and quote the supporting product text.
+
+  # ---- internal items ----
+
+  - id: budget_independence_line
+    form_question: "Is 'Other goods & services that increase independence' approved in the budget?"
+    kind: internal
+    internal_reason: "Participant budget data lives in internal systems."
+
+  - id: budget_health_safety_line
+    form_question: "Is 'Other goods & services that increase health and safety' approved in the budget?"
+    kind: internal
+    internal_reason: "Participant budget data lives in internal systems."
+
+  - id: lp_need
+    form_question: "Is the item related to a need or goal identified in the Life Plan?"
+    kind: internal
+    internal_reason: "Requires the participant's Life Plan."
+
+  - id: increases_independence_health
+    form_question: "Will the item increase the independence and/or health and safety of the individual?"
+    kind: internal
+    internal_reason: "Individual determination."
+
+  - id: exclusive_need
+    form_question: "Is the item exclusively needed for the participant?"
+    kind: internal
+    internal_reason: "About how the item is used at home."
+
+  - id: other_funding
+    form_question: "Can the item be funded through other sources?"
+    kind: internal
+    internal_reason: "Requires knowledge of other funding sources (care manager attests)."
+
+  - id: already_bought
+    form_question: "Was the same item bought already in this budget year?"
+    kind: internal
+    internal_reason: "Requires purchase history."

@@ -1,0 +1,37 @@
+{
+  "note": "Every capture below is stamped in-image with its capture time and URL. SHA-256 hashes are computed over the stamped file; recompute to verify the evidence has not been altered.",
+  "captures": [
+    {
+      "file": "evidence/01-full-full-page-gracie-barra-jiu-jitsu-fundame.png",
+      "kind": "full_page",
+      "label": "Full page: Gracie Barra Jiu-Jitsu Fundamentals",
+      "url": "https://graciebarra.com/classes/jiu-jitsu-fundamentals/",
+      "captured_at": "2026-08-17 23:39:36 India Standard Time",
+      "sha256": "19f0000d71d0fc1e586b799e54f4fa03234a6ab2374867356f301d0f41bae9a6"
+    },
+    {
+      "file": "evidence/02-evidence-evidence-open-to-public.png",
+      "kind": "targeted",
+      "label": "Evidence: open to public",
+      "url": "https://graciebarra.com/classes/jiu-jitsu-fundamentals/",
+      "captured_at": "2026-08-17 23:39:38 India Standard Time",
+      "sha256": "03d852d57871aa09457fbd828f4df12b9b39ba076af5f4acb719f0eddcf6fd18"
+    },
+    {
+      "file": "evidence/03-evidence-evidence-subject-based-martial-arts-clas.png",
+      "kind": "targeted",
+      "label": "Evidence: subject-based martial arts class",
+      "url": "https://graciebarra.com/classes/jiu-jitsu-fundamentals/",
+      "captured_at": "2026-08-17 23:39:41 India Standard Time",
+      "sha256": "55093b2903dfce79e0496dd9723ec78238a07005ff2e02e87ceff360cee97e55"
+    },
+    {
+      "file": "evidence/04-evidence-evidence-recreational-martial-arts-train.png",
+      "kind": "targeted",
+      "label": "Evidence: recreational martial arts training",
+      "url": "https://graciebarra.com/classes/jiu-jitsu-fundamentals/",
+      "captured_at": "2026-08-17 23:39:51 India Standard Time",
+      "sha256": "fd57b5c0513ce141f731b1a9bf52893dc9e2d2c8a51835b6b38e2f4916070113"
+    }
+  ]
+}

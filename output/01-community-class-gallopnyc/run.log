@@ -1,0 +1,40 @@
+23:32:42  Extracting application from 01-community-class-gallopnyc.pdf ...
+23:32:56    -> community_class | Recreational Riding — 30-Minute Group Lesson | GallopNYC (Sunrise Stables) | https://www.gallopnyc.org/recreational-riding
+23:32:56  Verifying on the provider's website (https://www.gallopnyc.org/recreational-riding) ...
+23:32:58  open_url: https://www.gallopnyc.org/recreational-riding
+23:33:29  open_url: https://www.gallopnyc.org
+23:34:00  open_url: http://gallopnyc.org
+23:34:34  list_links: filter=''
+23:34:36  open_url: https://gallopnyc.org/recreational-riding
+23:34:39  read_page: offset=0
+23:34:42  capture_page: 'Full page: GallopNYC Recreational Riding'
+23:34:44  capture_evidence: 'However, we offer a limited number of riding lessons to the public. Our lessons are available for children and adults of all skill levels and experience.' ('Evidence: open to public')
+23:34:45  capture_evidence: '30-Minute Group - $80' ('Evidence: published fees')
+23:34:47  open_url: https://gallopnyc.org/programs
+23:34:51  read_page: offset=2000
+23:34:52  read_page: offset=500
+23:34:53  open_url: https://gallopnyc.org/faq
+23:34:56  read_page: offset=1500
+23:34:58  open_url: https://gallopnyc.org/locations
+23:35:07  open_url: https://gallopnyc.org/recreational-riding
+23:35:10  list_links: filter=''
+23:35:12  open_url: https://gallopnyc.org/events
+23:35:17  open_url: https://gallopnyc.org/gallopnyc-site-map
+23:35:22  list_links: filter='Self-Directed'
+23:35:24  open_url: https://gallopnyc.org/recreational-riding
+23:35:29  capture_evidence: 'Pricing Private Classes 30-Minute Private - $100' ('Evidence: fees identical')
+23:35:35  find_on_page: 'Pricing'
+23:35:37  capture_evidence: 'Pricing' ('Evidence: fees identical')
+23:35:38  capture_evidence: 'GallopNYC’s Sunrise Stables is an outdoor horseback riding facility with a large riding arena' ('Evidence: subject-based horse riding lesson')
+23:35:41  capture_evidence: 'Our lessons are available for children and adults of all skill levels and experience.' ('Evidence: no college credits')
+23:35:43  capture_evidence: 'Revenue from our recreational riding lessons is used to support tuition scholarships for our therapeutic riding students' ('Evidence: recreational riding distinct from therapy')
+23:35:46  record_finding: open_to_public = found
+23:35:48  record_finding: published_fees = found
+23:35:50  record_finding: fees_identical = found
+23:35:53  record_finding: subject_based = found
+23:35:55  record_finding: no_college_credits = found
+23:35:57  record_finding: not_clinical = found
+23:36:03  record_finding: published_schedule = not_found
+23:36:06  record_rate_comparison: matches application exactly
+23:36:09  Tokens: 333,126 in / 6,177 out across 37 request(s) — estimated $0.19
+23:36:09  Report package written to output\01-community-class-gallopnyc

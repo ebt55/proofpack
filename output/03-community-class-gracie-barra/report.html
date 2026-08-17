@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ProofPack — GB1 Jiu-Jitsu Fundamentals (beginner adult class) (Luis Ortega)</title>
+<style>
+  :root {
+    --ink: #111827; --muted: #6b7280; --line: #e5e7eb; --bg: #f9fafb;
+    --green-bg: #d1fae5; --green-ink: #065f46;
+    --red-bg: #fee2e2;   --red-ink: #991b1b;
+    --amber-bg: #fef3c7; --amber-ink: #92400e;
+    --grey-bg: #f3f4f6;  --grey-ink: #374151;
+    --blue-bg: #dbeafe;  --blue-ink: #1e40af;
+  }
+  * { box-sizing: border-box; }
+  body { font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif; color: var(--ink);
+         margin: 0; background: var(--bg); line-height: 1.5; }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 32px 24px 64px; }
+  header.doc { border-bottom: 3px solid var(--ink); padding-bottom: 16px; margin-bottom: 24px; }
+  header.doc h1 { margin: 0 0 4px; font-size: 26px; }
+  header.doc .sub { color: var(--muted); font-size: 14px; }
+  h2 { font-size: 18px; margin: 32px 0 12px; border-bottom: 1px solid var(--line); padding-bottom: 6px; }
+  table.kv { width: 100%; border-collapse: collapse; font-size: 14px; background: #fff;
+             border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+  table.kv th { text-align: left; width: 220px; color: var(--muted); font-weight: 600;
+                padding: 8px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  table.kv td { padding: 8px 12px; border-bottom: 1px solid var(--line); word-break: break-word; }
+  table.kv tr:last-child th, table.kv tr:last-child td { border-bottom: none; }
+  .chip { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 12.5px;
+          font-weight: 700; letter-spacing: .2px; white-space: nowrap; }
+  .chip.found { background: var(--green-bg); color: var(--green-ink); }
+  .chip.not-found { background: var(--red-bg); color: var(--red-ink); }
+  .chip.needs-review { background: var(--amber-bg); color: var(--amber-ink); }
+  .chip.internal { background: var(--grey-bg); color: var(--grey-ink); }
+  .chip.needs-document { background: var(--blue-bg); color: var(--blue-ink); }
+  .card { background: #fff; border: 1px solid var(--line); border-radius: 8px;
+          padding: 14px 16px; margin-bottom: 12px; }
+  .card .q { font-weight: 600; margin-bottom: 2px; }
+  .card .req { color: var(--muted); font-size: 13px; margin-bottom: 8px; }
+  .card .note { font-size: 14px; margin: 8px 0 0; }
+  blockquote { margin: 10px 0 0; padding: 8px 12px; border-left: 3px solid var(--ink);
+               background: var(--bg); font-size: 13.5px; font-style: italic; }
+  blockquote .src { display: block; font-style: normal; color: var(--muted); font-size: 12px; margin-top: 4px; }
+  .ev-links { margin-top: 8px; font-size: 13px; }
+  .ev-links a { color: #1d4ed8; }
+  .summary { background: #fff; border: 1px solid var(--line); border-left: 4px solid var(--ink);
+             border-radius: 8px; padding: 14px 16px; font-size: 14.5px; white-space: pre-wrap; }
+  .banner { border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; font-size: 14px; }
+  .banner.warn { background: var(--amber-bg); color: var(--amber-ink); border: 1px solid #fcd34d; }
+  .banner.appeal { background: var(--blue-bg); color: var(--blue-ink); border: 1px solid #93c5fd; }
+  .rate { display: flex; gap: 16px; flex-wrap: wrap; }
+  .rate .box { flex: 1 1 240px; background: #fff; border: 1px solid var(--line);
+               border-radius: 8px; padding: 12px 16px; }
+  .rate .box .h { color: var(--muted); font-size: 12px; font-weight: 700; text-transform: uppercase;
+                  letter-spacing: .5px; margin-bottom: 4px; }
+  .rate .box .v { font-size: 15px; font-weight: 600; }
+  figure { margin: 0 0 20px; background: #fff; border: 1px solid var(--line); border-radius: 8px;
+           padding: 12px; }
+  figure img { max-width: 100%; border: 1px solid var(--line); border-radius: 4px; }
+  figcaption { font-size: 12.5px; color: var(--muted); margin-top: 8px; word-break: break-all; }
+  ul.notes { font-size: 13.5px; color: var(--grey-ink); }
+  footer { margin-top: 40px; padding-top: 12px; border-top: 1px solid var(--line);
+           color: var(--muted); font-size: 12.5px; }
+  @media print {
+    body { background: #fff; }
+    .wrap { padding: 0; max-width: none; }
+    figure { break-inside: avoid; }
+    .card { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="doc">
+  <h1>Pre-Approval Website Verification Report</h1>
+  <div class="sub">
+    Community Classes &middot; reviewed 2026-08-17T23:40:08+05:30 &middot;
+    source form: 03-community-class-gracie-barra.pdf &middot; ProofPack v0.1.0 (gemini-3.7-flash)
+  </div>
+</header>
+
+
+
+
+
+<h2>The request at a glance</h2>
+<table class="kv">
+  <tr><th>Participant</th><td>Luis Ortega (age 19)</td></tr>
+  <tr><th>Category</th><td>Community Classes</td></tr>
+  <tr><th>Requested</th><td>GB1 Jiu-Jitsu Fundamentals (beginner adult class)</td></tr>
+  <tr><th>Provider / Vendor</th><td>Gracie Barra</td></tr>
+  <tr><th>Website / link</th><td><a href="https://graciebarra.com/classes/jiu-jitsu-fundamentals/">https://graciebarra.com/classes/jiu-jitsu-fundamentals/</a></td></tr>
+  <tr><th>Fee on application</th><td>$189 per month (unlimited fundamentals classes)</td></tr>
+  <tr><th>Duration / billing</th><td>60 minutes</td></tr>
+  
+  <tr><th>Review date</th><td>2026-08-17T23:40:08+05:30</td></tr>
+</table>
+
+
+<h2>Summary for the reviewer</h2>
+<div class="summary">I reviewed the Gracie Barra Jiu-Jitsu Fundamentals (GB1) class webpage provided on the application. The program was confirmed to be a subject-based, recreational martial arts class open to the general public with no college credit or clinical therapy component. However, the website does not publish class pricing or a specific schedule with days and times. Because no fee structure is publicly available on the site, the requested rate of $189 per month could not be verified against published rates. The reviewer will need to obtain direct documentation or local school pricing confirmation from the provider for fee and schedule verification.</div>
+
+
+<h2>Rate comparison</h2>
+<div class="rate">
+  <div class="box"><div class="h">Fee on application</div><div class="v">$189 per month (unlimited fundamentals classes)</div></div>
+  <div class="box"><div class="h">Fee found on website</div><div class="v">— none published —</div></div>
+  <div class="box"><div class="h">Verdict</div><div class="v"><span class="chip not-found">not published</span></div></div>
+</div>
+<p class="note">No pricing or membership fee information is published on the Gracie Barra website for the GB1 Fundamentals program.</p>
+
+
+<h2>Website verification — checked on the provider's public website</h2>
+
+<div class="card">
+  <div class="q">Class is open to and attended by the broader public (not restricted to disabled/OPWDD individuals) &nbsp;<span class="chip found">Found</span></div>
+  <div class="req">Form question: Is the class open to and attended by the broader public?</div>
+  <div class="note">The GB1 Fundamentals program is open to the general public and designed for beginners with no prior experience required.</div>
+  
+  <blockquote>&ldquo;The GB1 Program is the foundation of Jiu-Jitsu at Gracie Barra - designed specifically for beginners. With no experience required, this program introduces students to core techniques, self-defence skills, and the philosophy behind our team.&rdquo;
+    <span class="src">— https://graciebarra.com/classes/jiu-jitsu-fundamentals/</span>
+  </blockquote>
+  
+  
+  <div class="ev-links">Evidence:
+    <a href="evidence/02-evidence-evidence-open-to-public.png">evidence/02-evidence-evidence-open-to-public.png</a>
+  </div>
+  
+</div>
+
+<div class="card">
+  <div class="q">Class has published fees — a public price is visible on the website &nbsp;<span class="chip not-found">Not Found</span></div>
+  <div class="req">Form question: Does the class have published fees? (attach link / advertised flyer)</div>
+  <div class="note">The provider's website outlines the GB1 program and offers a free introductory trial class, but does not display any public pricing or membership fees.</div>
+  
+  
+</div>
+
+<div class="card">
+  <div class="q">Fees are identical for OPWDD and non-OPWDD individuals (no special/segregated pricing) &nbsp;<span class="chip needs-review">Needs Review</span></div>
+  <div class="req">Form question: Are the fees identical for both OPWDD and non-OPWDD individuals?</div>
+  <div class="note">Pricing is not published on the website, so identical pricing between OPWDD and non-OPWDD individuals cannot be verified.</div>
+  
+  
+</div>
+
+<div class="card">
+  <div class="q">Class is subject-based (art, dance, martial arts, cooking, riding, etc.) &nbsp;<span class="chip found">Found</span></div>
+  <div class="req">Form question: Is the class subject based? (Art, Dance, Martial Arts, Cooking)</div>
+  <div class="note">The class teaches Brazilian Jiu-Jitsu martial arts fundamentals and self-defense skills.</div>
+  
+  <blockquote>&ldquo;Builds a strong foundation in Jiu-Jitsu techniques and self-defence&rdquo;
+    <span class="src">— https://graciebarra.com/classes/jiu-jitsu-fundamentals/</span>
+  </blockquote>
+  
+  
+  <div class="ev-links">Evidence:
+    <a href="evidence/03-evidence-evidence-subject-based-martial-arts-clas.png">evidence/03-evidence-evidence-subject-based-martial-arts-clas.png</a>
+  </div>
+  
+</div>
+
+<div class="card">
+  <div class="q">Class does NOT provide college credits &nbsp;<span class="chip found">Found</span></div>
+  <div class="req">Form question: Does the class provide college credits?</div>
+  <div class="note">The program is a recreational martial arts class for beginners, with no credit-bearing or degree language present.</div>
+  
+  <blockquote>&ldquo;The GB1 Program is the foundation of Jiu-Jitsu at Gracie Barra - designed specifically for beginners.&rdquo;
+    <span class="src">— https://graciebarra.com/classes/jiu-jitsu-fundamentals/</span>
+  </blockquote>
+  
+  
+  <div class="ev-links">Evidence:
+    <a href="evidence/02-evidence-evidence-open-to-public.png">evidence/02-evidence-evidence-open-to-public.png</a>
+  </div>
+  
+</div>
+
+<div class="card">
+  <div class="q">Class is NOT clinical/therapy in nature &nbsp;<span class="chip found">Found</span></div>
+  <div class="req">Form question: Is the class clinical in nature? (therapy)</div>
+  <div class="note">The class is framed strictly as recreational martial arts instruction led by certified martial arts instructors, with no clinical therapy services offered.</div>
+  
+  <blockquote>&ldquo;Our certified instructors focus on proper movement, posture, and mindset, helping you build strong fundamentals that prepare you for progression into GB2 and beyond.&rdquo;
+    <span class="src">— https://graciebarra.com/classes/jiu-jitsu-fundamentals/</span>
+  </blockquote>
+  
+  
+  <div class="ev-links">Evidence:
+    <a href="evidence/04-evidence-evidence-recreational-martial-arts-train.png">evidence/04-evidence-evidence-recreational-martial-arts-train.png</a>
+  </div>
+  
+</div>
+
+<div class="card">
+  <div class="q">A published schedule for the class exists (days/times or session calendar) &nbsp;<span class="chip not-found">Not Found</span></div>
+  <div class="req">Form question: Is there a published schedule of the class? (please attach)</div>
+  <div class="note">No class schedule, timetable, or days/times for GB1 classes are published on the website.</div>
+  
+  
+</div>
+
+
+
+
+
+
+<h2>Internal items — for the reviewer (not answered by this tool)</h2>
+
+<div class="card">
+  <div class="q">Are community classes currently approved in the budget? &nbsp;<span class="chip internal">Internal</span></div>
+  <div class="note">Internal — not website-verifiable. Participant budget data lives in internal systems.</div>
+</div>
+
+<div class="card">
+  <div class="q">Does the class provide opportunity for community inclusion? &nbsp;<span class="chip internal">Internal</span></div>
+  <div class="note">Internal — not website-verifiable. Judgment about the participant's inclusion goals — reviewer decision.</div>
+</div>
+
+<div class="card">
+  <div class="q">Does the class accommodate the individual's health and/or safety needs? &nbsp;<span class="chip internal">Internal</span></div>
+  <div class="note">Internal — not website-verifiable. Depends on the individual's needs, not on the website.</div>
+</div>
+
+<div class="card">
+  <div class="q">Does the class increase independence or substitute for human assistance? &nbsp;<span class="chip internal">Internal</span></div>
+  <div class="note">Internal — not website-verifiable. Depends on the participant's Life Plan and situation.</div>
+</div>
+
+<div class="card">
+  <div class="q">Is the class provided exclusively for the benefit of the participant? &nbsp;<span class="chip internal">Internal</span></div>
+  <div class="note">Internal — not website-verifiable. About how the purchase is used, not the provider's website.</div>
+</div>
+
+<div class="card">
+  <div class="q">Is the class given in a setting accessed only by people with Developmental Disabilities? &nbsp;<span class="chip internal">Internal</span></div>
+  <div class="note">Internal — not website-verifiable. Related to the 'open to the public' website check, but the definitive answer is a reviewer judgment.</div>
+</div>
+
+<div class="card">
+  <div class="q">Is the class run by OPWDD or a provider-agency staff acting in their official capacities? &nbsp;<span class="chip internal">Internal</span></div>
+  <div class="note">Internal — not website-verifiable. Provider staffing/agency relationships are not reliably published.</div>
+</div>
+
+<div class="card">
+  <div class="q">Is the class located on grounds where OPWDD services are normally provided? &nbsp;<span class="chip internal">Internal</span></div>
+  <div class="note">Internal — not website-verifiable. Requires knowledge of OPWDD-certified locations.</div>
+</div>
+
+<div class="card">
+  <div class="q">Does the class duplicate any Medicaid state plan or HCBS waiver services? &nbsp;<span class="chip internal">Internal</span></div>
+  <div class="note">Internal — not website-verifiable. Requires the participant's service records.</div>
+</div>
+
+<div class="card">
+  <div class="q">Does the class duplicate services given through Board of Education for school-aged children? &nbsp;<span class="chip internal">Internal</span></div>
+  <div class="note">Internal — not website-verifiable. Requires the participant's education records.</div>
+</div>
+
+<div class="card">
+  <div class="q">Is the class being reimbursed directly? (if yes, attach a W9) &nbsp;<span class="chip internal">Internal</span></div>
+  <div class="note">Internal — not website-verifiable. Payment mechanics + W9 are internal paperwork.</div>
+</div>
+
+
+
+<h2>Program notes for this category</h2>
+<ul class="notes">
+  <li>Invoice guideline: more than 2 sessions/day (up to 60 min each) or more than 7 sessions/week at one provider requires prior approval.</li><li>Classes must relate to a habilitative need in the Life Plan — not purely recreational.</li>
+</ul>
+
+
+
+
+<h2>Evidence captures</h2>
+<p class="ev-links">Each capture is stamped in-image with its capture time and URL.
+Integrity hashes: <a href="manifest.json">manifest.json</a>.</p>
+
+<figure id="evidence/01-full-full-page-gracie-barra-jiu-jitsu-fundame.png">
+  <img src="evidence/01-full-full-page-gracie-barra-jiu-jitsu-fundame.png" alt="Full page: Gracie Barra Jiu-Jitsu Fundamentals">
+  <figcaption>
+    <strong>Full page: Gracie Barra Jiu-Jitsu Fundamentals</strong> (full_page)<br>
+    https://graciebarra.com/classes/jiu-jitsu-fundamentals/<br>
+    Captured 2026-08-17 23:39:36 India Standard Time &middot; SHA-256 19f0000d71d0fc1e&hellip;
+  </figcaption>
+</figure>
+
+<figure id="evidence/02-evidence-evidence-open-to-public.png">
+  <img src="evidence/02-evidence-evidence-open-to-public.png" alt="Evidence: open to public">
+  <figcaption>
+    <strong>Evidence: open to public</strong> (targeted)<br>
+    https://graciebarra.com/classes/jiu-jitsu-fundamentals/<br>
+    Captured 2026-08-17 23:39:38 India Standard Time &middot; SHA-256 03d852d57871aa09&hellip;
+  </figcaption>
+</figure>
+
+<figure id="evidence/03-evidence-evidence-subject-based-martial-arts-clas.png">
+  <img src="evidence/03-evidence-evidence-subject-based-martial-arts-clas.png" alt="Evidence: subject-based martial arts class">
+  <figcaption>
+    <strong>Evidence: subject-based martial arts class</strong> (targeted)<br>
+    https://graciebarra.com/classes/jiu-jitsu-fundamentals/<br>
+    Captured 2026-08-17 23:39:41 India Standard Time &middot; SHA-256 55093b2903dfce79&hellip;
+  </figcaption>
+</figure>
+
+<figure id="evidence/04-evidence-evidence-recreational-martial-arts-train.png">
+  <img src="evidence/04-evidence-evidence-recreational-martial-arts-train.png" alt="Evidence: recreational martial arts training">
+  <figcaption>
+    <strong>Evidence: recreational martial arts training</strong> (targeted)<br>
+    https://graciebarra.com/classes/jiu-jitsu-fundamentals/<br>
+    Captured 2026-08-17 23:39:51 India Standard Time &middot; SHA-256 fd57b5c0513ce141&hellip;
+  </figcaption>
+</figure>
+
+
+<footer>
+  This report was produced by the Pre-Approval Website-Verification Tool to assist the
+  Pre-Approvals reviewer. It records what was (and was not) visible on the provider's public
+  website on the review date. <strong>It does not approve or deny anything — the final
+  decision is always made by staff.</strong> Items the website cannot answer are listed as
+  Internal and were deliberately not guessed.
+  <br><br>
+  Run cost: 176,357 input + 5,229
+  output tokens across 24 model request(s),
+  estimated $0.10 at the prices set in config.yaml.
+  The agent's full action trail for this review is in <code>run.log</code>.
+</footer>
+
+</div>
+</body>
+</html>

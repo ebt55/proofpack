@@ -1,0 +1,80 @@
+# Transition Program — checklist definition
+# Questions follow the NY OPWDD Self-Direction pre-approval form for this category.
+
+category: transition_program
+display_name: Transition Program
+form_title_hints:
+  - "Transition Program"
+
+adults_only: true   # for adults who aged out of their educational program
+
+fee_caps:
+  - id: cap_per_course
+    label: "Tuition ≤ $350 per course"
+    max_amount: 350
+    unit_keywords: ["course"]
+  - id: cap_per_month
+    label: "Monthly tuition ≤ $800"
+    max_amount: 800
+    unit_keywords: ["month"]
+
+notes:
+  - "For adults who have aged out of their educational program."
+  - "Services cannot exceed a 2-year time frame. No room & board."
+  - "Cannot be funded through another source (ACCES-VR, IDEA)."
+
+items:
+  - id: published_fees
+    form_question: "Does the program have published fees?"
+    requirement: "Published fees exist for the program on the provider's website"
+    kind: website
+    check_hint: >
+      Find public tuition/fee amounts for the program or its courses (catalog pages and linked
+      PDFs count — record the URL where the price appears).
+
+  - id: noncredit_skill_building
+    form_question: "Is the program a noncredit-bearing transition program? / Does the coursework address skill-building and employment outcomes?"
+    requirement: "Program is noncredit-bearing and oriented to skill-building / employment outcomes"
+    kind: website
+    check_hint: >
+      Confirm the program is continuing education / noncredit (not degree-granting coursework)
+      and that its description is oriented to job skills, vocational training or employment
+      readiness.
+
+  - id: not_opwdd_location
+    form_question: "Is the program provided in an OPWDD-certified location?"
+    requirement: "Program is NOT provided in an OPWDD-certified location"
+    kind: website
+    check_hint: >
+      Check where the program is delivered (campus/venue). A mainstream venue such as a community
+      college campus supports this requirement. A definitive certification lookup is internal, so
+      when in doubt mark Needs Review with what the site shows about location.
+
+  # ---- document items ----
+
+  - id: staff_screened
+    form_question: "Are all staff/volunteers/trainers screened for criminal background & excluded-provider status? (letter)"
+    kind: document
+    internal_reason: "Proven by a letter from the program, not by the website — flag as 'needs document'."
+
+  # ---- internal items ----
+
+  - id: budget_approved
+    form_question: "Is the Transition program currently approved in the budget?"
+    kind: internal
+    internal_reason: "Participant budget data lives in internal systems."
+
+  - id: completed_education
+    form_question: "Has the individual already completed their educational program?"
+    kind: internal
+    internal_reason: "Participant education history is internal."
+
+  - id: valued_outcome
+    form_question: "Does the coursework address the individual's valued outcome?"
+    kind: internal
+    internal_reason: "Requires the participant's Life Plan."
+
+  - id: other_funding
+    form_question: "Can the program be funded by ACCES-VR, IDEA, or any other source?"
+    kind: internal
+    internal_reason: "Requires knowledge of other funding sources."

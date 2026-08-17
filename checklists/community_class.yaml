@@ -1,0 +1,136 @@
+# Community Classes — checklist definition
+# Questions follow the NY OPWDD Self-Direction pre-approval form for this category.
+# kind: website  = verifiable on the provider's public website (the tool checks these)
+#       internal = depends on internal data (budget, Life Plan, ...) — never guessed
+#       document = proven by a document, not the website
+
+category: community_class
+display_name: Community Classes
+form_title_hints:
+  - "Community Class Pre-approval"
+
+adults_only: false
+
+fee_caps: []   # no hard dollar cap; fee-match is handled by the rate comparison
+
+notes:
+  - "Invoice guideline: more than 2 sessions/day (up to 60 min each) or more than 7 sessions/week at one provider requires prior approval."
+  - "Classes must relate to a habilitative need in the Life Plan — not purely recreational."
+
+items:
+  - id: open_to_public
+    form_question: "Is the class open to and attended by the broader public?"
+    requirement: "Class is open to and attended by the broader public (not restricted to disabled/OPWDD individuals)"
+    kind: website
+    check_hint: >
+      Look for registration/enrollment language showing anyone from the general public can sign
+      up (e.g. "open to all", public sign-up forms, adult/child programs offered to the community).
+      Restriction to people with disabilities would fail this requirement.
+
+  - id: published_fees
+    form_question: "Does the class have published fees? (attach link / advertised flyer)"
+    requirement: "Class has published fees — a public price is visible on the website"
+    kind: website
+    check_hint: >
+      Find an actual dollar price for the class/session/package on a public page (pricing page,
+      class listing, registration page). "Contact us for pricing" or a login-gated price is NOT a
+      published fee.
+
+  - id: fees_identical
+    form_question: "Are the fees identical for both OPWDD and non-OPWDD individuals?"
+    requirement: "Fees are identical for OPWDD and non-OPWDD individuals (no special/segregated pricing)"
+    kind: website
+    check_hint: >
+      Check whether the published pricing shows any separate rate for disabled/OPWDD/special-needs
+      participants. A single public price for everyone satisfies this; a segregated price fails it.
+      If only one general price is published with no disability-specific pricing anywhere, treat as met.
+
+  - id: subject_based
+    form_question: "Is the class subject based? (Art, Dance, Martial Arts, Cooking)"
+    requirement: "Class is subject-based (art, dance, martial arts, cooking, riding, etc.)"
+    kind: website
+    check_hint: >
+      Confirm the class teaches a concrete subject/skill, evidenced by the class description.
+
+  - id: no_college_credits
+    form_question: "Does the class provide college credits?"
+    requirement: "Class does NOT provide college credits"
+    kind: website
+    check_hint: >
+      Check the class description for any mention of college credit, credit-bearing coursework,
+      or accreditation toward a degree. Absence of any credit language on a recreational class
+      page satisfies this.
+
+  - id: not_clinical
+    form_question: "Is the class clinical in nature? (therapy)"
+    requirement: "Class is NOT clinical/therapy in nature"
+    kind: website
+    check_hint: >
+      Check whether the provider presents the class as therapy/clinical treatment (e.g. licensed
+      therapists, treatment sessions, hippotherapy billed as therapy). A recreational/instructional
+      framing satisfies this. Note: 'therapeutic benefits' marketing language alone does not make
+      a class clinical.
+
+  - id: published_schedule
+    form_question: "Is there a published schedule of the class? (please attach)"
+    requirement: "A published schedule for the class exists (days/times or session calendar)"
+    kind: website
+    check_hint: >
+      Find a schedule, calendar, timetable or session listing with days/times for the class.
+
+  # ---- internal items (never answered by the tool) ----
+
+  - id: budget_approved
+    form_question: "Are community classes currently approved in the budget?"
+    kind: internal
+    internal_reason: "Participant budget data lives in internal systems."
+
+  - id: community_inclusion
+    form_question: "Does the class provide opportunity for community inclusion?"
+    kind: internal
+    internal_reason: "Judgment about the participant's inclusion goals — reviewer decision."
+
+  - id: health_safety_needs
+    form_question: "Does the class accommodate the individual's health and/or safety needs?"
+    kind: internal
+    internal_reason: "Depends on the individual's needs, not on the website."
+
+  - id: increases_independence
+    form_question: "Does the class increase independence or substitute for human assistance?"
+    kind: internal
+    internal_reason: "Depends on the participant's Life Plan and situation."
+
+  - id: exclusive_benefit
+    form_question: "Is the class provided exclusively for the benefit of the participant?"
+    kind: internal
+    internal_reason: "About how the purchase is used, not the provider's website."
+
+  - id: dd_only_setting
+    form_question: "Is the class given in a setting accessed only by people with Developmental Disabilities?"
+    kind: internal
+    internal_reason: "Related to the 'open to the public' website check, but the definitive answer is a reviewer judgment."
+
+  - id: opwdd_staff
+    form_question: "Is the class run by OPWDD or a provider-agency staff acting in their official capacities?"
+    kind: internal
+    internal_reason: "Provider staffing/agency relationships are not reliably published."
+
+  - id: opwdd_grounds
+    form_question: "Is the class located on grounds where OPWDD services are normally provided?"
+    kind: internal
+    internal_reason: "Requires knowledge of OPWDD-certified locations."
+
+  - id: duplicates_medicaid
+    form_question: "Does the class duplicate any Medicaid state plan or HCBS waiver services?"
+    kind: internal
+    internal_reason: "Requires the participant's service records."
+
+  - id: duplicates_boe
+    form_question: "Does the class duplicate services given through Board of Education for school-aged children?"
+    kind: internal
+    internal_reason: "Requires the participant's education records."
+
+  - id: reimbursed_directly
+    form_question: "Is the class being reimbursed directly? (if yes, attach a W9)"
+    kind: internal
+    internal_reason: "Payment mechanics + W9 are internal paperwork."

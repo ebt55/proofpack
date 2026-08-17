@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ProofPack — Recreational Riding — 30-Minute Group Lesson (Jordan Ellis)</title>
+<style>
+  :root {
+    --ink: #111827; --muted: #6b7280; --line: #e5e7eb; --bg: #f9fafb;
+    --green-bg: #d1fae5; --green-ink: #065f46;
+    --red-bg: #fee2e2;   --red-ink: #991b1b;
+    --amber-bg: #fef3c7; --amber-ink: #92400e;
+    --grey-bg: #f3f4f6;  --grey-ink: #374151;
+    --blue-bg: #dbeafe;  --blue-ink: #1e40af;
+  }
+  * { box-sizing: border-box; }
+  body { font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif; color: var(--ink);
+         margin: 0; background: var(--bg); line-height: 1.5; }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 32px 24px 64px; }
+  header.doc { border-bottom: 3px solid var(--ink); padding-bottom: 16px; margin-bottom: 24px; }
+  header.doc h1 { margin: 0 0 4px; font-size: 26px; }
+  header.doc .sub { color: var(--muted); font-size: 14px; }
+  h2 { font-size: 18px; margin: 32px 0 12px; border-bottom: 1px solid var(--line); padding-bottom: 6px; }
+  table.kv { width: 100%; border-collapse: collapse; font-size: 14px; background: #fff;
+             border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+  table.kv th { text-align: left; width: 220px; color: var(--muted); font-weight: 600;
+                padding: 8px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  table.kv td { padding: 8px 12px; border-bottom: 1px solid var(--line); word-break: break-word; }
+  table.kv tr:last-child th, table.kv tr:last-child td { border-bottom: none; }
+  .chip { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 12.5px;
+          font-weight: 700; letter-spacing: .2px; white-space: nowrap; }
+  .chip.found { background: var(--green-bg); color: var(--green-ink); }
+  .chip.not-found { background: var(--red-bg); color: var(--red-ink); }
+  .chip.needs-review { background: var(--amber-bg); color: var(--amber-ink); }
+  .chip.internal { background: var(--grey-bg); color: var(--grey-ink); }
+  .chip.needs-document { background: var(--blue-bg); color: var(--blue-ink); }
+  .card { background: #fff; border: 1px solid var(--line); border-radius: 8px;
+          padding: 14px 16px; margin-bottom: 12px; }
+  .card .q { font-weight: 600; margin-bottom: 2px; }
+  .card .req { color: var(--muted); font-size: 13px; margin-bottom: 8px; }
+  .card .note { font-size: 14px; margin: 8px 0 0; }
+  blockquote { margin: 10px 0 0; padding: 8px 12px; border-left: 3px solid var(--ink);
+               background: var(--bg); font-size: 13.5px; font-style: italic; }
+  blockquote .src { display: block; font-style: normal; color: var(--muted); font-size: 12px; margin-top: 4px; }
+  .ev-links { margin-top: 8px; font-size: 13px; }
+  .ev-links a { color: #1d4ed8; }
+  .summary { background: #fff; border: 1px solid var(--line); border-left: 4px solid var(--ink);
+             border-radius: 8px; padding: 14px 16px; font-size: 14.5px; white-space: pre-wrap; }
+  .banner { border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; font-size: 14px; }
+  .banner.warn { background: var(--amber-bg); color: var(--amber-ink); border: 1px solid #fcd34d; }
+  .banner.appeal { background: var(--blue-bg); color: var(--blue-ink); border: 1px solid #93c5fd; }
+  .rate { display: flex; gap: 16px; flex-wrap: wrap; }
+  .rate .box { flex: 1 1 240px; background: #fff; border: 1px solid var(--line);
+               border-radius: 8px; padding: 12px 16px; }
+  .rate .box .h { color: var(--muted); font-size: 12px; font-weight: 700; text-transform: uppercase;
+                  letter-spacing: .5px; margin-bottom: 4px; }
+  .rate .box .v { font-size: 15px; font-weight: 600; }
+  figure { margin: 0 0 20px; background: #fff; border: 1px solid var(--line); border-radius: 8px;
+           padding: 12px; }
+  figure img { max-width: 100%; border: 1px solid var(--line); border-radius: 4px; }
+  figcaption { font-size: 12.5px; color: var(--muted); margin-top: 8px; word-break: break-all; }
+  ul.notes { font-size: 13.5px; color: var(--grey-ink); }
+  footer { margin-top: 40px; padding-top: 12px; border-top: 1px solid var(--line);
+           color: var(--muted); font-size: 12.5px; }
+  @media print {
+    body { background: #fff; }
+    .wrap { padding: 0; max-width: none; }
+    figure { break-inside: avoid; }
+    .card { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="doc">
+  <h1>Pre-Approval Website Verification Report</h1>
+  <div class="sub">
+    Community Classes &middot; reviewed 2026-08-17T23:36:09+05:30 &middot;
+    source form: 01-community-class-gallopnyc.pdf &middot; ProofPack v0.1.0 (gemini-3.7-flash)
+  </div>
+</header>
+
+
+
+
+
+<h2>The request at a glance</h2>
+<table class="kv">
+  <tr><th>Participant</th><td>Jordan Ellis (age 24)</td></tr>
+  <tr><th>Category</th><td>Community Classes</td></tr>
+  <tr><th>Requested</th><td>Recreational Riding — 30-Minute Group Lesson</td></tr>
+  <tr><th>Provider / Vendor</th><td>GallopNYC (Sunrise Stables)</td></tr>
+  <tr><th>Website / link</th><td><a href="https://www.gallopnyc.org/recreational-riding">https://www.gallopnyc.org/recreational-riding</a></td></tr>
+  <tr><th>Fee on application</th><td>Fee per Class / Session: $80 per session</td></tr>
+  <tr><th>Duration / billing</th><td>30 minutes</td></tr>
+  
+  <tr><th>Review date</th><td>2026-08-17T23:36:09+05:30</td></tr>
+</table>
+
+
+<h2>Summary for the reviewer</h2>
+<div class="summary">GallopNYC publishes information on its website for Recreational Riding at Sunrise Stables, confirming that group and private riding lessons are open to the general public across all skill levels and ages. The published fee for a 30-minute group lesson is $80 per session, which matches the application fee exactly with uniform pricing for all participants. The class is subject-based horse instruction and horsemanship, does not grant college credits, and is structured separately from the organization's clinical therapeutic riding programs. However, a published schedule detailing specific class days or times is not available on the website, as enrollment is handled on a semester basis via a registration form and email inquiry.</div>
+
+
+<h2>Rate comparison</h2>
+<div class="rate">
+  <div class="box"><div class="h">Fee on application</div><div class="v">Fee per Class / Session: $80 per session</div></div>
+  <div class="box"><div class="h">Fee found on website</div><div class="v">30-Minute Group - $80</div></div>
+  <div class="box"><div class="h">Verdict</div><div class="v"><span class="chip found">matches application exactly</span></div></div>
+</div>
+<p class="note">The website lists the rate for a 30-minute group lesson as $80, which matches the fee of $80 per session requested on the application.</p>
+
+<p class="ev-links">Evidence:
+  <a href="evidence/03-evidence-evidence-published-fees.png">evidence/03-evidence-evidence-published-fees.png</a>
+   &middot; seen at <a href="https://gallopnyc.org/recreational-riding">https://gallopnyc.org/recreational-riding</a>
+</p>
+
+
+<h2>Website verification — checked on the provider's public website</h2>
+
+<div class="card">
+  <div class="q">Class is open to and attended by the broader public (not restricted to disabled/OPWDD individuals) &nbsp;<span class="chip found">Found</span></div>
+  <div class="req">Form question: Is the class open to and attended by the broader public?</div>
+  <div class="note">The recreational riding program is explicitly offered to the public for children and adults of all skill levels.</div>
+  
+  <blockquote>&ldquo;However, we offer a limited number of riding lessons to the public. Our lessons are available for children and adults of all skill levels and experience.&rdquo;
+    <span class="src">— https://gallopnyc.org/recreational-riding</span>
+  </blockquote>
+  
+  
+  <div class="ev-links">Evidence:
+    <a href="evidence/02-evidence-evidence-open-to-public.png">evidence/02-evidence-evidence-open-to-public.png</a>
+  </div>
+  
+</div>
+
+<div class="card">
+  <div class="q">Class has published fees — a public price is visible on the website &nbsp;<span class="chip found">Found</span></div>
+  <div class="req">Form question: Does the class have published fees? (attach link / advertised flyer)</div>
+  <div class="note">Pricing is published directly on the recreational riding page, listing a 30-minute group lesson at $80.</div>
+  
+  <blockquote>&ldquo;30-Minute Group - $80&rdquo;
+    <span class="src">— https://gallopnyc.org/recreational-riding</span>
+  </blockquote>
+  
+  
+  <div class="ev-links">Evidence:
+    <a href="evidence/03-evidence-evidence-published-fees.png">evidence/03-evidence-evidence-published-fees.png</a>
+  </div>
+  
+</div>
+
+<div class="card">
+  <div class="q">Fees are identical for OPWDD and non-OPWDD individuals (no special/segregated pricing) &nbsp;<span class="chip found">Found</span></div>
+  <div class="req">Form question: Are the fees identical for both OPWDD and non-OPWDD individuals?</div>
+  <div class="note">A single standard pricing schedule is published for all participants with no separate or segregated pricing for individuals with disabilities or OPWDD participants.</div>
+  
+  <blockquote>&ldquo;30-Minute Group - $80&rdquo;
+    <span class="src">— https://gallopnyc.org/recreational-riding</span>
+  </blockquote>
+  
+  
+  <div class="ev-links">Evidence:
+    <a href="evidence/05-evidence-evidence-fees-identical.png">evidence/05-evidence-evidence-fees-identical.png</a>
+  </div>
+  
+</div>
+
+<div class="card">
+  <div class="q">Class is subject-based (art, dance, martial arts, cooking, riding, etc.) &nbsp;<span class="chip found">Found</span></div>
+  <div class="req">Form question: Is the class subject based? (Art, Dance, Martial Arts, Cooking)</div>
+  <div class="note">The program offers instruction in horseback riding and horse education at Sunrise Stables.</div>
+  
+  <blockquote>&ldquo;We offer limited public riding lessons, including private and group lessons, and events as part of our horse education programs.&rdquo;
+    <span class="src">— https://gallopnyc.org/recreational-riding</span>
+  </blockquote>
+  
+  
+  <div class="ev-links">Evidence:
+    <a href="evidence/06-evidence-evidence-subject-based-horse-riding-less.png">evidence/06-evidence-evidence-subject-based-horse-riding-less.png</a>
+  </div>
+  
+</div>
+
+<div class="card">
+  <div class="q">Class does NOT provide college credits &nbsp;<span class="chip found">Found</span></div>
+  <div class="req">Form question: Does the class provide college credits?</div>
+  <div class="note">The lessons are community horse education and recreational riding lessons with no academic accreditation or college credit offered.</div>
+  
+  <blockquote>&ldquo;Our lessons are available for children and adults of all skill levels and experience.&rdquo;
+    <span class="src">— https://gallopnyc.org/recreational-riding</span>
+  </blockquote>
+  
+  
+  <div class="ev-links">Evidence:
+    <a href="evidence/07-evidence-evidence-no-college-credits.png">evidence/07-evidence-evidence-no-college-credits.png</a>
+  </div>
+  
+</div>
+
+<div class="card">
+  <div class="q">Class is NOT clinical/therapy in nature &nbsp;<span class="chip found">Found</span></div>
+  <div class="req">Form question: Is the class clinical in nature? (therapy)</div>
+  <div class="note">Recreational riding is offered as public riding lessons and horse education, separate from GallopNYC's therapeutic riding services.</div>
+  
+  <blockquote>&ldquo;Revenue from our recreational riding lessons is used to support tuition scholarships for our therapeutic riding students, ensuring that those facing financial barriers can take part in our program.&rdquo;
+    <span class="src">— https://gallopnyc.org/recreational-riding</span>
+  </blockquote>
+  
+  
+  <div class="ev-links">Evidence:
+    <a href="evidence/08-evidence-evidence-recreational-riding-distinct-fr.png">evidence/08-evidence-evidence-recreational-riding-distinct-fr.png</a>
+  </div>
+  
+</div>
+
+<div class="card">
+  <div class="q">A published schedule for the class exists (days/times or session calendar) &nbsp;<span class="chip not-found">Not Found</span></div>
+  <div class="req">Form question: Is there a published schedule of the class? (please attach)</div>
+  <div class="note">No timetable, specific days, or class hours are published on the website; prospective riders sign up through an online form or contact the organization to arrange enrollment.</div>
+  
+  
+</div>
+
+
+
+
+
+
+<h2>Internal items — for the reviewer (not answered by this tool)</h2>
+
+<div class="card">
+  <div class="q">Are community classes currently approved in the budget? &nbsp;<span class="chip internal">Internal</span></div>
+  <div class="note">Internal — not website-verifiable. Participant budget data lives in internal systems.</div>
+</div>
+
+<div class="card">
+  <div class="q">Does the class provide opportunity for community inclusion? &nbsp;<span class="chip internal">Internal</span></div>
+  <div class="note">Internal — not website-verifiable. Judgment about the participant's inclusion goals — reviewer decision.</div>
+</div>
+
+<div class="card">
+  <div class="q">Does the class accommodate the individual's health and/or safety needs? &nbsp;<span class="chip internal">Internal</span></div>
+  <div class="note">Internal — not website-verifiable. Depends on the individual's needs, not on the website.</div>
+</div>
+
+<div class="card">
+  <div class="q">Does the class increase independence or substitute for human assistance? &nbsp;<span class="chip internal">Internal</span></div>
+  <div class="note">Internal — not website-verifiable. Depends on the participant's Life Plan and situation.</div>
+</div>
+
+<div class="card">
+  <div class="q">Is the class provided exclusively for the benefit of the participant? &nbsp;<span class="chip internal">Internal</span></div>
+  <div class="note">Internal — not website-verifiable. About how the purchase is used, not the provider's website.</div>
+</div>
+
+<div class="card">
+  <div class="q">Is the class given in a setting accessed only by people with Developmental Disabilities? &nbsp;<span class="chip internal">Internal</span></div>
+  <div class="note">Internal — not website-verifiable. Related to the 'open to the public' website check, but the definitive answer is a reviewer judgment.</div>
+</div>
+
+<div class="card">
+  <div class="q">Is the class run by OPWDD or a provider-agency staff acting in their official capacities? &nbsp;<span class="chip internal">Internal</span></div>
+  <div class="note">Internal — not website-verifiable. Provider staffing/agency relationships are not reliably published.</div>
+</div>
+
+<div class="card">
+  <div class="q">Is the class located on grounds where OPWDD services are normally provided? &nbsp;<span class="chip internal">Internal</span></div>
+  <div class="note">Internal — not website-verifiable. Requires knowledge of OPWDD-certified locations.</div>
+</div>
+
+<div class="card">
+  <div class="q">Does the class duplicate any Medicaid state plan or HCBS waiver services? &nbsp;<span class="chip internal">Internal</span></div>
+  <div class="note">Internal — not website-verifiable. Requires the participant's service records.</div>
+</div>
+
+<div class="card">
+  <div class="q">Does the class duplicate services given through Board of Education for school-aged children? &nbsp;<span class="chip internal">Internal</span></div>
+  <div class="note">Internal — not website-verifiable. Requires the participant's education records.</div>
+</div>
+
+<div class="card">
+  <div class="q">Is the class being reimbursed directly? (if yes, attach a W9) &nbsp;<span class="chip internal">Internal</span></div>
+  <div class="note">Internal — not website-verifiable. Payment mechanics + W9 are internal paperwork.</div>
+</div>
+
+
+
+<h2>Program notes for this category</h2>
+<ul class="notes">
+  <li>Invoice guideline: more than 2 sessions/day (up to 60 min each) or more than 7 sessions/week at one provider requires prior approval.</li><li>Classes must relate to a habilitative need in the Life Plan — not purely recreational.</li>
+</ul>
+
+
+
+
+<h2>Evidence captures</h2>
+<p class="ev-links">Each capture is stamped in-image with its capture time and URL.
+Integrity hashes: <a href="manifest.json">manifest.json</a>.</p>
+
+<figure id="evidence/01-full-full-page-gallopnyc-recreational-riding.png">
+  <img src="evidence/01-full-full-page-gallopnyc-recreational-riding.png" alt="Full page: GallopNYC Recreational Riding">
+  <figcaption>
+    <strong>Full page: GallopNYC Recreational Riding</strong> (full_page)<br>
+    https://gallopnyc.org/recreational-riding<br>
+    Captured 2026-08-17 23:34:42 India Standard Time &middot; SHA-256 4e53077c3279fc85&hellip;
+  </figcaption>
+</figure>
+
+<figure id="evidence/02-evidence-evidence-open-to-public.png">
+  <img src="evidence/02-evidence-evidence-open-to-public.png" alt="Evidence: open to public">
+  <figcaption>
+    <strong>Evidence: open to public</strong> (targeted)<br>
+    https://gallopnyc.org/recreational-riding<br>
+    Captured 2026-08-17 23:34:44 India Standard Time &middot; SHA-256 4f7bc49845e6b9c8&hellip;
+  </figcaption>
+</figure>
+
+<figure id="evidence/03-evidence-evidence-published-fees.png">
+  <img src="evidence/03-evidence-evidence-published-fees.png" alt="Evidence: published fees">
+  <figcaption>
+    <strong>Evidence: published fees</strong> (targeted)<br>
+    https://gallopnyc.org/recreational-riding<br>
+    Captured 2026-08-17 23:34:45 India Standard Time &middot; SHA-256 a62f68d47944c2b6&hellip;
+  </figcaption>
+</figure>
+
+<figure id="evidence/05-evidence-evidence-fees-identical.png">
+  <img src="evidence/05-evidence-evidence-fees-identical.png" alt="Evidence: fees identical">
+  <figcaption>
+    <strong>Evidence: fees identical</strong> (targeted)<br>
+    https://gallopnyc.org/recreational-riding<br>
+    Captured 2026-08-17 23:35:37 India Standard Time &middot; SHA-256 28551fe5c032c678&hellip;
+  </figcaption>
+</figure>
+
+<figure id="evidence/06-evidence-evidence-subject-based-horse-riding-less.png">
+  <img src="evidence/06-evidence-evidence-subject-based-horse-riding-less.png" alt="Evidence: subject-based horse riding lesson">
+  <figcaption>
+    <strong>Evidence: subject-based horse riding lesson</strong> (targeted)<br>
+    https://gallopnyc.org/recreational-riding<br>
+    Captured 2026-08-17 23:35:39 India Standard Time &middot; SHA-256 d1426f6955fc6952&hellip;
+  </figcaption>
+</figure>
+
+<figure id="evidence/07-evidence-evidence-no-college-credits.png">
+  <img src="evidence/07-evidence-evidence-no-college-credits.png" alt="Evidence: no college credits">
+  <figcaption>
+    <strong>Evidence: no college credits</strong> (targeted)<br>
+    https://gallopnyc.org/recreational-riding<br>
+    Captured 2026-08-17 23:35:41 India Standard Time &middot; SHA-256 cb4f52c51b355f2f&hellip;
+  </figcaption>
+</figure>
+
+<figure id="evidence/08-evidence-evidence-recreational-riding-distinct-fr.png">
+  <img src="evidence/08-evidence-evidence-recreational-riding-distinct-fr.png" alt="Evidence: recreational riding distinct from therapy">
+  <figcaption>
+    <strong>Evidence: recreational riding distinct from therapy</strong> (targeted)<br>
+    https://gallopnyc.org/recreational-riding<br>
+    Captured 2026-08-17 23:35:43 India Standard Time &middot; SHA-256 5d981c404386d12a&hellip;
+  </figcaption>
+</figure>
+
+
+<footer>
+  This report was produced by the Pre-Approval Website-Verification Tool to assist the
+  Pre-Approvals reviewer. It records what was (and was not) visible on the provider's public
+  website on the review date. <strong>It does not approve or deny anything — the final
+  decision is always made by staff.</strong> Items the website cannot answer are listed as
+  Internal and were deliberately not guessed.
+  <br><br>
+  Run cost: 333,126 input + 6,177
+  output tokens across 37 model request(s),
+  estimated $0.19 at the prices set in config.yaml.
+  The agent's full action trail for this review is in <code>run.log</code>.
+</footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ProofPack — {{ r.application.requested_item }} ({{ r.application.participant_name }})</title>
+<style>
+  :root {
+    --ink: #111827; --muted: #6b7280; --line: #e5e7eb; --bg: #f9fafb;
+    --green-bg: #d1fae5; --green-ink: #065f46;
+    --red-bg: #fee2e2;   --red-ink: #991b1b;
+    --amber-bg: #fef3c7; --amber-ink: #92400e;
+    --grey-bg: #f3f4f6;  --grey-ink: #374151;
+    --blue-bg: #dbeafe;  --blue-ink: #1e40af;
+  }
+  * { box-sizing: border-box; }
+  body { font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif; color: var(--ink);
+         margin: 0; background: var(--bg); line-height: 1.5; }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 32px 24px 64px; }
+  header.doc { border-bottom: 3px solid var(--ink); padding-bottom: 16px; margin-bottom: 24px; }
+  header.doc h1 { margin: 0 0 4px; font-size: 26px; }
+  header.doc .sub { color: var(--muted); font-size: 14px; }
+  h2 { font-size: 18px; margin: 32px 0 12px; border-bottom: 1px solid var(--line); padding-bottom: 6px; }
+  table.kv { width: 100%; border-collapse: collapse; font-size: 14px; background: #fff;
+             border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+  table.kv th { text-align: left; width: 220px; color: var(--muted); font-weight: 600;
+                padding: 8px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  table.kv td { padding: 8px 12px; border-bottom: 1px solid var(--line); word-break: break-word; }
+  table.kv tr:last-child th, table.kv tr:last-child td { border-bottom: none; }
+  .chip { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 12.5px;
+          font-weight: 700; letter-spacing: .2px; white-space: nowrap; }
+  .chip.found { background: var(--green-bg); color: var(--green-ink); }
+  .chip.not-found { background: var(--red-bg); color: var(--red-ink); }
+  .chip.needs-review { background: var(--amber-bg); color: var(--amber-ink); }
+  .chip.internal { background: var(--grey-bg); color: var(--grey-ink); }
+  .chip.needs-document { background: var(--blue-bg); color: var(--blue-ink); }
+  .card { background: #fff; border: 1px solid var(--line); border-radius: 8px;
+          padding: 14px 16px; margin-bottom: 12px; }
+  .card .q { font-weight: 600; margin-bottom: 2px; }
+  .card .req { color: var(--muted); font-size: 13px; margin-bottom: 8px; }
+  .card .note { font-size: 14px; margin: 8px 0 0; }
+  blockquote { margin: 10px 0 0; padding: 8px 12px; border-left: 3px solid var(--ink);
+               background: var(--bg); font-size: 13.5px; font-style: italic; }
+  blockquote .src { display: block; font-style: normal; color: var(--muted); font-size: 12px; margin-top: 4px; }
+  .ev-links { margin-top: 8px; font-size: 13px; }
+  .ev-links a { color: #1d4ed8; }
+  .summary { background: #fff; border: 1px solid var(--line); border-left: 4px solid var(--ink);
+             border-radius: 8px; padding: 14px 16px; font-size: 14.5px; white-space: pre-wrap; }
+  .banner { border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; font-size: 14px; }
+  .banner.warn { background: var(--amber-bg); color: var(--amber-ink); border: 1px solid #fcd34d; }
+  .banner.appeal { background: var(--blue-bg); color: var(--blue-ink); border: 1px solid #93c5fd; }
+  .rate { display: flex; gap: 16px; flex-wrap: wrap; }
+  .rate .box { flex: 1 1 240px; background: #fff; border: 1px solid var(--line);
+               border-radius: 8px; padding: 12px 16px; }
+  .rate .box .h { color: var(--muted); font-size: 12px; font-weight: 700; text-transform: uppercase;
+                  letter-spacing: .5px; margin-bottom: 4px; }
+  .rate .box .v { font-size: 15px; font-weight: 600; }
+  figure { margin: 0 0 20px; background: #fff; border: 1px solid var(--line); border-radius: 8px;
+           padding: 12px; }
+  figure img { max-width: 100%; border: 1px solid var(--line); border-radius: 4px; }
+  figcaption { font-size: 12.5px; color: var(--muted); margin-top: 8px; word-break: break-all; }
+  ul.notes { font-size: 13.5px; color: var(--grey-ink); }
+  footer { margin-top: 40px; padding-top: 12px; border-top: 1px solid var(--line);
+           color: var(--muted); font-size: 12.5px; }
+  @media print {
+    body { background: #fff; }
+    .wrap { padding: 0; max-width: none; }
+    figure { break-inside: avoid; }
+    .card { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="doc">
+  <h1>Pre-Approval Website Verification Report</h1>
+  <div class="sub">
+    {{ r.category_display }} &middot; reviewed {{ r.reviewed_at }} &middot;
+    source form: {{ r.source_pdf }} &middot; ProofPack v{{ r.tool_version }} ({{ r.model }})
+    {%- if r.review_count > 1 %} &middot; <strong>re-run #{{ r.review_count }}</strong>{% endif %}
+  </div>
+</header>
+
+{% for w in r.warnings %}
+<div class="banner warn"><strong>Attention:</strong> {{ w }}</div>
+{% endfor %}
+
+{% if r.application.denial_reason %}
+<div class="banner appeal">
+  <strong>APPEAL</strong> — original denial {{ r.application.denial_date or "" }}:
+  &ldquo;{{ r.application.denial_reason }}&rdquo;<br>
+  Applicant's justification: {{ r.application.appeal_justification or "—" }}
+</div>
+{% endif %}
+
+<h2>The request at a glance</h2>
+<table class="kv">
+  <tr><th>Participant</th><td>{{ r.application.participant_name }}{% if r.application.participant_age is not none %} (age {{ r.application.participant_age }}){% endif %}</td></tr>
+  <tr><th>Category</th><td>{{ r.category_display }}</td></tr>
+  <tr><th>Requested</th><td>{{ r.application.requested_item }}</td></tr>
+  <tr><th>Provider / Vendor</th><td>{{ r.application.provider_name or "—" }}</td></tr>
+  <tr><th>Website / link</th><td><a href="{{ r.application.url }}">{{ r.application.url }}</a></td></tr>
+  <tr><th>Fee on application</th><td>{{ r.application.fee_text }}</td></tr>
+  {% if r.application.duration_text %}<tr><th>Duration / billing</th><td>{{ r.application.duration_text }}</td></tr>{% endif %}
+  {% if r.application.safety_features %}<tr><th>Safety features (form)</th><td>{{ r.application.safety_features }}</td></tr>{% endif %}
+  <tr><th>Review date</th><td>{{ r.reviewed_at }}</td></tr>
+</table>
+
+{% if agent_summary %}
+<h2>Summary for the reviewer</h2>
+<div class="summary">{{ agent_summary }}</div>
+{% endif %}
+
+<h2>Rate comparison</h2>
+<div class="rate">
+  <div class="box"><div class="h">Fee on application</div><div class="v">{{ r.rate_comparison.form_fee }}</div></div>
+  <div class="box"><div class="h">Fee found on website</div><div class="v">{{ r.rate_comparison.published_fee or "— none published —" }}</div></div>
+  <div class="box"><div class="h">Verdict</div><div class="v"><span class="chip {{ verdict_class }}">{{ r.rate_comparison.verdict }}</span></div></div>
+</div>
+{% if r.rate_comparison.detail %}<p class="note">{{ r.rate_comparison.detail }}</p>{% endif %}
+{% if r.rate_comparison.evidence_files %}
+<p class="ev-links">Evidence:
+  {% for f in r.rate_comparison.evidence_files %}<a href="{{ f }}">{{ f }}</a>{% if not loop.last %}, {% endif %}{% endfor %}
+  {% if r.rate_comparison.evidence_url %} &middot; seen at <a href="{{ r.rate_comparison.evidence_url }}">{{ r.rate_comparison.evidence_url }}</a>{% endif %}
+</p>
+{% endif %}
+
+<h2>Website verification — checked on the provider's public website</h2>
+{% for f in website_findings %}
+<div class="card">
+  <div class="q">{{ f.requirement or f.form_question }} &nbsp;<span class="chip {{ f.status.value|status_class }}">{{ f.status.value|status_label }}</span></div>
+  <div class="req">Form question: {{ f.form_question }}</div>
+  {% if f.note %}<div class="note">{{ f.note }}</div>{% endif %}
+  {% if f.quote %}
+  <blockquote>&ldquo;{{ f.quote }}&rdquo;
+    {% if f.evidence_url %}<span class="src">— {{ f.evidence_url }}</span>{% endif %}
+  </blockquote>
+  {% endif %}
+  {% if f.evidence_files %}
+  <div class="ev-links">Evidence:
+    {% for file in f.evidence_files %}<a href="{{ file }}">{{ file }}</a>{% if not loop.last %}, {% endif %}{% endfor %}
+  </div>
+  {% endif %}
+</div>
+{% endfor %}
+
+{% if form_checks %}
+<h2>Form-level checks (deterministic)</h2>
+{% for f in form_checks %}
+<div class="card">
+  <div class="q">{{ f.requirement or f.form_question }} &nbsp;<span class="chip {{ f.status.value|status_class }}">{{ f.status.value|status_label }}</span></div>
+  {% if f.note %}<div class="note">{{ f.note }}</div>{% endif %}
+</div>
+{% endfor %}
+{% endif %}
+
+{% if document_findings %}
+<h2>Requires a document (not the website)</h2>
+{% for f in document_findings %}
+<div class="card">
+  <div class="q">{{ f.form_question }} &nbsp;<span class="chip needs-document">Needs Document</span></div>
+  {% if f.note %}<div class="note">{{ f.note }}</div>{% endif %}
+</div>
+{% endfor %}
+{% endif %}
+
+<h2>Internal items — for the reviewer (not answered by this tool)</h2>
+{% for f in internal_findings %}
+<div class="card">
+  <div class="q">{{ f.form_question }} &nbsp;<span class="chip internal">Internal</span></div>
+  {% if f.note %}<div class="note">{{ f.note }}</div>{% endif %}
+</div>
+{% endfor %}
+
+{% if r.checklist_notes %}
+<h2>Program notes for this category</h2>
+<ul class="notes">
+  {% for n in r.checklist_notes %}<li>{{ n }}</li>{% endfor %}
+</ul>
+{% endif %}
+
+{% if r.reviewer_notes %}
+<h2>Reviewer notes</h2>
+<ul class="notes">
+  {% for n in r.reviewer_notes %}<li>{{ n }}</li>{% endfor %}
+</ul>
+{% endif %}
+
+<h2>Evidence captures</h2>
+<p class="ev-links">Each capture is stamped in-image with its capture time and URL.
+Integrity hashes: <a href="manifest.json">manifest.json</a>.</p>
+{% for e in r.evidence %}
+<figure id="{{ e.file }}">
+  <img src="{{ e.file }}" alt="{{ e.label }}">
+  <figcaption>
+    <strong>{{ e.label }}</strong> ({{ e.kind }})<br>
+    {{ e.url }}<br>
+    Captured {{ e.captured_at }} &middot; SHA-256 {{ e.sha256[:16] }}&hellip;
+  </figcaption>
+</figure>
+{% endfor %}
+
+<footer>
+  This report was produced by the Pre-Approval Website-Verification Tool to assist the
+  Pre-Approvals reviewer. It records what was (and was not) visible on the provider's public
+  website on the review date. <strong>It does not approve or deny anything — the final
+  decision is always made by staff.</strong> Items the website cannot answer are listed as
+  Internal and were deliberately not guessed.
+  <br><br>
+  Run cost: {{ "{:,}".format(r.usage.input_tokens) }} input + {{ "{:,}".format(r.usage.output_tokens) }}
+  output tokens across {{ r.usage.requests }} model request(s){% if r.estimated_cost_usd is not none %},
+  estimated ${{ "%.2f"|format(r.estimated_cost_usd) }} at the prices set in config.yaml{% endif %}.
+  The agent's full action trail for this review is in <code>run.log</code>.
+</footer>
+
+</div>
+</body>
+</html>

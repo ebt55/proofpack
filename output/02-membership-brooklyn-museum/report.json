@@ -1,0 +1,206 @@
+{
+  "tool_version": "0.1.0",
+  "model": "gemini-3.7-flash",
+  "source_pdf": "02-membership-brooklyn-museum.pdf",
+  "reviewed_at": "2026-08-17T23:38:38+05:30",
+  "category": "membership",
+  "category_display": "Health Club / Organizational Membership",
+  "application": {
+    "category": "membership",
+    "form_title": "Health Club / Organizational Memberships Pre-approval Checklist",
+    "participant_name": "Samira Haddad",
+    "participant_age": 31,
+    "fi_coordinator": "R. Patel",
+    "broker": "T. Nguyen",
+    "requested_item": "Individual Membership (one adult)",
+    "provider_name": "Brooklyn Museum",
+    "url": "https://www.brooklynmuseum.org/support/membership",
+    "fee_text": "Membership Fee: $85",
+    "fees": [
+      {
+        "amount": 85.0,
+        "unit": "per year"
+      }
+    ],
+    "duration_text": "Annual (12 months)",
+    "subject_area": null,
+    "safety_features": null,
+    "valued_outcome": "Samira wants to visit exhibitions regularly and attend member programs to expand her interests in art and meet people in her borough.",
+    "justification": "An annual membership is cheaper than the per-visit tickets Samira currently pays for and supports her Life Plan goal of independent community outings.",
+    "denial_date": null,
+    "denial_reason": null,
+    "appeal_justification": null,
+    "form_answers": [
+      {
+        "question": "1. Is Health-club/Organizational Membership currently approved in the budget?",
+        "answer": "YES"
+      },
+      {
+        "question": "2. Is the organization open to the public and not a private/invitation-only club?",
+        "answer": "YES"
+      },
+      {
+        "question": "3. Is the membership fee published on the organization's website?",
+        "answer": "YES"
+      },
+      {
+        "question": "4. Does the membership provide opportunity for community inclusion?",
+        "answer": "YES"
+      },
+      {
+        "question": "5. Does the membership accommodate the individual's health and/or safety needs?",
+        "answer": "YES"
+      },
+      {
+        "question": "6. Does the membership increase independence or substitute for human assistance?",
+        "answer": "YES"
+      },
+      {
+        "question": "7. Is the membership provided exclusively toward the benefit of the participant? (not family)",
+        "answer": "YES"
+      }
+    ]
+  },
+  "rate_comparison": {
+    "form_fee": "Membership Fee: $85",
+    "published_fee": "$80 per year",
+    "verdict": "differs from application",
+    "detail": "The website lists the annual Individual Membership at $80 per year (and notes a $10 discount for seniors and visitors with disabilities, making it $70), which differs from the $85 per year listed on the application.",
+    "evidence_url": "https://www.brooklynmuseum.org/support/membership",
+    "evidence_files": [
+      "evidence/04-evidence-evidence-published-membership-fees.png"
+    ]
+  },
+  "findings": [
+    {
+      "item_id": "open_to_public",
+      "form_question": "Is the organization open to the public and not a private/invitation-only club?",
+      "requirement": "Organization is open to the public — not a private/invitation-only club",
+      "status": "found",
+      "note": "The Brooklyn Museum offers public memberships with clear online join and renewal options, open to the general public without private invitation or sponsorship requirements.",
+      "quote": "You belong here. Members help make possible the great art, big ideas, and courageous conversations that can only happen at the Brooklyn Museum.",
+      "evidence_url": "https://www.brooklynmuseum.org/support/membership",
+      "evidence_files": [
+        "evidence/02-evidence-evidence-open-to-public-membership.png"
+      ],
+      "source": "agent"
+    },
+    {
+      "item_id": "fee_published",
+      "form_question": "(program guideline) Membership fee is published",
+      "requirement": "Membership fee is published; the published amount is comparable against the form's fee",
+      "status": "found",
+      "note": "The annual Individual Membership is published on the website at $80 per year (with a $10 discount available for adults 65+ and visitors with disabilities).",
+      "quote": "Adults 65+ and visitors with disabilities can save $10 on annual Individual and Dual Memberships.",
+      "evidence_url": "https://www.brooklynmuseum.org/support/membership",
+      "evidence_files": [
+        "evidence/04-evidence-evidence-published-membership-fees.png"
+      ],
+      "source": "agent"
+    },
+    {
+      "item_id": "budget_approved",
+      "form_question": "Is Health-club/Organizational Membership currently approved in the budget?",
+      "requirement": null,
+      "status": "internal",
+      "note": "Internal — not website-verifiable. Participant budget data lives in internal systems.",
+      "quote": null,
+      "evidence_url": null,
+      "evidence_files": [],
+      "source": "deterministic"
+    },
+    {
+      "item_id": "community_inclusion",
+      "form_question": "Does the membership provide opportunity for community inclusion?",
+      "requirement": null,
+      "status": "internal",
+      "note": "Internal — not website-verifiable. Judgment about the participant's inclusion goals — reviewer decision.",
+      "quote": null,
+      "evidence_url": null,
+      "evidence_files": [],
+      "source": "deterministic"
+    },
+    {
+      "item_id": "health_safety_needs",
+      "form_question": "Does the membership accommodate the individual's health and/or safety needs?",
+      "requirement": null,
+      "status": "internal",
+      "note": "Internal — not website-verifiable. Depends on the individual's needs, not on the website.",
+      "quote": null,
+      "evidence_url": null,
+      "evidence_files": [],
+      "source": "deterministic"
+    },
+    {
+      "item_id": "increases_independence",
+      "form_question": "Does the membership increase independence or substitute for human assistance?",
+      "requirement": null,
+      "status": "internal",
+      "note": "Internal — not website-verifiable. Depends on the participant's Life Plan and situation.",
+      "quote": null,
+      "evidence_url": null,
+      "evidence_files": [],
+      "source": "deterministic"
+    },
+    {
+      "item_id": "exclusive_benefit",
+      "form_question": "Is the membership provided exclusively toward the benefit of the participant? (not family)",
+      "requirement": null,
+      "status": "internal",
+      "note": "Internal — not website-verifiable. Whether the membership is single vs family is partly visible on the website, but exclusive use is a reviewer determination.",
+      "quote": null,
+      "evidence_url": null,
+      "evidence_files": [],
+      "source": "deterministic"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "evidence/01-full-full-page-brooklyn-museum-membership-lev.png",
+      "kind": "full_page",
+      "label": "Full page: Brooklyn Museum membership levels and pricing",
+      "url": "https://www.brooklynmuseum.org/support/membership",
+      "captured_at": "2026-08-17 23:37:35 India Standard Time",
+      "sha256": "145c6e4a4a1375f062f521421214eb111b5c77ff4d41a52ac62226994ceb2871"
+    },
+    {
+      "file": "evidence/02-evidence-evidence-open-to-public-membership.png",
+      "kind": "targeted",
+      "label": "Evidence: open to public membership",
+      "url": "https://www.brooklynmuseum.org/support/membership",
+      "captured_at": "2026-08-17 23:37:41 India Standard Time",
+      "sha256": "869c77908e3debebbca4a155f76a41979fd97aac440d8d9a2bbbe0b7f456801c"
+    },
+    {
+      "file": "evidence/04-evidence-evidence-published-membership-fees.png",
+      "kind": "targeted",
+      "label": "Evidence: published membership fees",
+      "url": "https://www.brooklynmuseum.org/support/membership",
+      "captured_at": "2026-08-17 23:37:51 India Standard Time",
+      "sha256": "30eac8e2b99b5081f17ba2f000e3f788ed1d5bb98ea083c18f2bc6ca2ec466c8"
+    },
+    {
+      "file": "evidence/05-evidence-evidence-membership-levels.png",
+      "kind": "targeted",
+      "label": "Evidence: membership levels",
+      "url": "https://www.brooklynmuseum.org/support/membership",
+      "captured_at": "2026-08-17 23:37:53 India Standard Time",
+      "sha256": "ab2c6dc433875048c88d3c5c110eaed435454a03289f455fad7c7c0ed33c9ea0"
+    }
+  ],
+  "agent_summary": "I reviewed the Brooklyn Museum membership page at https://www.brooklynmuseum.org/support/membership. The organization is open to the general public, offering clear online registration options without private club or sponsorship restrictions. The website publishes an annual Individual Membership fee of $80 per year, with an available $10 discount for seniors and visitors with disabilities. This published rate differs from the $85 per year listed on the application form. Full-page and targeted evidence screenshots have been captured for the audit file.",
+  "checklist_notes": [
+    "IDGS memberships do NOT cover family or dual memberships (or a share of one)."
+  ],
+  "reviewer_notes": [],
+  "warnings": [],
+  "usage": {
+    "requests": 21,
+    "input_tokens": 108739,
+    "output_tokens": 4646,
+    "cache_read_input_tokens": 3974,
+    "cache_creation_input_tokens": 0
+  },
+  "estimated_cost_usd": 0.0688,
+  "review_count": 1
+}

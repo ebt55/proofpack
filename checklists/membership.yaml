@@ -1,0 +1,61 @@
+# Health Club / Organizational Memberships — checklist definition
+# Questions follow the NY OPWDD Self-Direction pre-approval form for this category.
+
+category: membership
+display_name: Health Club / Organizational Membership
+form_title_hints:
+  - "Health Club / Organizational Memberships"
+  - "Memberships Pre-approval"
+
+adults_only: false
+
+fee_caps: []   # no dollar cap; published amount is checked against the form fee (rate comparison)
+
+notes:
+  - "IDGS memberships do NOT cover family or dual memberships (or a share of one)."
+
+items:
+  - id: open_to_public
+    form_question: "Is the organization open to the public and not a private/invitation-only club?"
+    requirement: "Organization is open to the public — not a private/invitation-only club"
+    kind: website
+    check_hint: >
+      Look for public join/sign-up flows, published membership options anyone can buy, and the
+      absence of invitation/sponsorship requirements.
+
+  - id: fee_published
+    form_question: "(program guideline) Membership fee is published"
+    requirement: "Membership fee is published; the published amount is comparable against the form's fee"
+    kind: website
+    check_hint: >
+      Find the published membership price for the specific membership named on the form (e.g.
+      'Classic'). Note billing period (monthly/yearly), start-up/annual fees, and whether pricing
+      is location-dependent. If the site requires choosing a location before showing a price,
+      capture that flow and report what is (or is not) publicly visible.
+
+  # ---- internal items ----
+
+  - id: budget_approved
+    form_question: "Is Health-club/Organizational Membership currently approved in the budget?"
+    kind: internal
+    internal_reason: "Participant budget data lives in internal systems."
+
+  - id: community_inclusion
+    form_question: "Does the membership provide opportunity for community inclusion?"
+    kind: internal
+    internal_reason: "Judgment about the participant's inclusion goals — reviewer decision."
+
+  - id: health_safety_needs
+    form_question: "Does the membership accommodate the individual's health and/or safety needs?"
+    kind: internal
+    internal_reason: "Depends on the individual's needs, not on the website."
+
+  - id: increases_independence
+    form_question: "Does the membership increase independence or substitute for human assistance?"
+    kind: internal
+    internal_reason: "Depends on the participant's Life Plan and situation."
+
+  - id: exclusive_benefit
+    form_question: "Is the membership provided exclusively toward the benefit of the participant? (not family)"
+    kind: internal
+    internal_reason: "Whether the membership is single vs family is partly visible on the website, but exclusive use is a reviewer determination."

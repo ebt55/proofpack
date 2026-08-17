@@ -1,0 +1,27 @@
+23:38:38  Extracting application from 03-community-class-gracie-barra.pdf ...
+23:38:42    -> community_class | GB1 Jiu-Jitsu Fundamentals (beginner adult class) | Gracie Barra | https://graciebarra.com/classes/jiu-jitsu-fundamentals/
+23:38:42  Verifying on the provider's website (https://graciebarra.com/classes/jiu-jitsu-fundamentals/) ...
+23:38:45  open_url: https://graciebarra.com/classes/jiu-jitsu-fundamentals/
+23:39:12  read_page: offset=0
+23:39:14  list_links: filter=''
+23:39:15  open_url: https://graciebarra.com/classes/
+23:39:24  find_on_page: '$'
+23:39:25  open_url: https://graciebarra.com/classes/jiu-jitsu-fundamentals/
+23:39:28  find_on_page: '$'
+23:39:30  find_on_page: 'price'
+23:39:31  find_on_page: 'fee'
+23:39:33  find_on_page: 'schedule'
+23:39:36  capture_page: 'Full page: Gracie Barra Jiu-Jitsu Fundamentals'
+23:39:38  capture_evidence: 'The GB1 Program is the foundation of Jiu-Jitsu at Gracie Barra - designed specifically for beginners.' ('Evidence: open to public')
+23:39:41  capture_evidence: 'Builds a strong foundation in Jiu-Jitsu techniques and self-defence' ('Evidence: subject-based martial arts class')
+23:39:51  capture_evidence: 'Our certified instructors focus on proper movement, posture, and mindset, helping you build strong fundamentals that prepare you for progression into GB2 and beyond.' ('Evidence: recreational martial arts training')
+23:39:53  record_finding: open_to_public = found
+23:39:55  record_finding: published_fees = not_found
+23:39:56  record_finding: fees_identical = needs_review
+23:39:58  record_finding: subject_based = found
+23:40:00  record_finding: no_college_credits = found
+23:40:01  record_finding: not_clinical = found
+23:40:03  record_finding: published_schedule = not_found
+23:40:06  record_rate_comparison: not published
+23:40:08  Tokens: 176,357 in / 5,229 out across 24 request(s) — estimated $0.10
+23:40:08  Report package written to output\03-community-class-gracie-barra

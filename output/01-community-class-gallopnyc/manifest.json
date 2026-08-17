@@ -1,0 +1,61 @@
+{
+  "note": "Every capture below is stamped in-image with its capture time and URL. SHA-256 hashes are computed over the stamped file; recompute to verify the evidence has not been altered.",
+  "captures": [
+    {
+      "file": "evidence/01-full-full-page-gallopnyc-recreational-riding.png",
+      "kind": "full_page",
+      "label": "Full page: GallopNYC Recreational Riding",
+      "url": "https://gallopnyc.org/recreational-riding",
+      "captured_at": "2026-08-17 23:34:42 India Standard Time",
+      "sha256": "4e53077c3279fc8550433a2d6d8ed37886eab0ecef86546c9a98d4268d9710d9"
+    },
+    {
+      "file": "evidence/02-evidence-evidence-open-to-public.png",
+      "kind": "targeted",
+      "label": "Evidence: open to public",
+      "url": "https://gallopnyc.org/recreational-riding",
+      "captured_at": "2026-08-17 23:34:44 India Standard Time",
+      "sha256": "4f7bc49845e6b9c88a5de1fbf41c897bd4a5867b4d74bc1517a5fd5fba1314ab"
+    },
+    {
+      "file": "evidence/03-evidence-evidence-published-fees.png",
+      "kind": "targeted",
+      "label": "Evidence: published fees",
+      "url": "https://gallopnyc.org/recreational-riding",
+      "captured_at": "2026-08-17 23:34:45 India Standard Time",
+      "sha256": "a62f68d47944c2b681d26942bfd21daaf8010fbd8b7f5be9181371b75c8c9436"
+    },
+    {
+      "file": "evidence/05-evidence-evidence-fees-identical.png",
+      "kind": "targeted",
+      "label": "Evidence: fees identical",
+      "url": "https://gallopnyc.org/recreational-riding",
+      "captured_at": "2026-08-17 23:35:37 India Standard Time",
+      "sha256": "28551fe5c032c678400f73bd49528c239f64683fd59863be9e1cf6700264d441"
+    },
+    {
+      "file": "evidence/06-evidence-evidence-subject-based-horse-riding-less.png",
+      "kind": "targeted",
+      "label": "Evidence: subject-based horse riding lesson",
+      "url": "https://gallopnyc.org/recreational-riding",
+      "captured_at": "2026-08-17 23:35:39 India Standard Time",
+      "sha256": "d1426f6955fc69522c9571d3de0d0e126a1dc76e24511b980e201d9cd4058189"
+    },
+    {
+      "file": "evidence/07-evidence-evidence-no-college-credits.png",
+      "kind": "targeted",
+      "label": "Evidence: no college credits",
+      "url": "https://gallopnyc.org/recreational-riding",
+      "captured_at": "2026-08-17 23:35:41 India Standard Time",
+      "sha256": "cb4f52c51b355f2f3d7b3d071aefbdf2193a8e8cb24ba3d04f7963647274ec74"
+    },
+    {
+      "file": "evidence/08-evidence-evidence-recreational-riding-distinct-fr.png",
+      "kind": "targeted",
+      "label": "Evidence: recreational riding distinct from therapy",
+      "url": "https://gallopnyc.org/recreational-riding",
+      "captured_at": "2026-08-17 23:35:43 India Standard Time",
+      "sha256": "5d981c404386d12ae98a310f41ac623d0b3a18707b64d441ec2c6f267b639574"
+    }
+  ]
+}

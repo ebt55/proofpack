@@ -1,0 +1,374 @@
+{
+  "tool_version": "0.1.0",
+  "model": "gemini-3.7-flash",
+  "source_pdf": "03-community-class-gracie-barra.pdf",
+  "reviewed_at": "2026-08-17T23:40:08+05:30",
+  "category": "community_class",
+  "category_display": "Community Classes",
+  "application": {
+    "category": "community_class",
+    "form_title": "Community Class Pre-approval Checklist",
+    "participant_name": "Luis Ortega",
+    "participant_age": 19,
+    "fi_coordinator": "A. Brennan",
+    "broker": "M. Okafor",
+    "requested_item": "GB1 Jiu-Jitsu Fundamentals (beginner adult class)",
+    "provider_name": "Gracie Barra",
+    "url": "https://graciebarra.com/classes/jiu-jitsu-fundamentals/",
+    "fee_text": "$189 per month (unlimited fundamentals classes)",
+    "fees": [
+      {
+        "amount": 189.0,
+        "unit": "per month"
+      }
+    ],
+    "duration_text": "60 minutes",
+    "subject_area": "Martial arts — Brazilian Jiu-Jitsu",
+    "safety_features": null,
+    "valued_outcome": "Luis wants to improve fitness, self-confidence and self-defence skills in a structured group setting.",
+    "justification": "Beginner-level group martial arts class open to the public; supports Luis's Life Plan goals for physical activity and social interaction with peers.",
+    "denial_date": null,
+    "denial_reason": null,
+    "appeal_justification": null,
+    "form_answers": [
+      {
+        "question": "Are community classes currently approved in the budget?",
+        "answer": "YES"
+      },
+      {
+        "question": "Is the class open to and attended by the broader public?",
+        "answer": "YES"
+      },
+      {
+        "question": "Does the class have published fees? (attach link / advertised flyer)",
+        "answer": "YES"
+      },
+      {
+        "question": "Are the fees identical for both OPWDD and non-OPWDD individuals?",
+        "answer": "YES"
+      },
+      {
+        "question": "Is the class subject based? (Art, Dance, Martial Arts, Cooking)",
+        "answer": "YES"
+      },
+      {
+        "question": "Does the class provide college credits?",
+        "answer": "NO"
+      },
+      {
+        "question": "Is the class clinical in nature? (therapy)",
+        "answer": "NO"
+      },
+      {
+        "question": "Is there a published schedule of the class? (please attach)",
+        "answer": "YES"
+      },
+      {
+        "question": "Does the class provide opportunity for community inclusion?",
+        "answer": "YES"
+      },
+      {
+        "question": "Does the class accommodate the individual's health and/or safety needs?",
+        "answer": "YES"
+      },
+      {
+        "question": "Does the class increase independence or substitute for human assistance?",
+        "answer": "YES"
+      },
+      {
+        "question": "Is the class provided exclusively for the benefit of the participant?",
+        "answer": "YES"
+      },
+      {
+        "question": "Is the class given in a setting accessed only by people with Developmental Disabilities?",
+        "answer": "NO"
+      },
+      {
+        "question": "Is the class run by OPWDD or a provider-agency staff acting in their official capacities?",
+        "answer": "NO"
+      },
+      {
+        "question": "Is the class located on grounds where OPWDD services are normally provided?",
+        "answer": "NO"
+      },
+      {
+        "question": "Does the class duplicate any Medicaid state plan or HCBS waiver services?",
+        "answer": "NO"
+      },
+      {
+        "question": "Does the class duplicate services given through Board of Education for school-aged children?",
+        "answer": "NO"
+      },
+      {
+        "question": "Is the class being reimbursed directly? (if yes, attach a W9)",
+        "answer": "NO"
+      }
+    ]
+  },
+  "rate_comparison": {
+    "form_fee": "$189 per month (unlimited fundamentals classes)",
+    "published_fee": null,
+    "verdict": "not published",
+    "detail": "No pricing or membership fee information is published on the Gracie Barra website for the GB1 Fundamentals program.",
+    "evidence_url": null,
+    "evidence_files": []
+  },
+  "findings": [
+    {
+      "item_id": "open_to_public",
+      "form_question": "Is the class open to and attended by the broader public?",
+      "requirement": "Class is open to and attended by the broader public (not restricted to disabled/OPWDD individuals)",
+      "status": "found",
+      "note": "The GB1 Fundamentals program is open to the general public and designed for beginners with no prior experience required.",
+      "quote": "The GB1 Program is the foundation of Jiu-Jitsu at Gracie Barra - designed specifically for beginners. With no experience required, this program introduces students to core techniques, self-defence skills, and the philosophy behind our team.",
+      "evidence_url": "https://graciebarra.com/classes/jiu-jitsu-fundamentals/",
+      "evidence_files": [
+        "evidence/02-evidence-evidence-open-to-public.png"
+      ],
+      "source": "agent"
+    },
+    {
+      "item_id": "published_fees",
+      "form_question": "Does the class have published fees? (attach link / advertised flyer)",
+      "requirement": "Class has published fees — a public price is visible on the website",
+      "status": "not_found",
+      "note": "The provider's website outlines the GB1 program and offers a free introductory trial class, but does not display any public pricing or membership fees.",
+      "quote": null,
+      "evidence_url": "https://graciebarra.com/classes/jiu-jitsu-fundamentals/",
+      "evidence_files": [],
+      "source": "agent"
+    },
+    {
+      "item_id": "fees_identical",
+      "form_question": "Are the fees identical for both OPWDD and non-OPWDD individuals?",
+      "requirement": "Fees are identical for OPWDD and non-OPWDD individuals (no special/segregated pricing)",
+      "status": "needs_review",
+      "note": "Pricing is not published on the website, so identical pricing between OPWDD and non-OPWDD individuals cannot be verified.",
+      "quote": null,
+      "evidence_url": "https://graciebarra.com/classes/jiu-jitsu-fundamentals/",
+      "evidence_files": [],
+      "source": "agent"
+    },
+    {
+      "item_id": "subject_based",
+      "form_question": "Is the class subject based? (Art, Dance, Martial Arts, Cooking)",
+      "requirement": "Class is subject-based (art, dance, martial arts, cooking, riding, etc.)",
+      "status": "found",
+      "note": "The class teaches Brazilian Jiu-Jitsu martial arts fundamentals and self-defense skills.",
+      "quote": "Builds a strong foundation in Jiu-Jitsu techniques and self-defence",
+      "evidence_url": "https://graciebarra.com/classes/jiu-jitsu-fundamentals/",
+      "evidence_files": [
+        "evidence/03-evidence-evidence-subject-based-martial-arts-clas.png"
+      ],
+      "source": "agent"
+    },
+    {
+      "item_id": "no_college_credits",
+      "form_question": "Does the class provide college credits?",
+      "requirement": "Class does NOT provide college credits",
+      "status": "found",
+      "note": "The program is a recreational martial arts class for beginners, with no credit-bearing or degree language present.",
+      "quote": "The GB1 Program is the foundation of Jiu-Jitsu at Gracie Barra - designed specifically for beginners.",
+      "evidence_url": "https://graciebarra.com/classes/jiu-jitsu-fundamentals/",
+      "evidence_files": [
+        "evidence/02-evidence-evidence-open-to-public.png"
+      ],
+      "source": "agent"
+    },
+    {
+      "item_id": "not_clinical",
+      "form_question": "Is the class clinical in nature? (therapy)",
+      "requirement": "Class is NOT clinical/therapy in nature",
+      "status": "found",
+      "note": "The class is framed strictly as recreational martial arts instruction led by certified martial arts instructors, with no clinical therapy services offered.",
+      "quote": "Our certified instructors focus on proper movement, posture, and mindset, helping you build strong fundamentals that prepare you for progression into GB2 and beyond.",
+      "evidence_url": "https://graciebarra.com/classes/jiu-jitsu-fundamentals/",
+      "evidence_files": [
+        "evidence/04-evidence-evidence-recreational-martial-arts-train.png"
+      ],
+      "source": "agent"
+    },
+    {
+      "item_id": "published_schedule",
+      "form_question": "Is there a published schedule of the class? (please attach)",
+      "requirement": "A published schedule for the class exists (days/times or session calendar)",
+      "status": "not_found",
+      "note": "No class schedule, timetable, or days/times for GB1 classes are published on the website.",
+      "quote": null,
+      "evidence_url": "https://graciebarra.com/classes/jiu-jitsu-fundamentals/",
+      "evidence_files": [],
+      "source": "agent"
+    },
+    {
+      "item_id": "budget_approved",
+      "form_question": "Are community classes currently approved in the budget?",
+      "requirement": null,
+      "status": "internal",
+      "note": "Internal — not website-verifiable. Participant budget data lives in internal systems.",
+      "quote": null,
+      "evidence_url": null,
+      "evidence_files": [],
+      "source": "deterministic"
+    },
+    {
+      "item_id": "community_inclusion",
+      "form_question": "Does the class provide opportunity for community inclusion?",
+      "requirement": null,
+      "status": "internal",
+      "note": "Internal — not website-verifiable. Judgment about the participant's inclusion goals — reviewer decision.",
+      "quote": null,
+      "evidence_url": null,
+      "evidence_files": [],
+      "source": "deterministic"
+    },
+    {
+      "item_id": "health_safety_needs",
+      "form_question": "Does the class accommodate the individual's health and/or safety needs?",
+      "requirement": null,
+      "status": "internal",
+      "note": "Internal — not website-verifiable. Depends on the individual's needs, not on the website.",
+      "quote": null,
+      "evidence_url": null,
+      "evidence_files": [],
+      "source": "deterministic"
+    },
+    {
+      "item_id": "increases_independence",
+      "form_question": "Does the class increase independence or substitute for human assistance?",
+      "requirement": null,
+      "status": "internal",
+      "note": "Internal — not website-verifiable. Depends on the participant's Life Plan and situation.",
+      "quote": null,
+      "evidence_url": null,
+      "evidence_files": [],
+      "source": "deterministic"
+    },
+    {
+      "item_id": "exclusive_benefit",
+      "form_question": "Is the class provided exclusively for the benefit of the participant?",
+      "requirement": null,
+      "status": "internal",
+      "note": "Internal — not website-verifiable. About how the purchase is used, not the provider's website.",
+      "quote": null,
+      "evidence_url": null,
+      "evidence_files": [],
+      "source": "deterministic"
+    },
+    {
+      "item_id": "dd_only_setting",
+      "form_question": "Is the class given in a setting accessed only by people with Developmental Disabilities?",
+      "requirement": null,
+      "status": "internal",
+      "note": "Internal — not website-verifiable. Related to the 'open to the public' website check, but the definitive answer is a reviewer judgment.",
+      "quote": null,
+      "evidence_url": null,
+      "evidence_files": [],
+      "source": "deterministic"
+    },
+    {
+      "item_id": "opwdd_staff",
+      "form_question": "Is the class run by OPWDD or a provider-agency staff acting in their official capacities?",
+      "requirement": null,
+      "status": "internal",
+      "note": "Internal — not website-verifiable. Provider staffing/agency relationships are not reliably published.",
+      "quote": null,
+      "evidence_url": null,
+      "evidence_files": [],
+      "source": "deterministic"
+    },
+    {
+      "item_id": "opwdd_grounds",
+      "form_question": "Is the class located on grounds where OPWDD services are normally provided?",
+      "requirement": null,
+      "status": "internal",
+      "note": "Internal — not website-verifiable. Requires knowledge of OPWDD-certified locations.",
+      "quote": null,
+      "evidence_url": null,
+      "evidence_files": [],
+      "source": "deterministic"
+    },
+    {
+      "item_id": "duplicates_medicaid",
+      "form_question": "Does the class duplicate any Medicaid state plan or HCBS waiver services?",
+      "requirement": null,
+      "status": "internal",
+      "note": "Internal — not website-verifiable. Requires the participant's service records.",
+      "quote": null,
+      "evidence_url": null,
+      "evidence_files": [],
+      "source": "deterministic"
+    },
+    {
+      "item_id": "duplicates_boe",
+      "form_question": "Does the class duplicate services given through Board of Education for school-aged children?",
+      "requirement": null,
+      "status": "internal",
+      "note": "Internal — not website-verifiable. Requires the participant's education records.",
+      "quote": null,
+      "evidence_url": null,
+      "evidence_files": [],
+      "source": "deterministic"
+    },
+    {
+      "item_id": "reimbursed_directly",
+      "form_question": "Is the class being reimbursed directly? (if yes, attach a W9)",
+      "requirement": null,
+      "status": "internal",
+      "note": "Internal — not website-verifiable. Payment mechanics + W9 are internal paperwork.",
+      "quote": null,
+      "evidence_url": null,
+      "evidence_files": [],
+      "source": "deterministic"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "evidence/01-full-full-page-gracie-barra-jiu-jitsu-fundame.png",
+      "kind": "full_page",
+      "label": "Full page: Gracie Barra Jiu-Jitsu Fundamentals",
+      "url": "https://graciebarra.com/classes/jiu-jitsu-fundamentals/",
+      "captured_at": "2026-08-17 23:39:36 India Standard Time",
+      "sha256": "19f0000d71d0fc1e586b799e54f4fa03234a6ab2374867356f301d0f41bae9a6"
+    },
+    {
+      "file": "evidence/02-evidence-evidence-open-to-public.png",
+      "kind": "targeted",
+      "label": "Evidence: open to public",
+      "url": "https://graciebarra.com/classes/jiu-jitsu-fundamentals/",
+      "captured_at": "2026-08-17 23:39:38 India Standard Time",
+      "sha256": "03d852d57871aa09457fbd828f4df12b9b39ba076af5f4acb719f0eddcf6fd18"
+    },
+    {
+      "file": "evidence/03-evidence-evidence-subject-based-martial-arts-clas.png",
+      "kind": "targeted",
+      "label": "Evidence: subject-based martial arts class",
+      "url": "https://graciebarra.com/classes/jiu-jitsu-fundamentals/",
+      "captured_at": "2026-08-17 23:39:41 India Standard Time",
+      "sha256": "55093b2903dfce79e0496dd9723ec78238a07005ff2e02e87ceff360cee97e55"
+    },
+    {
+      "file": "evidence/04-evidence-evidence-recreational-martial-arts-train.png",
+      "kind": "targeted",
+      "label": "Evidence: recreational martial arts training",
+      "url": "https://graciebarra.com/classes/jiu-jitsu-fundamentals/",
+      "captured_at": "2026-08-17 23:39:51 India Standard Time",
+      "sha256": "fd57b5c0513ce141f731b1a9bf52893dc9e2d2c8a51835b6b38e2f4916070113"
+    }
+  ],
+  "agent_summary": "I reviewed the Gracie Barra Jiu-Jitsu Fundamentals (GB1) class webpage provided on the application. The program was confirmed to be a subject-based, recreational martial arts class open to the general public with no college credit or clinical therapy component. However, the website does not publish class pricing or a specific schedule with days and times. Because no fee structure is publicly available on the site, the requested rate of $189 per month could not be verified against published rates. The reviewer will need to obtain direct documentation or local school pricing confirmation from the provider for fee and schedule verification.",
+  "checklist_notes": [
+    "Invoice guideline: more than 2 sessions/day (up to 60 min each) or more than 7 sessions/week at one provider requires prior approval.",
+    "Classes must relate to a habilitative need in the Life Plan — not purely recreational."
+  ],
+  "reviewer_notes": [],
+  "warnings": [],
+  "usage": {
+    "requests": 24,
+    "input_tokens": 176357,
+    "output_tokens": 5229,
+    "cache_read_input_tokens": 3997,
+    "cache_creation_input_tokens": 0
+  },
+  "estimated_cost_usd": 0.1044,
+  "review_count": 1
+}

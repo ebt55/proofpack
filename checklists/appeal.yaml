@@ -1,0 +1,86 @@
+# Pre-Approval Appeals — checklist definition
+# Questions follow the NY OPWDD Self-Direction pre-approval form for this category.
+#
+# An appeal re-runs the Community Classes website checks, framed against the stated
+# denial reason. The tool must surface evidence that specifically supports or refutes
+# that reason. The website items below mirror community_class.yaml.
+
+category: appeal
+display_name: Pre-Approval Appeal (Community Class)
+form_title_hints:
+  - "Pre-Approval Appeals"
+  - "Appeals Form"
+
+adults_only: false
+
+fee_caps: []
+
+notes:
+  - "A special appeal committee reviews appeals once per month, after reviewing the justification and the provider's website."
+  - "The review below is framed against the stated denial reason: evidence that supports or refutes it is called out explicitly."
+
+appeal:
+  base_category: community_class
+  framing: >
+    This is an APPEAL of a previous denial. Re-run the community-class website checks, but give
+    priority and extra depth to the checks related to the denial reason. In every finding note,
+    say explicitly whether the evidence SUPPORTS the original denial reason or REFUTES it.
+
+items:
+  - id: open_to_public
+    form_question: "Is the class open to and attended by the broader public?"
+    requirement: "Class is open to and attended by the broader public (not restricted to disabled/OPWDD individuals)"
+    kind: website
+    check_hint: >
+      Look for registration/enrollment language showing anyone from the general public can sign up.
+
+  - id: published_fees
+    form_question: "Does the class have published fees?"
+    requirement: "Class has published fees — a public price is visible on the website"
+    kind: website
+    check_hint: >
+      Find an actual dollar price for the class on a public page. This is frequently the denial
+      reason under appeal — search the site thoroughly (pricing pages, schedule pages, FAQ,
+      location-specific pages) and document exactly where prices are or are not published.
+
+  - id: fees_identical
+    form_question: "Are the fees identical for both OPWDD and non-OPWDD individuals?"
+    requirement: "Fees are identical for OPWDD and non-OPWDD individuals"
+    kind: website
+    check_hint: >
+      Check whether the published pricing shows any separate rate for disabled/OPWDD participants.
+
+  - id: subject_based
+    form_question: "Is the class subject based?"
+    requirement: "Class is subject-based (art, dance, martial arts, cooking, etc.)"
+    kind: website
+    check_hint: >
+      Confirm the class teaches a concrete subject/skill.
+
+  - id: no_college_credits
+    form_question: "Does the class provide college credits?"
+    requirement: "Class does NOT provide college credits"
+    kind: website
+    check_hint: >
+      Check the class description for any credit-bearing language.
+
+  - id: not_clinical
+    form_question: "Is the class clinical in nature? (therapy)"
+    requirement: "Class is NOT clinical/therapy in nature"
+    kind: website
+    check_hint: >
+      Check whether the provider presents the class as therapy/clinical treatment.
+
+  - id: published_schedule
+    form_question: "Is there a published schedule of the class?"
+    requirement: "A published schedule for the class exists"
+    kind: website
+    check_hint: >
+      Find a schedule, calendar or timetable with days/times for the class.
+
+  # ---- internal items ----
+
+  - id: justification_review
+    form_question: "Justification for Appeal (attached rate sheet / documents)"
+    kind: internal
+    internal_reason: "Attached documents (e.g. a rate sheet obtained from the provider) are reviewed by the appeal committee — the tool only verifies what is on the public website."

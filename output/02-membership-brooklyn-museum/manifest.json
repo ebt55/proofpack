@@ -1,0 +1,37 @@
+{
+  "note": "Every capture below is stamped in-image with its capture time and URL. SHA-256 hashes are computed over the stamped file; recompute to verify the evidence has not been altered.",
+  "captures": [
+    {
+      "file": "evidence/01-full-full-page-brooklyn-museum-membership-lev.png",
+      "kind": "full_page",
+      "label": "Full page: Brooklyn Museum membership levels and pricing",
+      "url": "https://www.brooklynmuseum.org/support/membership",
+      "captured_at": "2026-08-17 23:37:35 India Standard Time",
+      "sha256": "145c6e4a4a1375f062f521421214eb111b5c77ff4d41a52ac62226994ceb2871"
+    },
+    {
+      "file": "evidence/02-evidence-evidence-open-to-public-membership.png",
+      "kind": "targeted",
+      "label": "Evidence: open to public membership",
+      "url": "https://www.brooklynmuseum.org/support/membership",
+      "captured_at": "2026-08-17 23:37:41 India Standard Time",
+      "sha256": "869c77908e3debebbca4a155f76a41979fd97aac440d8d9a2bbbe0b7f456801c"
+    },
+    {
+      "file": "evidence/04-evidence-evidence-published-membership-fees.png",
+      "kind": "targeted",
+      "label": "Evidence: published membership fees",
+      "url": "https://www.brooklynmuseum.org/support/membership",
+      "captured_at": "2026-08-17 23:37:51 India Standard Time",
+      "sha256": "30eac8e2b99b5081f17ba2f000e3f788ed1d5bb98ea083c18f2bc6ca2ec466c8"
+    },
+    {
+      "file": "evidence/05-evidence-evidence-membership-levels.png",
+      "kind": "targeted",
+      "label": "Evidence: membership levels",
+      "url": "https://www.brooklynmuseum.org/support/membership",
+      "captured_at": "2026-08-17 23:37:53 India Standard Time",
+      "sha256": "ab2c6dc433875048c88d3c5c110eaed435454a03289f455fad7c7c0ed33c9ea0"
+    }
+  ]
+}

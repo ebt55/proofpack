@@ -1,0 +1,24 @@
+23:36:49  Extracting application from 02-membership-brooklyn-museum.pdf ...
+23:36:54    -> membership | Individual Membership (one adult) | Brooklyn Museum | https://www.brooklynmuseum.org/support/membership
+23:36:54  Verifying on the provider's website (https://www.brooklynmuseum.org/support/membership) ...
+23:36:56  open_url: https://www.brooklynmuseum.org/support/membership
+23:37:32  read_page: offset=1500
+23:37:34  capture_page: 'Full page: Brooklyn Museum membership levels and pricing'
+23:37:37  find_on_page: 'Members help make possible'
+23:37:38  find_on_page: 'Adults 65+'
+23:37:39  find_on_page: '$80'
+23:37:41  capture_evidence: 'Adults 65+ and visitors with disabilities can save $10 on annual Individual' ('Evidence: open to public membership')
+23:37:43  capture_evidence: '$80' ('Evidence: published membership fee')
+23:37:49  find_on_page: 'Join or renew'
+23:37:51  capture_evidence: 'Become a Groundbreaker' ('Evidence: published membership fees')
+23:37:53  capture_evidence: 'MEMBERSHIP LEVELS' ('Evidence: membership levels')
+23:37:55  find_on_page: 'You belong here'
+23:37:57  list_links: filter='membership'
+23:37:59  open_url: https://secure.brooklynmuseum.org/m/membership/ind
+23:38:25  open_url: https://www.brooklynmuseum.org/support/membership
+23:38:29  find_on_page: 'Adults 65+'
+23:38:31  record_finding: open_to_public = found
+23:38:33  record_finding: fee_published = found
+23:38:35  record_rate_comparison: differs from application
+23:38:38  Tokens: 108,739 in / 4,646 out across 21 request(s) — estimated $0.07
+23:38:38  Report package written to output\02-membership-brooklyn-museum
