@@ -5,286 +5,988 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ProofPack — Gravity Weighted Blanket, 20 lb (Elena Vasquez)</title>
 <style>
-  :root {
-    --ink: #111827; --muted: #6b7280; --line: #e5e7eb; --bg: #f9fafb;
-    --green-bg: #d1fae5; --green-ink: #065f46;
-    --red-bg: #fee2e2;   --red-ink: #991b1b;
-    --amber-bg: #fef3c7; --amber-ink: #92400e;
-    --grey-bg: #f3f4f6;  --grey-ink: #374151;
-    --blue-bg: #dbeafe;  --blue-ink: #1e40af;
-  }
-  * { box-sizing: border-box; }
-  body { font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif; color: var(--ink);
-         margin: 0; background: var(--bg); line-height: 1.5; }
-  .wrap { max-width: 960px; margin: 0 auto; padding: 32px 24px 64px; }
-  header.doc { border-bottom: 3px solid var(--ink); padding-bottom: 16px; margin-bottom: 24px; }
-  header.doc h1 { margin: 0 0 4px; font-size: 26px; }
-  header.doc .sub { color: var(--muted); font-size: 14px; }
-  h2 { font-size: 18px; margin: 32px 0 12px; border-bottom: 1px solid var(--line); padding-bottom: 6px; }
-  table.kv { width: 100%; border-collapse: collapse; font-size: 14px; background: #fff;
-             border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
-  table.kv th { text-align: left; width: 220px; color: var(--muted); font-weight: 600;
-                padding: 8px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
-  table.kv td { padding: 8px 12px; border-bottom: 1px solid var(--line); word-break: break-word; }
-  table.kv tr:last-child th, table.kv tr:last-child td { border-bottom: none; }
-  .chip { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 12.5px;
-          font-weight: 700; letter-spacing: .2px; white-space: nowrap; }
-  .chip.found { background: var(--green-bg); color: var(--green-ink); }
-  .chip.not-found { background: var(--red-bg); color: var(--red-ink); }
-  .chip.needs-review { background: var(--amber-bg); color: var(--amber-ink); }
-  .chip.internal { background: var(--grey-bg); color: var(--grey-ink); }
-  .chip.needs-document { background: var(--blue-bg); color: var(--blue-ink); }
-  .card { background: #fff; border: 1px solid var(--line); border-radius: 8px;
-          padding: 14px 16px; margin-bottom: 12px; }
-  .card .q { font-weight: 600; margin-bottom: 2px; }
-  .card .req { color: var(--muted); font-size: 13px; margin-bottom: 8px; }
-  .card .note { font-size: 14px; margin: 8px 0 0; }
-  blockquote { margin: 10px 0 0; padding: 8px 12px; border-left: 3px solid var(--ink);
-               background: var(--bg); font-size: 13.5px; font-style: italic; }
-  blockquote .src { display: block; font-style: normal; color: var(--muted); font-size: 12px; margin-top: 4px; }
-  .ev-links { margin-top: 8px; font-size: 13px; }
-  .ev-links a { color: #1d4ed8; }
-  .summary { background: #fff; border: 1px solid var(--line); border-left: 4px solid var(--ink);
-             border-radius: 8px; padding: 14px 16px; font-size: 14.5px; white-space: pre-wrap; }
-  .banner { border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; font-size: 14px; }
-  .banner.warn { background: var(--amber-bg); color: var(--amber-ink); border: 1px solid #fcd34d; }
-  .banner.appeal { background: var(--blue-bg); color: var(--blue-ink); border: 1px solid #93c5fd; }
-  .rate { display: flex; gap: 16px; flex-wrap: wrap; }
-  .rate .box { flex: 1 1 240px; background: #fff; border: 1px solid var(--line);
-               border-radius: 8px; padding: 12px 16px; }
-  .rate .box .h { color: var(--muted); font-size: 12px; font-weight: 700; text-transform: uppercase;
-                  letter-spacing: .5px; margin-bottom: 4px; }
-  .rate .box .v { font-size: 15px; font-weight: 600; }
-  figure { margin: 0 0 20px; background: #fff; border: 1px solid var(--line); border-radius: 8px;
-           padding: 12px; }
-  figure img { max-width: 100%; border: 1px solid var(--line); border-radius: 4px; }
-  figcaption { font-size: 12.5px; color: var(--muted); margin-top: 8px; word-break: break-all; }
-  ul.notes { font-size: 13.5px; color: var(--grey-ink); }
-  footer { margin-top: 40px; padding-top: 12px; border-top: 1px solid var(--line);
-           color: var(--muted); font-size: 12.5px; }
-  @media print {
-    body { background: #fff; }
-    .wrap { padding: 0; max-width: none; }
-    figure { break-inside: avoid; }
-    .card { break-inside: avoid; }
-  }
+/* ProofPack design system — "the case file".
+ *
+ * One stylesheet shared by the report (inlined at render time, so the report
+ * stays a single self-contained file that works from file://) and the local
+ * reviewer workbench (served at /static/theme.css). Tokens first, then the
+ * handful of components both surfaces use: chips, cards, banners, the segmented
+ * status bar and the dark "stamp" strip that mirrors the burned-in banner on
+ * every evidence capture.
+ *
+ * No CDNs, no fonts to download, no build step: everything here must work
+ * offline from a local file.
+ */
+
+:root {
+  /* Ink and paper */
+  --ink: #0B1F3A;
+  --ink-2: #111827;
+  --muted: #5B6B7F;
+  --line: #D9E0E8;
+  --line-soft: #EAEFF4;
+  --paper: #FFFFFF;
+  --paper-2: #F5F7FA;
+  --paper-3: #EEF2F6;
+
+  /* Accents — mint on dark surfaces (matches the evidence stamp), teal on light */
+  --mint: #6EE7B7;
+  --mint-ink: #0F766E;
+
+  /* Status */
+  --ok: #16A34A;      --ok-bg: #DCFCE7;    --ok-ink: #14532D;
+  --warn: #D97706;    --warn-bg: #FEF3C7;  --warn-ink: #78350F;
+  --bad: #DC2626;     --bad-bg: #FEE2E2;   --bad-ink: #7F1D1D;
+  --info: #2563EB;    --info-bg: #DBEAFE;  --info-ink: #1E3A8A;
+  --neutral-bg: #EEF2F6; --neutral-ink: #334155;
+
+  --radius: 10px;
+  --radius-sm: 6px;
+  --shadow-1: 0 1px 2px rgba(11, 31, 58, .06), 0 1px 1px rgba(11, 31, 58, .04);
+  --shadow-2: 0 8px 24px rgba(11, 31, 58, .10);
+
+  --font-sans: "Segoe UI", Inter, -apple-system, system-ui, Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: ui-monospace, "Cascadia Mono", "SF Mono", Menlo, Consolas, monospace;
+}
+
+/* ---------------------------------------------------------------- base --- */
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--paper-2);
+  color: var(--ink-2);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+h1, h2, h3, h4 { color: var(--ink); font-weight: 700; line-height: 1.25; }
+h1 { font-size: 28px; margin: 0 0 4px; }
+h2 { font-size: 22px; margin: 0 0 8px; }
+h3 { font-size: 18px; margin: 0 0 6px; }
+h4 { font-size: 15px; margin: 0 0 4px; }
+
+a { color: var(--info-ink); }
+a:hover { color: var(--info); }
+
+:where(a, button, [tabindex], summary, input, select, textarea):focus-visible {
+  outline: 2px solid var(--info);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  letter-spacing: 0;
+}
+
+.muted { color: var(--muted); }
+
+.small { font-size: 13px; }
+
+.break-all { word-break: break-all; overflow-wrap: anywhere; }
+
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap;
+}
+
+/* --------------------------------------------------------------- chips --- */
+
+/* A status chip reads like a rubber stamp: uppercase, boxed, never colour alone
+ * — the text always says what the status is. */
+.chip {
+  display: inline-block;
+  padding: 3px 9px;
+  border-radius: 999px;
+  border: 1.5px solid currentColor;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.chip.found, .chip.pass, .chip.ok { background: var(--ok-bg); color: var(--ok-ink); }
+.chip.not-found, .chip.flag, .chip.bad { background: var(--bad-bg); color: var(--bad-ink); }
+.chip.needs-review, .chip.warn { background: var(--warn-bg); color: var(--warn-ink); }
+.chip.internal, .chip.neutral { background: var(--neutral-bg); color: var(--neutral-ink); }
+.chip.needs-document, .chip.info { background: var(--info-bg); color: var(--info-ink); }
+.chip.pending {
+  background: transparent;
+  color: var(--muted);
+  border-style: dashed;
+  border-width: 1.5px;
+}
+
+/* --------------------------------------------------------------- cards --- */
+
+.card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+}
+
+.card + .card { margin-top: 12px; }
+
+/* ------------------------------------------------------------- buttons --- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 13px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--ink);
+  font: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.btn:hover { border-color: var(--muted); }
+.btn:active { transform: translateY(1px); }
+.btn[disabled] { opacity: .5; cursor: not-allowed; }
+
+.btn-primary { background: var(--ink); border-color: var(--ink); color: #fff; }
+.btn-primary:hover { background: #133055; border-color: #133055; }
+
+.btn-ghost { background: transparent; border-color: transparent; color: var(--muted); }
+.btn-ghost:hover { background: var(--paper-3); color: var(--ink); border-color: transparent; }
+
+.btn-sm { padding: 3px 8px; font-size: 12px; }
+
+/* ------------------------------------------------------ key/value table --- */
+
+.kv {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  font-size: 14px;
+}
+.kv th {
+  width: 210px;
+  padding: 9px 14px;
+  text-align: left;
+  vertical-align: top;
+  color: var(--muted);
+  font-weight: 600;
+  border-bottom: 1px solid var(--line-soft);
+}
+.kv td {
+  padding: 9px 14px;
+  vertical-align: top;
+  border-bottom: 1px solid var(--line-soft);
+  overflow-wrap: anywhere;
+}
+.kv tr:last-child th, .kv tr:last-child td { border-bottom: none; }
+.kv tr:nth-child(even) th, .kv tr:nth-child(even) td { background: #FCFDFE; }
+
+/* ------------------------------------------------------------- banners --- */
+
+.banner {
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  padding: 12px 16px;
+  font-size: 14px;
+}
+.banner + .banner { margin-top: 10px; }
+.banner strong { letter-spacing: .02em; }
+.banner.warn { background: var(--warn-bg); border-color: #FCD34D; color: var(--warn-ink); }
+.banner.appeal { background: var(--info-bg); border-color: #93C5FD; color: var(--info-ink); }
+.banner.ok { background: var(--ok-bg); border-color: #86EFAC; color: var(--ok-ink); }
+.banner.bad { background: var(--bad-bg); border-color: #FCA5A5; color: var(--bad-ink); }
+
+/* ------------------------------------------------- segmented status bar --- */
+
+/* Proportional bar of the website checks: found / not found / needs review.
+ * Counts are always spelled out next to it — the bar is a summary, not the
+ * only carrier of the information. */
+.seg {
+  display: flex;
+  width: 100%;
+  height: 8px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: var(--paper-3);
+}
+.seg > span { display: block; height: 100%; }
+.seg .s-found { background: var(--ok); }
+.seg .s-not-found { background: var(--bad); }
+.seg .s-needs-review { background: var(--warn); }
+.seg .s-pending { background: var(--line); }
+
+.seg-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  margin-top: 8px;
+  font-size: 12.5px;
+  color: var(--muted);
+}
+.seg-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.seg-legend i {
+  width: 9px; height: 9px; border-radius: 2px; display: inline-block; flex: none;
+}
+.seg-legend .s-found { background: var(--ok); }
+.seg-legend .s-not-found { background: var(--bad); }
+.seg-legend .s-needs-review { background: var(--warn); }
+
+/* ------------------------------------------------------------ stamp bar --- */
+
+/* The dark slate + mint strip: the same visual language as the banner burned
+ * into every evidence PNG, so the report and the captures read as one artifact. */
+.stamp-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 20px;
+  align-items: baseline;
+  background: #111827;
+  color: #E5E7EB;
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  line-height: 1.6;
+}
+.stamp-bar .f { display: flex; gap: 7px; align-items: baseline; min-width: 0; }
+.stamp-bar .k {
+  color: var(--mint);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  font-size: 10.5px;
+  flex: none;
+}
+.stamp-bar .v { overflow-wrap: anywhere; }
+.stamp-bar a { color: #BFDBFE; }
+
+/* ---------------------------------------------------------------- misc --- */
+
+.rule { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+
+.row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+
+/* ---- report-specific layout (the shared tokens/components are above) ---- */
+
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+.masthead { background: var(--ink); color: #fff; padding: 20px 0 18px; }
+.masthead .wrap { display: flex; gap: 14px; align-items: flex-start; }
+.masthead h1 { color: #fff; font-size: 25px; letter-spacing: -.01em; }
+.masthead .sub { color: #C2D2E4; font-size: 13px; margin-top: 6px; line-height: 1.6; }
+.mark { flex: none; margin-top: 3px; color: #fff; }
+.badge {
+  display: inline-block; margin-left: 2px; padding: 1px 8px; border-radius: 999px;
+  background: rgba(110, 231, 183, .14); border: 1px solid rgba(110, 231, 183, .55);
+  color: var(--mint); font-size: 11px; font-weight: 700; letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+nav.toc {
+  position: sticky; top: 0; z-index: 20;
+  background: var(--paper-2); border-bottom: 1px solid var(--line);
+}
+nav.toc .wrap { display: flex; flex-wrap: wrap; gap: 4px; padding-top: 7px; padding-bottom: 7px; }
+nav.toc a {
+  padding: 4px 10px; border-radius: 999px; border: 1px solid transparent;
+  color: var(--muted); font-size: 12.5px; font-weight: 600; text-decoration: none;
+}
+nav.toc a:hover { background: var(--paper); border-color: var(--line); color: var(--ink); }
+
+main { padding-bottom: 56px; }
+section { margin-top: 34px; scroll-margin-top: 56px; }
+.sec-head {
+  display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;
+  border-bottom: 2px solid var(--ink); padding-bottom: 6px; margin-bottom: 14px;
+}
+.sec-head h2 { font-size: 19px; margin: 0; }
+.sec-head .count { color: var(--muted); font-size: 13px; font-weight: 600; }
+.lede { color: var(--muted); font-size: 13.5px; margin: -6px 0 12px; }
+
+.banners { margin-top: 20px; }
+
+/* ---- verdict strip ---- */
+.verdict { display: grid; grid-template-columns: repeat(auto-fit, minmax(228px, 1fr)); gap: 12px; margin-top: 20px; }
+.tile {
+  background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius);
+  box-shadow: var(--shadow-1); padding: 13px 15px 15px;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.tile .t-label {
+  color: var(--muted); font-size: 10.5px; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase;
+}
+.tile .t-big { color: var(--ink); font-size: 21px; font-weight: 700; line-height: 1.15; }
+.tile .t-big .of { color: var(--muted); font-size: 13.5px; font-weight: 600; }
+.tile .t-sub { color: var(--muted); font-size: 13px; }
+.t-fees { margin: 0; font-size: 13px; display: grid; gap: 3px; }
+.t-fees .fee { display: flex; gap: 8px; }
+.t-fees dt { flex: none; width: 68px; color: var(--muted); }
+.t-fees dd { margin: 0; overflow-wrap: anywhere; }
+.runline { margin: 10px 0 0; color: var(--muted); }
+
+/* ---- findings ---- */
+.finding { box-shadow: var(--shadow-1); }
+.f-head { display: flex; gap: 12px; align-items: flex-start; justify-content: space-between; }
+.f-head h3 { font-size: 16px; margin: 0; }
+.f-head .chip { flex: none; margin-top: 1px; }
+.f-q { margin: 5px 0 0; font-size: 13px; color: var(--muted); }
+.f-note { margin: 10px 0 0; font-size: 14.5px; }
+blockquote.receipt {
+  margin: 12px 0 0; padding: 10px 14px;
+  background: var(--paper-2); border: 1px solid var(--line-soft);
+  border-left: 3px solid var(--mint-ink); border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+blockquote.receipt p { margin: 0; font-size: 14px; font-style: italic; }
+blockquote.receipt .src { margin-top: 6px; color: var(--muted); }
+
+.thumbs { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+.thumbs-label {
+  margin-top: 14px; color: var(--muted); font-size: 10.5px; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase;
+}
+.thumbs-label + .thumbs { margin-top: 6px; }
+.thumb { display: block; width: 188px; color: var(--muted); text-decoration: none; }
+.thumb img {
+  display: block; width: 100%; height: 110px; object-fit: cover; object-position: top;
+  border: 1px solid var(--line); border-radius: var(--radius-sm);
+  background: var(--paper-2); cursor: zoom-in;
+}
+.thumb:hover img { border-color: var(--mint-ink); box-shadow: var(--shadow-1); }
+.thumb .cap { display: block; margin-top: 5px; font-size: 11.5px; line-height: 1.35; overflow-wrap: anywhere; }
+
+/* ---- compact rows (internal / document items) ---- */
+ul.compact {
+  list-style: none; margin: 0; padding: 0;
+  background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius);
+  box-shadow: var(--shadow-1);
+}
+ul.compact li {
+  display: flex; gap: 14px; align-items: flex-start; justify-content: space-between;
+  padding: 10px 15px; border-bottom: 1px solid var(--line-soft);
+}
+ul.compact li:last-child { border-bottom: none; }
+ul.compact .q { font-size: 14px; font-weight: 600; color: var(--ink); }
+ul.compact .why { font-size: 13px; color: var(--muted); margin-top: 2px; }
+ul.compact .chip { flex: none; margin-top: 2px; }
+
+.summary {
+  background: var(--paper); border: 1px solid var(--line); border-left: 4px solid var(--ink);
+  border-radius: var(--radius); padding: 15px 17px; font-size: 14.5px; white-space: pre-wrap;
+  box-shadow: var(--shadow-1);
+}
+ul.notes { margin: 0; padding-left: 20px; font-size: 14px; }
+ul.notes li { margin-bottom: 4px; }
+
+/* ---- evidence appendix ---- */
+figure.ev {
+  margin: 0 0 16px; padding: 13px 15px 15px; scroll-margin-top: 56px;
+  background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius);
+  box-shadow: var(--shadow-1);
+}
+.ev-head { display: flex; gap: 10px; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.ev-head h3 { font-size: 15px; margin: 0; }
+.ev-head .n { color: var(--muted); font-family: var(--font-mono); font-size: 12.5px; }
+.ev-frame { border: 1px solid var(--line); border-radius: var(--radius-sm); overflow: hidden; background: var(--paper-2); }
+.ev-frame.tall { max-height: 520px; overflow: auto; }
+.ev-frame img { display: block; width: 100%; height: auto; cursor: zoom-in; }
+.ev-hint { margin: 6px 0 0; }
+figure.ev figcaption { margin-top: 10px; }
+.sha-copy { margin-left: 2px; }
+
+footer {
+  margin-top: 40px; padding-top: 14px; border-top: 1px solid var(--line);
+  color: var(--muted); font-size: 12.5px;
+}
+footer code { font-family: var(--font-mono); font-size: 12px; }
+
+/* ---- lightbox ---- */
+dialog#lightbox {
+  width: min(1120px, 94vw); max-width: none; max-height: 92vh; padding: 0;
+  border: 1px solid var(--line); border-radius: var(--radius);
+  box-shadow: var(--shadow-2); background: var(--paper); color: var(--ink-2);
+  overflow: hidden;
+}
+dialog#lightbox[open] { display: flex; flex-direction: column; }
+dialog#lightbox::backdrop { background: rgba(11, 31, 58, .62); }
+.lb-top {
+  display: flex; gap: 12px; align-items: center; justify-content: space-between;
+  padding: 10px 12px; border-bottom: 1px solid var(--line);
+}
+.lb-title { font-weight: 700; color: var(--ink); font-size: 15px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.lb-tools { display: flex; gap: 6px; align-items: center; flex: none; }
+.lb-body { background: var(--paper-3); overflow: auto; flex: 1 1 auto; }
+.lb-body img { display: block; width: 100%; height: auto; }
+.lb-meta { border-radius: 0; }
+
+@media (max-width: 640px) {
+  .masthead h1 { font-size: 21px; }
+  .thumb { width: calc(50% - 5px); }
+}
+
+@page { margin: 14mm; }
+
+@media print {
+  body { background: #fff; font-size: 12pt; }
+  .wrap { max-width: none; padding: 0; }
+  .masthead { background: #fff; color: var(--ink); border-bottom: 3px solid var(--ink); padding: 0 0 10px; }
+  .masthead h1 { color: var(--ink); }
+  .masthead .sub { color: var(--muted); }
+  .mark { color: var(--ink); }
+  .badge { background: none; color: var(--mint-ink); border-color: var(--mint-ink); }
+  nav.toc, dialog, .btn, .sha-copy { display: none !important; }
+  .card, .tile, figure.ev, ul.compact li, blockquote.receipt { break-inside: avoid; box-shadow: none; }
+  .sec-head, h2, h3 { break-after: avoid; }
+  .ev-frame.tall { max-height: none; overflow: visible; }
+  img { max-width: 100%; }
+  .stamp-bar { background: #fff; color: var(--ink-2); border: 1px solid var(--line); }
+  .stamp-bar .k { color: var(--mint-ink); }
+  .stamp-bar a { color: var(--ink-2); }
+  a { text-decoration: none; }
+}
 </style>
 </head>
-<body>
-<div class="wrap">
-
-<header class="doc">
-  <h1>Pre-Approval Website Verification Report</h1>
-  <div class="sub">
-    Other Than Personal Services (OTPS) &middot; reviewed 2026-08-18T01:58:44+05:30 &middot;
-    source form: 06-otps-weighted-blanket-gravity.pdf &middot; ProofPack v0.1.0 (gemini-3.7-flash)
+<body><header class="masthead">
+  <div class="wrap">
+    <svg class="mark" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M5.75 2.75h7.9L18.5 7.6v13.65H5.75z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+      <path d="M13.4 2.9V7.7h4.9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+      <path d="M8.5 13.7l2.6 2.6 4.7-5.1" fill="none" stroke="var(--mint)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <div>
+      <h1>Pre-Approval Website Verification Report</h1>
+      <div class="sub">
+        Other Than Personal Services (OTPS) &middot; reviewed 2026-08-18T01:58:44+05:30 &middot;
+        source form: 06-otps-weighted-blanket-gravity.pdf &middot; ProofPack v0.1.0 (gemini-3.7-flash)
+      </div>
+    </div>
   </div>
 </header>
 
+<nav class="toc" aria-label="Report sections">
+  <div class="wrap">
+    <a href="#request">Request</a><a href="#summary">Summary</a>
+    <a href="#rate">Rate</a>
+    <a href="#website">Website checks</a><a href="#form-checks">Form checks</a><a href="#internal">Internal</a><a href="#notes">Notes</a>
+    <a href="#evidence">Evidence</a>
+  </div>
+</nav>
+
+<main class="wrap">
 
 
+<div class="verdict">
 
+  <div class="tile">
+    <div class="t-label">Rate comparison</div>
+    <div><span class="chip not-found">differs from application</span></div>
+    <dl class="t-fees">
+      <div class="fee"><dt>Form</dt><dd>$199.00 one-time</dd></div>
+      <div class="fee"><dt>Published</dt><dd>$149.00 (regularly $199.00)</dd></div>
+    </dl>
+  </div>
 
-<h2>The request at a glance</h2>
-<table class="kv">
-  <tr><th>Participant</th><td>Elena Vasquez (age 22)</td></tr>
-  <tr><th>Category</th><td>Other Than Personal Services (OTPS)</td></tr>
-  <tr><th>Requested</th><td>Gravity Weighted Blanket, 20 lb</td></tr>
-  <tr><th>Provider / Vendor</th><td>Gravity Blankets</td></tr>
-  <tr><th>Website / link</th><td><a href="https://gravityblankets.com/products/gravity-blanket">https://gravityblankets.com/products/gravity-blanket</a></td></tr>
-  <tr><th>Fee on application</th><td>$199.00 one-time</td></tr>
+  <div class="tile">
+    <div class="t-label">Website checks</div>
+    <div class="t-big">3 <span class="of">of 3 found</span></div>
+    <div class="seg" role="img"
+         aria-label="3 found, 0 not found, 0 needs review, out of 3 checks"><span class="s-found" style="width: 100.0%"></span>
+    </div>
+    <div class="seg-legend">
+      <span><i class="s-found"></i>3 found</span>
+      <span><i class="s-not-found"></i>0 not found</span>
+      <span><i class="s-needs-review"></i>0 needs review</span>
+    </div>
+  </div>
+
   
-  <tr><th>Safety features (form)</th><td>Weight approx. 10% of body weight; breathable removable cover; evenly distributed glass beads</td></tr>
-  <tr><th>Review date</th><td>2026-08-18T01:58:44+05:30</td></tr>
-</table>
+  <div class="tile">
+    <div class="t-label">Form checks</div>
+    <div class="t-big">1 <span class="of">passed</span></div>
+    <div class="t-sub">
+      0 flagged
+    </div>
+    <div class="t-sub small">Deterministic: fee caps and age, checked in code.</div>
+  </div>
+  
 
+  <div class="tile">
+    <div class="t-label">For the reviewer</div>
+    <div class="t-big">7 <span class="of">internal</span></div>
+    <div class="t-sub">0 need a document</div>
+    <div class="t-sub small">Not answerable from a website — never guessed.</div>
+  </div>
 
-<h2>Summary for the reviewer</h2>
-<div class="summary">The Gravity Weighted Blanket was verified on the vendor's official website, including the requested 20 lb option. All claimed safety features were corroborated by the product documentation, which confirms evenly distributed fine-grade glass beads in gridded stitching, a breathable removable cover, and weight sizing calibrated to roughly 10% of body weight. The item is an allowable sensory support and does not fall under any OTPS exclusion categories. Reviewer attention is directed to pricing: while the regular price of $199.00 matches the application, the vendor is currently running a 25% discount bringing the published purchase price to $149.00.</div>
-
-
-<h2>Rate comparison</h2>
-<div class="rate">
-  <div class="box"><div class="h">Fee on application</div><div class="v">$199.00 one-time</div></div>
-  <div class="box"><div class="h">Fee found on website</div><div class="v">$149.00 (regularly $199.00)</div></div>
-  <div class="box"><div class="h">Verdict</div><div class="v"><span class="chip not-found">differs from application</span></div></div>
 </div>
-<p class="note">The application states $199.00, which matches the regular retail price displayed on the website; however, the website currently offers the blanket on sale for $149.00 (25% off).</p>
 
-<p class="ev-links">Evidence:
-  <a href="evidence/03-evidence-evidence-product-exists-with-visible-pri.png">evidence/03-evidence-evidence-product-exists-with-visible-pri.png</a>
-   &middot; seen at <a href="https://gravityblankets.com/products/gravity-blanket">https://gravityblankets.com/products/gravity-blanket</a>
+<p class="runline mono">
+  gemini-3.7-flash &middot;
+  85,750 in / 5,046 out tokens
+  across 16 requests &middot; est. $0.06
+  &middot; 6 captures
 </p>
 
+<section id="request">
+  <div class="sec-head"><h2>The request at a glance</h2></div>
+  <table class="kv">
+    <tbody>
+      <tr><th>Participant</th><td>Elena Vasquez (age 22)</td></tr>
+      <tr><th>Category</th><td>Other Than Personal Services (OTPS)</td></tr>
+      <tr><th>Requested</th><td>Gravity Weighted Blanket, 20 lb</td></tr>
+      <tr><th>Provider / Vendor</th><td>Gravity Blankets</td></tr>
+      <tr><th>Website / link</th><td><a class="mono break-all" href="https://gravityblankets.com/products/gravity-blanket">https://gravityblankets.com/products/gravity-blanket</a></td></tr>
+      <tr><th>Fee on application</th><td>$199.00 one-time</td></tr>
+      
+      <tr><th>Safety features (form)</th><td>Weight approx. 10% of body weight; breathable removable cover; evenly distributed glass beads</td></tr>
+      <tr><th>Review date</th><td>2026-08-18T01:58:44+05:30</td></tr>
+    </tbody>
+  </table>
+</section>
 
-<h2>Website verification — checked on the provider's public website</h2>
 
-<div class="card">
-  <div class="q">The item exists at the linked page with a visible price &nbsp;<span class="chip found">Found</span></div>
-  <div class="req">Form question: (program guideline) The item exists at the linked page, with a visible price</div>
-  <div class="note">The Gravity Weighted Blanket (with 20 lb size option) is available on the vendor website at a current sale price of $149.00 (discounted 25% from the regular $199.00 list price).</div>
-  
-  <blockquote>&ldquo;ORIGINAL WEIGHTED BLANKET $149.00 $199.00 SAVE 25%&rdquo;
-    <span class="src">— https://gravityblankets.com/products/gravity-blanket</span>
-  </blockquote>
-  
-  
-  <div class="ev-links">Evidence:
-    <a href="evidence/03-evidence-evidence-product-exists-with-visible-pri.png">evidence/03-evidence-evidence-product-exists-with-visible-pri.png</a>
+<section id="summary">
+  <div class="sec-head"><h2>Summary for the reviewer</h2></div>
+  <div class="summary">The Gravity Weighted Blanket was verified on the vendor&#39;s official website, including the requested 20 lb option. All claimed safety features were corroborated by the product documentation, which confirms evenly distributed fine-grade glass beads in gridded stitching, a breathable removable cover, and weight sizing calibrated to roughly 10% of body weight. The item is an allowable sensory support and does not fall under any OTPS exclusion categories. Reviewer attention is directed to pricing: while the regular price of $199.00 matches the application, the vendor is currently running a 25% discount bringing the published purchase price to $149.00.</div>
+</section>
+
+
+<section id="rate">
+  <div class="sec-head">
+    <h2>Rate comparison</h2>
+    <span class="count">application fee vs. the price published on the website</span>
+  </div>
+  <table class="kv">
+    <tbody>
+      <tr><th>Fee on application</th><td>$199.00 one-time</td></tr>
+      <tr><th>Fee found on website</th><td>$149.00 (regularly $199.00)</td></tr>
+      <tr><th>Verdict</th><td><span class="chip not-found">differs from application</span></td></tr>
+      <tr><th>Detail</th><td>The application states $199.00, which matches the regular retail price displayed on the website; however, the website currently offers the blanket on sale for $149.00 (25% off).</td></tr>
+      <tr><th>Seen at</th><td><a class="mono break-all" href="https://gravityblankets.com/products/gravity-blanket">https://gravityblankets.com/products/gravity-blanket</a></td></tr>
+    </tbody>
+  </table>
+  <div class="thumbs-label">Evidence for this comparison</div>
+<div class="thumbs">
+  <a class="thumb" href="evidence/03-evidence-evidence-product-exists-with-visible-pri.png"
+     data-lb
+     data-src="evidence/03-evidence-evidence-product-exists-with-visible-pri.png"
+     data-label="Evidence: product exists with visible price"
+     data-kind="targeted"
+     data-url="https://gravityblankets.com/products/gravity-blanket"
+     data-time="2026-08-18 01:58:24 India Standard Time"
+     data-sha="12d692c1bc95a9888bdbb8d7bff442f4932b43506b7c25bd1d3897fdf3331bdc">
+    <img src="evidence/03-evidence-evidence-product-exists-with-visible-pri.png" alt="Evidence capture — Evidence: product exists with visible price" loading="lazy">
+    <span class="cap">Evidence: product exists with visible price</span>
+  </a>
+</div>
+</section>
+
+<section id="website">
+  <div class="sec-head">
+    <h2>Website verification</h2>
+    <span class="count">3 items checked on the provider's public website</span>
   </div>
   
+  <article class="card finding" id="item-item_exists_with_price">
+    <div class="f-head">
+      <h3>The item exists at the linked page with a visible price</h3>
+      <span class="chip found">Found</span>
+    </div>
+    <p class="f-q">Form question: (program guideline) The item exists at the linked page, with a visible price</p>
+    <p class="f-note">The Gravity Weighted Blanket (with 20 lb size option) is available on the vendor website at a current sale price of $149.00 (discounted 25% from the regular $199.00 list price).</p>
+    
+    <blockquote class="receipt">
+      <p>&ldquo;ORIGINAL WEIGHTED BLANKET $149.00 $199.00 SAVE 25%&rdquo;</p>
+      <div class="src mono break-all">https://gravityblankets.com/products/gravity-blanket</div>
+    </blockquote>
+    
+    
+<div class="thumbs">
+  <a class="thumb" href="evidence/03-evidence-evidence-product-exists-with-visible-pri.png"
+     data-lb
+     data-src="evidence/03-evidence-evidence-product-exists-with-visible-pri.png"
+     data-label="Evidence: product exists with visible price"
+     data-kind="targeted"
+     data-url="https://gravityblankets.com/products/gravity-blanket"
+     data-time="2026-08-18 01:58:24 India Standard Time"
+     data-sha="12d692c1bc95a9888bdbb8d7bff442f4932b43506b7c25bd1d3897fdf3331bdc">
+    <img src="evidence/03-evidence-evidence-product-exists-with-visible-pri.png" alt="Evidence capture — Evidence: product exists with visible price" loading="lazy">
+    <span class="cap">Evidence: product exists with visible price</span>
+  </a>
 </div>
+  </article>
+  
+  <article class="card finding" id="item-not_excluded">
+    <div class="f-head">
+      <h3>Item is plausibly NOT on the OTPS exclusion list</h3>
+      <span class="chip found">Found</span>
+    </div>
+    <p class="f-q">Form question: Is the item on the OTPS exclusion list? (see guidelines)</p>
+    <p class="f-note">The product is a sensory weighted blanket for sleep and anxiety management and does not match any items on the OTPS exclusion list (such as medical copays, common household supplies, illegal items, or vehicle/housing costs).</p>
+    
+    <blockquote class="receipt">
+      <p>&ldquo;Features a premium micro-plush duvet cover and an inner weighted piece containing fine-grade glass beads.&rdquo;</p>
+      <div class="src mono break-all">https://gravityblankets.com/products/gravity-blanket</div>
+    </blockquote>
+    
+    
+<div class="thumbs">
+  <a class="thumb" href="evidence/04-evidence-evidence-item-description-showing-sensor.png"
+     data-lb
+     data-src="evidence/04-evidence-evidence-item-description-showing-sensor.png"
+     data-label="Evidence: item description showing sensory weighted blanket not on exclusion list"
+     data-kind="targeted"
+     data-url="https://gravityblankets.com/products/gravity-blanket"
+     data-time="2026-08-18 01:58:26 India Standard Time"
+     data-sha="020803f48d895b374488d903dc18fef772499364b78c2b51d8ad43eebe7869ec">
+    <img src="evidence/04-evidence-evidence-item-description-showing-sensor.png" alt="Evidence capture — Evidence: item description showing sensory weighted blanket not on exclusion list" loading="lazy">
+    <span class="cap">Evidence: item description showing sensory weighted blanket not on exclusion list</span>
+  </a>
+</div>
+  </article>
+  
+  <article class="card finding" id="item-safety_features_supported">
+    <div class="f-head">
+      <h3>Safety features described on the form are supported by the product page</h3>
+      <span class="chip found">Found</span>
+    </div>
+    <p class="f-q">Form question: Safety features for the item (as described on the form)</p>
+    <p class="f-note">All claimed safety features are explicitly supported: the site specifies precise gridded stitching for evenly distributed glass beads, details a removable breathable cover, and recommends a blanket weight of roughly 10% of body weight (sizing the 20 lb blanket for 170-230 lb).</p>
+    
+    <blockquote class="receipt">
+      <p>&ldquo;Precise gridded stitching ensures the glass beads remain uniformly distributed, providing comfort, no matter how you use your weighted blanket.&rdquo;</p>
+      <div class="src mono break-all">https://gravityblankets.com/products/gravity-blanket</div>
+    </blockquote>
+    
+    
+<div class="thumbs">
+  <a class="thumb" href="evidence/05-evidence-evidence-safety-features-supported.png"
+     data-lb
+     data-src="evidence/05-evidence-evidence-safety-features-supported.png"
+     data-label="Evidence: safety features supported"
+     data-kind="targeted"
+     data-url="https://gravityblankets.com/products/gravity-blanket"
+     data-time="2026-08-18 01:58:28 India Standard Time"
+     data-sha="74acd40dfc43db90f8a07efabc1e2cc052b8a44a0c0ab344fbea7097c40d619e">
+    <img src="evidence/05-evidence-evidence-safety-features-supported.png" alt="Evidence capture — Evidence: safety features supported" loading="lazy">
+    <span class="cap">Evidence: safety features supported</span>
+  </a>
+</div>
+  </article>
+  
+</section>
 
-<div class="card">
-  <div class="q">Item is plausibly NOT on the OTPS exclusion list &nbsp;<span class="chip found">Found</span></div>
-  <div class="req">Form question: Is the item on the OTPS exclusion list? (see guidelines)</div>
-  <div class="note">The product is a sensory weighted blanket for sleep and anxiety management and does not match any items on the OTPS exclusion list (such as medical copays, common household supplies, illegal items, or vehicle/housing costs).</div>
-  
-  <blockquote>&ldquo;Features a premium micro-plush duvet cover and an inner weighted piece containing fine-grade glass beads.&rdquo;
-    <span class="src">— https://gravityblankets.com/products/gravity-blanket</span>
-  </blockquote>
-  
-  
-  <div class="ev-links">Evidence:
-    <a href="evidence/04-evidence-evidence-item-description-showing-sensor.png">evidence/04-evidence-evidence-item-description-showing-sensor.png</a>
+
+<section id="form-checks">
+  <div class="sec-head">
+    <h2>Form-level checks</h2>
+    <span class="count">deterministic — computed in code from the form, not by the model</span>
   </div>
   
-</div>
+  <article class="card finding" id="item-cap_budget_year">
+    <div class="f-head">
+      <h3>Capped at $3,000 per budget year</h3>
+      <span class="chip found">Pass</span>
+    </div>
+    <p class="f-note">Form states $199 one-time item price — within the Capped at $3,000 per budget year cap.</p>
+  </article>
+  
+</section>
 
-<div class="card">
-  <div class="q">Safety features described on the form are supported by the product page &nbsp;<span class="chip found">Found</span></div>
-  <div class="req">Form question: Safety features for the item (as described on the form)</div>
-  <div class="note">All claimed safety features are explicitly supported: the site specifies precise gridded stitching for evenly distributed glass beads, details a removable breathable cover, and recommends a blanket weight of roughly 10% of body weight (sizing the 20 lb blanket for 170-230 lb).</div>
+
+
+
+
+<section id="internal">
+  <div class="sec-head">
+    <h2>Internal items — for the reviewer</h2>
+    <span class="count">7 items this tool deliberately did not answer</span>
+  </div>
+  <p class="lede">A website cannot answer these. They are listed so nothing is lost — and never guessed.</p>
+  <ul class="compact">
+    
+    <li id="item-budget_independence_line">
+      <div>
+        <div class="q">Is &#39;Other goods &amp; services that increase independence&#39; approved in the budget?</div>
+        
+        <div class="why">Participant budget data lives in internal systems.</div>
+      </div>
+      <span class="chip internal">Internal</span>
+    </li>
+    
+    <li id="item-budget_health_safety_line">
+      <div>
+        <div class="q">Is &#39;Other goods &amp; services that increase health and safety&#39; approved in the budget?</div>
+        
+        <div class="why">Participant budget data lives in internal systems.</div>
+      </div>
+      <span class="chip internal">Internal</span>
+    </li>
+    
+    <li id="item-lp_need">
+      <div>
+        <div class="q">Is the item related to a need or goal identified in the Life Plan?</div>
+        
+        <div class="why">Requires the participant&#39;s Life Plan.</div>
+      </div>
+      <span class="chip internal">Internal</span>
+    </li>
+    
+    <li id="item-increases_independence_health">
+      <div>
+        <div class="q">Will the item increase the independence and/or health and safety of the individual?</div>
+        
+        <div class="why">Individual determination.</div>
+      </div>
+      <span class="chip internal">Internal</span>
+    </li>
+    
+    <li id="item-exclusive_need">
+      <div>
+        <div class="q">Is the item exclusively needed for the participant?</div>
+        
+        <div class="why">About how the item is used at home.</div>
+      </div>
+      <span class="chip internal">Internal</span>
+    </li>
+    
+    <li id="item-other_funding">
+      <div>
+        <div class="q">Can the item be funded through other sources?</div>
+        
+        <div class="why">Requires knowledge of other funding sources (care manager attests).</div>
+      </div>
+      <span class="chip internal">Internal</span>
+    </li>
+    
+    <li id="item-already_bought">
+      <div>
+        <div class="q">Was the same item bought already in this budget year?</div>
+        
+        <div class="why">Requires purchase history.</div>
+      </div>
+      <span class="chip internal">Internal</span>
+    </li>
+    
+  </ul>
+</section>
+
+
+
+<section id="notes">
+  <div class="sec-head"><h2>Notes</h2></div>
   
-  <blockquote>&ldquo;Precise gridded stitching ensures the glass beads remain uniformly distributed, providing comfort, no matter how you use your weighted blanket.&rdquo;
-    <span class="src">— https://gravityblankets.com/products/gravity-blanket</span>
-  </blockquote>
-  
-  
-  <div class="ev-links">Evidence:
-    <a href="evidence/05-evidence-evidence-safety-features-supported.png">evidence/05-evidence-evidence-safety-features-supported.png</a>
+  <div class="card">
+    <h3>Program notes for this category</h3>
+    <ul class="notes">
+      <li>Approval is valid for 3 months, then resubmit.</li><li>Cannot be funded through another source (e.g. Emods/assistive technology).</li><li>Must increase independence and/or health &amp; safety; specific to the disability.</li>
+    </ul>
   </div>
   
-</div>
+  
+</section>
 
 
-
-<h2>Form-level checks (deterministic)</h2>
-
-<div class="card">
-  <div class="q">Capped at $3,000 per budget year &nbsp;<span class="chip found">Pass</span></div>
-  <div class="note">Form states $199 one-time item price — within the Capped at $3,000 per budget year cap.</div>
-</div>
-
-
-
-
-
-<h2>Internal items — for the reviewer (not answered by this tool)</h2>
-
-<div class="card">
-  <div class="q">Is 'Other goods & services that increase independence' approved in the budget? &nbsp;<span class="chip internal">Internal</span></div>
-  <div class="note">Internal — not website-verifiable. Participant budget data lives in internal systems.</div>
-</div>
-
-<div class="card">
-  <div class="q">Is 'Other goods & services that increase health and safety' approved in the budget? &nbsp;<span class="chip internal">Internal</span></div>
-  <div class="note">Internal — not website-verifiable. Participant budget data lives in internal systems.</div>
-</div>
-
-<div class="card">
-  <div class="q">Is the item related to a need or goal identified in the Life Plan? &nbsp;<span class="chip internal">Internal</span></div>
-  <div class="note">Internal — not website-verifiable. Requires the participant's Life Plan.</div>
-</div>
-
-<div class="card">
-  <div class="q">Will the item increase the independence and/or health and safety of the individual? &nbsp;<span class="chip internal">Internal</span></div>
-  <div class="note">Internal — not website-verifiable. Individual determination.</div>
-</div>
-
-<div class="card">
-  <div class="q">Is the item exclusively needed for the participant? &nbsp;<span class="chip internal">Internal</span></div>
-  <div class="note">Internal — not website-verifiable. About how the item is used at home.</div>
-</div>
-
-<div class="card">
-  <div class="q">Can the item be funded through other sources? &nbsp;<span class="chip internal">Internal</span></div>
-  <div class="note">Internal — not website-verifiable. Requires knowledge of other funding sources (care manager attests).</div>
-</div>
-
-<div class="card">
-  <div class="q">Was the same item bought already in this budget year? &nbsp;<span class="chip internal">Internal</span></div>
-  <div class="note">Internal — not website-verifiable. Requires purchase history.</div>
-</div>
-
-
-
-<h2>Program notes for this category</h2>
-<ul class="notes">
-  <li>Approval is valid for 3 months, then resubmit.</li><li>Cannot be funded through another source (e.g. Emods/assistive technology).</li><li>Must increase independence and/or health & safety; specific to the disability.</li>
-</ul>
-
-
-
-
-<h2>Evidence captures</h2>
-<p class="ev-links">Each capture is stamped in-image with its capture time and URL.
-Integrity hashes: <a href="manifest.json">manifest.json</a>.</p>
-
-<figure id="evidence/01-full-full-page-gravity-weighted-blanket-produ.png">
-  <img src="evidence/01-full-full-page-gravity-weighted-blanket-produ.png" alt="Full page: Gravity Weighted Blanket product page">
-  <figcaption>
-    <strong>Full page: Gravity Weighted Blanket product page</strong> (full_page)<br>
-    https://gravityblankets.com/products/gravity-blanket<br>
-    Captured 2026-08-18 01:58:14 India Standard Time &middot; SHA-256 68975b53239d17ff&hellip;
-  </figcaption>
-</figure>
-
-<figure id="evidence/03-evidence-evidence-product-exists-with-visible-pri.png">
-  <img src="evidence/03-evidence-evidence-product-exists-with-visible-pri.png" alt="Evidence: product exists with visible price">
-  <figcaption>
-    <strong>Evidence: product exists with visible price</strong> (targeted)<br>
-    https://gravityblankets.com/products/gravity-blanket<br>
-    Captured 2026-08-18 01:58:24 India Standard Time &middot; SHA-256 12d692c1bc95a988&hellip;
-  </figcaption>
-</figure>
-
-<figure id="evidence/04-evidence-evidence-item-description-showing-sensor.png">
-  <img src="evidence/04-evidence-evidence-item-description-showing-sensor.png" alt="Evidence: item description showing sensory weighted blanket not on exclusion list">
-  <figcaption>
-    <strong>Evidence: item description showing sensory weighted blanket not on exclusion list</strong> (targeted)<br>
-    https://gravityblankets.com/products/gravity-blanket<br>
-    Captured 2026-08-18 01:58:26 India Standard Time &middot; SHA-256 020803f48d895b37&hellip;
-  </figcaption>
-</figure>
-
-<figure id="evidence/05-evidence-evidence-safety-features-supported.png">
-  <img src="evidence/05-evidence-evidence-safety-features-supported.png" alt="Evidence: safety features supported">
-  <figcaption>
-    <strong>Evidence: safety features supported</strong> (targeted)<br>
-    https://gravityblankets.com/products/gravity-blanket<br>
-    Captured 2026-08-18 01:58:28 India Standard Time &middot; SHA-256 74acd40dfc43db90&hellip;
-  </figcaption>
-</figure>
-
-<figure id="evidence/06-evidence-evidence-breathable-removable-cover-and-.png">
-  <img src="evidence/06-evidence-evidence-breathable-removable-cover-and-.png" alt="Evidence: breathable removable cover and 10% body weight recommendation">
-  <figcaption>
-    <strong>Evidence: breathable removable cover and 10% body weight recommendation</strong> (targeted)<br>
-    https://gravityblankets.com/products/gravity-blanket<br>
-    Captured 2026-08-18 01:58:29 India Standard Time &middot; SHA-256 d885389d84a03e2b&hellip;
-  </figcaption>
-</figure>
-
-<figure id="evidence/07-evidence-evidence-blanket-weight-recommendation-1.png">
-  <img src="evidence/07-evidence-evidence-blanket-weight-recommendation-1.png" alt="Evidence: blanket weight recommendation 10% of body weight">
-  <figcaption>
-    <strong>Evidence: blanket weight recommendation 10% of body weight</strong> (targeted)<br>
-    https://gravityblankets.com/products/gravity-blanket<br>
-    Captured 2026-08-18 01:58:31 India Standard Time &middot; SHA-256 7b0ae189b13b7b92&hellip;
-  </figcaption>
-</figure>
-
+<section id="evidence">
+  <div class="sec-head">
+    <h2>Evidence captures</h2>
+    <span class="count">6 captures, each stamped in-image with its capture time and URL</span>
+  </div>
+  <p class="lede">Integrity hashes for every file are in <a href="manifest.json">manifest.json</a>. Click any capture to enlarge it.</p>
+  
+  <figure class="ev" id="evidence/01-full-full-page-gravity-weighted-blanket-produ.png">
+    <div class="ev-head">
+      <h3><span class="n">01</span> &nbsp;Full page: Gravity Weighted Blanket product page</h3>
+      <span class="chip info">Full page</span>
+    </div>
+    <div class="ev-frame tall">
+      <a href="evidence/01-full-full-page-gravity-weighted-blanket-produ.png"
+         data-lb
+         data-src="evidence/01-full-full-page-gravity-weighted-blanket-produ.png"
+         data-label="Full page: Gravity Weighted Blanket product page"
+         data-kind="full_page"
+         data-url="https://gravityblankets.com/products/gravity-blanket"
+         data-time="2026-08-18 01:58:14 India Standard Time"
+         data-sha="68975b53239d17ffa102c6ddeb6f6d5ab12c4371a81511cfedd9467881f1c2f6">
+        <img src="evidence/01-full-full-page-gravity-weighted-blanket-produ.png" alt="Full page: Gravity Weighted Blanket product page — capture of https://gravityblankets.com/products/gravity-blanket taken 2026-08-18 01:58:14 India Standard Time">
+      </a>
+    </div>
+    <p class="ev-hint muted small">Tall capture — scrolls inside this frame; click it to see the whole page.</p>
+    <figcaption>
+      <div class="stamp-bar">
+        <div class="f"><span class="k">File</span><span class="v break-all">evidence/01-full-full-page-gravity-weighted-blanket-produ.png</span></div>
+        <div class="f"><span class="k">URL</span><span class="v break-all">https://gravityblankets.com/products/gravity-blanket</span></div>
+        <div class="f"><span class="k">Captured</span><span class="v">2026-08-18 01:58:14 India Standard Time</span></div>
+        <div class="f"><span class="k">SHA-256</span><span class="v break-all">68975b53239d17ffa102c6ddeb6f6d5ab12c4371a81511cfedd9467881f1c2f6</span>
+          <button type="button" class="btn btn-sm sha-copy" data-copy="68975b53239d17ffa102c6ddeb6f6d5ab12c4371a81511cfedd9467881f1c2f6" hidden>Copy</button>
+        </div>
+      </div>
+    </figcaption>
+  </figure>
+  
+  <figure class="ev" id="evidence/03-evidence-evidence-product-exists-with-visible-pri.png">
+    <div class="ev-head">
+      <h3><span class="n">02</span> &nbsp;Evidence: product exists with visible price</h3>
+      <span class="chip neutral">Targeted</span>
+    </div>
+    <div class="ev-frame">
+      <a href="evidence/03-evidence-evidence-product-exists-with-visible-pri.png"
+         data-lb
+         data-src="evidence/03-evidence-evidence-product-exists-with-visible-pri.png"
+         data-label="Evidence: product exists with visible price"
+         data-kind="targeted"
+         data-url="https://gravityblankets.com/products/gravity-blanket"
+         data-time="2026-08-18 01:58:24 India Standard Time"
+         data-sha="12d692c1bc95a9888bdbb8d7bff442f4932b43506b7c25bd1d3897fdf3331bdc">
+        <img src="evidence/03-evidence-evidence-product-exists-with-visible-pri.png" alt="Evidence: product exists with visible price — capture of https://gravityblankets.com/products/gravity-blanket taken 2026-08-18 01:58:24 India Standard Time">
+      </a>
+    </div>
+    
+    <figcaption>
+      <div class="stamp-bar">
+        <div class="f"><span class="k">File</span><span class="v break-all">evidence/03-evidence-evidence-product-exists-with-visible-pri.png</span></div>
+        <div class="f"><span class="k">URL</span><span class="v break-all">https://gravityblankets.com/products/gravity-blanket</span></div>
+        <div class="f"><span class="k">Captured</span><span class="v">2026-08-18 01:58:24 India Standard Time</span></div>
+        <div class="f"><span class="k">SHA-256</span><span class="v break-all">12d692c1bc95a9888bdbb8d7bff442f4932b43506b7c25bd1d3897fdf3331bdc</span>
+          <button type="button" class="btn btn-sm sha-copy" data-copy="12d692c1bc95a9888bdbb8d7bff442f4932b43506b7c25bd1d3897fdf3331bdc" hidden>Copy</button>
+        </div>
+      </div>
+    </figcaption>
+  </figure>
+  
+  <figure class="ev" id="evidence/04-evidence-evidence-item-description-showing-sensor.png">
+    <div class="ev-head">
+      <h3><span class="n">03</span> &nbsp;Evidence: item description showing sensory weighted blanket not on exclusion list</h3>
+      <span class="chip neutral">Targeted</span>
+    </div>
+    <div class="ev-frame">
+      <a href="evidence/04-evidence-evidence-item-description-showing-sensor.png"
+         data-lb
+         data-src="evidence/04-evidence-evidence-item-description-showing-sensor.png"
+         data-label="Evidence: item description showing sensory weighted blanket not on exclusion list"
+         data-kind="targeted"
+         data-url="https://gravityblankets.com/products/gravity-blanket"
+         data-time="2026-08-18 01:58:26 India Standard Time"
+         data-sha="020803f48d895b374488d903dc18fef772499364b78c2b51d8ad43eebe7869ec">
+        <img src="evidence/04-evidence-evidence-item-description-showing-sensor.png" alt="Evidence: item description showing sensory weighted blanket not on exclusion list — capture of https://gravityblankets.com/products/gravity-blanket taken 2026-08-18 01:58:26 India Standard Time">
+      </a>
+    </div>
+    
+    <figcaption>
+      <div class="stamp-bar">
+        <div class="f"><span class="k">File</span><span class="v break-all">evidence/04-evidence-evidence-item-description-showing-sensor.png</span></div>
+        <div class="f"><span class="k">URL</span><span class="v break-all">https://gravityblankets.com/products/gravity-blanket</span></div>
+        <div class="f"><span class="k">Captured</span><span class="v">2026-08-18 01:58:26 India Standard Time</span></div>
+        <div class="f"><span class="k">SHA-256</span><span class="v break-all">020803f48d895b374488d903dc18fef772499364b78c2b51d8ad43eebe7869ec</span>
+          <button type="button" class="btn btn-sm sha-copy" data-copy="020803f48d895b374488d903dc18fef772499364b78c2b51d8ad43eebe7869ec" hidden>Copy</button>
+        </div>
+      </div>
+    </figcaption>
+  </figure>
+  
+  <figure class="ev" id="evidence/05-evidence-evidence-safety-features-supported.png">
+    <div class="ev-head">
+      <h3><span class="n">04</span> &nbsp;Evidence: safety features supported</h3>
+      <span class="chip neutral">Targeted</span>
+    </div>
+    <div class="ev-frame">
+      <a href="evidence/05-evidence-evidence-safety-features-supported.png"
+         data-lb
+         data-src="evidence/05-evidence-evidence-safety-features-supported.png"
+         data-label="Evidence: safety features supported"
+         data-kind="targeted"
+         data-url="https://gravityblankets.com/products/gravity-blanket"
+         data-time="2026-08-18 01:58:28 India Standard Time"
+         data-sha="74acd40dfc43db90f8a07efabc1e2cc052b8a44a0c0ab344fbea7097c40d619e">
+        <img src="evidence/05-evidence-evidence-safety-features-supported.png" alt="Evidence: safety features supported — capture of https://gravityblankets.com/products/gravity-blanket taken 2026-08-18 01:58:28 India Standard Time">
+      </a>
+    </div>
+    
+    <figcaption>
+      <div class="stamp-bar">
+        <div class="f"><span class="k">File</span><span class="v break-all">evidence/05-evidence-evidence-safety-features-supported.png</span></div>
+        <div class="f"><span class="k">URL</span><span class="v break-all">https://gravityblankets.com/products/gravity-blanket</span></div>
+        <div class="f"><span class="k">Captured</span><span class="v">2026-08-18 01:58:28 India Standard Time</span></div>
+        <div class="f"><span class="k">SHA-256</span><span class="v break-all">74acd40dfc43db90f8a07efabc1e2cc052b8a44a0c0ab344fbea7097c40d619e</span>
+          <button type="button" class="btn btn-sm sha-copy" data-copy="74acd40dfc43db90f8a07efabc1e2cc052b8a44a0c0ab344fbea7097c40d619e" hidden>Copy</button>
+        </div>
+      </div>
+    </figcaption>
+  </figure>
+  
+  <figure class="ev" id="evidence/06-evidence-evidence-breathable-removable-cover-and-.png">
+    <div class="ev-head">
+      <h3><span class="n">05</span> &nbsp;Evidence: breathable removable cover and 10% body weight recommendation</h3>
+      <span class="chip neutral">Targeted</span>
+    </div>
+    <div class="ev-frame">
+      <a href="evidence/06-evidence-evidence-breathable-removable-cover-and-.png"
+         data-lb
+         data-src="evidence/06-evidence-evidence-breathable-removable-cover-and-.png"
+         data-label="Evidence: breathable removable cover and 10% body weight recommendation"
+         data-kind="targeted"
+         data-url="https://gravityblankets.com/products/gravity-blanket"
+         data-time="2026-08-18 01:58:29 India Standard Time"
+         data-sha="d885389d84a03e2bcf527a36db8bab9a7ce9f28099a521496ab29caf03f83e73">
+        <img src="evidence/06-evidence-evidence-breathable-removable-cover-and-.png" alt="Evidence: breathable removable cover and 10% body weight recommendation — capture of https://gravityblankets.com/products/gravity-blanket taken 2026-08-18 01:58:29 India Standard Time">
+      </a>
+    </div>
+    
+    <figcaption>
+      <div class="stamp-bar">
+        <div class="f"><span class="k">File</span><span class="v break-all">evidence/06-evidence-evidence-breathable-removable-cover-and-.png</span></div>
+        <div class="f"><span class="k">URL</span><span class="v break-all">https://gravityblankets.com/products/gravity-blanket</span></div>
+        <div class="f"><span class="k">Captured</span><span class="v">2026-08-18 01:58:29 India Standard Time</span></div>
+        <div class="f"><span class="k">SHA-256</span><span class="v break-all">d885389d84a03e2bcf527a36db8bab9a7ce9f28099a521496ab29caf03f83e73</span>
+          <button type="button" class="btn btn-sm sha-copy" data-copy="d885389d84a03e2bcf527a36db8bab9a7ce9f28099a521496ab29caf03f83e73" hidden>Copy</button>
+        </div>
+      </div>
+    </figcaption>
+  </figure>
+  
+  <figure class="ev" id="evidence/07-evidence-evidence-blanket-weight-recommendation-1.png">
+    <div class="ev-head">
+      <h3><span class="n">06</span> &nbsp;Evidence: blanket weight recommendation 10% of body weight</h3>
+      <span class="chip neutral">Targeted</span>
+    </div>
+    <div class="ev-frame">
+      <a href="evidence/07-evidence-evidence-blanket-weight-recommendation-1.png"
+         data-lb
+         data-src="evidence/07-evidence-evidence-blanket-weight-recommendation-1.png"
+         data-label="Evidence: blanket weight recommendation 10% of body weight"
+         data-kind="targeted"
+         data-url="https://gravityblankets.com/products/gravity-blanket"
+         data-time="2026-08-18 01:58:31 India Standard Time"
+         data-sha="7b0ae189b13b7b92c9717e0d804ab6b253f450927fc2fc33419066e91216fdab">
+        <img src="evidence/07-evidence-evidence-blanket-weight-recommendation-1.png" alt="Evidence: blanket weight recommendation 10% of body weight — capture of https://gravityblankets.com/products/gravity-blanket taken 2026-08-18 01:58:31 India Standard Time">
+      </a>
+    </div>
+    
+    <figcaption>
+      <div class="stamp-bar">
+        <div class="f"><span class="k">File</span><span class="v break-all">evidence/07-evidence-evidence-blanket-weight-recommendation-1.png</span></div>
+        <div class="f"><span class="k">URL</span><span class="v break-all">https://gravityblankets.com/products/gravity-blanket</span></div>
+        <div class="f"><span class="k">Captured</span><span class="v">2026-08-18 01:58:31 India Standard Time</span></div>
+        <div class="f"><span class="k">SHA-256</span><span class="v break-all">7b0ae189b13b7b92c9717e0d804ab6b253f450927fc2fc33419066e91216fdab</span>
+          <button type="button" class="btn btn-sm sha-copy" data-copy="7b0ae189b13b7b92c9717e0d804ab6b253f450927fc2fc33419066e91216fdab" hidden>Copy</button>
+        </div>
+      </div>
+    </figcaption>
+  </figure>
+  
+</section>
 
 <footer>
   This report was produced by the Pre-Approval Website-Verification Tool to assist the
@@ -299,6 +1001,106 @@ Integrity hashes: <a href="manifest.json">manifest.json</a>.</p>
   The agent's full action trail for this review is in <code>run.log</code>.
 </footer>
 
-</div>
+</main><dialog id="lightbox" aria-label="Evidence capture viewer">
+  <div class="lb-top">
+    <div class="lb-title" id="lb-title"></div>
+    <div class="lb-tools">
+      <span class="mono muted" id="lb-count"></span>
+      <button type="button" class="btn btn-sm" id="lb-prev" aria-label="Previous capture">&larr;</button>
+      <button type="button" class="btn btn-sm" id="lb-next" aria-label="Next capture">&rarr;</button>
+      <a class="btn btn-sm" id="lb-open" href="#">Open PNG</a>
+      <button type="button" class="btn btn-sm" id="lb-close" aria-label="Close viewer">&#10005;</button>
+    </div>
+  </div>
+  <div class="lb-body"><img id="lb-img" src="" alt=""></div>
+  <div class="stamp-bar lb-meta">
+    <div class="f"><span class="k">URL</span><span class="v break-all" id="lb-url"></span></div>
+    <div class="f"><span class="k">Captured</span><span class="v" id="lb-time"></span></div>
+    <div class="f"><span class="k">SHA-256</span><span class="v break-all" id="lb-sha"></span></div>
+  </div>
+</dialog>
+
+<script>
+/* Evidence lightbox — vanilla, no dependencies, works from file://.
+   Thumbnails remain real links: if this script never runs, clicking one just
+   opens the PNG. */
+(function () {
+  var dlg = document.getElementById("lightbox");
+  if (!dlg || typeof dlg.showModal !== "function") return;
+
+  var links = Array.prototype.slice.call(document.querySelectorAll("a[data-lb]"));
+  // Same capture can be cited by several findings; the viewer walks the unique
+  // set so the arrow keys move between captures, not between citations.
+  var items = [], bySrc = {};
+  links.forEach(function (a) {
+    var src = a.getAttribute("data-src");
+    if (!(src in bySrc)) { bySrc[src] = items.length; items.push(a.dataset); }
+  });
+  if (!items.length) return;
+
+  var img = document.getElementById("lb-img");
+  var el = {
+    title: document.getElementById("lb-title"), count: document.getElementById("lb-count"),
+    url: document.getElementById("lb-url"), time: document.getElementById("lb-time"),
+    sha: document.getElementById("lb-sha"), open: document.getElementById("lb-open")
+  };
+  var at = 0;
+
+  function show(i) {
+    at = (i + items.length) % items.length;
+    var d = items[at];
+    img.src = d.src;
+    img.alt = d.label + " — capture of " + d.url;
+    el.title.textContent = d.label;
+    el.title.title = d.label;
+    el.count.textContent = (at + 1) + " / " + items.length;
+    el.url.textContent = d.url;
+    el.time.textContent = d.time;
+    el.sha.textContent = d.sha;
+    el.open.href = d.src;
+    dlg.querySelector(".lb-body").scrollTop = 0;
+  }
+
+  links.forEach(function (a) {
+    a.addEventListener("click", function (ev) {
+      if (ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.button) return;  // let people open it in a tab
+      ev.preventDefault();
+      show(bySrc[a.getAttribute("data-src")]);
+      if (!dlg.open) dlg.showModal();
+    });
+  });
+
+  document.getElementById("lb-next").addEventListener("click", function () { show(at + 1); });
+  document.getElementById("lb-prev").addEventListener("click", function () { show(at - 1); });
+  document.getElementById("lb-close").addEventListener("click", function () { dlg.close(); });
+  dlg.addEventListener("click", function (ev) { if (ev.target === dlg) dlg.close(); });  // backdrop
+  dlg.addEventListener("keydown", function (ev) {
+    if (ev.key === "ArrowRight") { ev.preventDefault(); show(at + 1); }
+    else if (ev.key === "ArrowLeft") { ev.preventDefault(); show(at - 1); }
+  });
+
+  // Copy a full SHA-256 without hunting for it with the mouse.
+  Array.prototype.forEach.call(document.querySelectorAll("[data-copy]"), function (btn) {
+    btn.hidden = false;
+    btn.addEventListener("click", function () {
+      var text = btn.getAttribute("data-copy"), done = function () {
+        var was = btn.textContent; btn.textContent = "Copied";
+        setTimeout(function () { btn.textContent = was; }, 1200);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, fallback);
+      } else { fallback(); }
+      function fallback() {
+        var ta = document.createElement("textarea");
+        ta.value = text; ta.setAttribute("readonly", "");
+        ta.style.position = "fixed"; ta.style.opacity = "0";
+        document.body.appendChild(ta); ta.select();
+        try { document.execCommand("copy"); done(); } catch (e) { /* nothing we can do */ }
+        document.body.removeChild(ta);
+      }
+    });
+  });
+})();
+</script>
 </body>
 </html>

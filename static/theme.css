@@ -1,0 +1,273 @@
+/* ProofPack design system — "the case file".
+ *
+ * One stylesheet shared by the report (inlined at render time, so the report
+ * stays a single self-contained file that works from file://) and the local
+ * reviewer workbench (served at /static/theme.css). Tokens first, then the
+ * handful of components both surfaces use: chips, cards, banners, the segmented
+ * status bar and the dark "stamp" strip that mirrors the burned-in banner on
+ * every evidence capture.
+ *
+ * No CDNs, no fonts to download, no build step: everything here must work
+ * offline from a local file.
+ */
+
+:root {
+  /* Ink and paper */
+  --ink: #0B1F3A;
+  --ink-2: #111827;
+  --muted: #5B6B7F;
+  --line: #D9E0E8;
+  --line-soft: #EAEFF4;
+  --paper: #FFFFFF;
+  --paper-2: #F5F7FA;
+  --paper-3: #EEF2F6;
+
+  /* Accents — mint on dark surfaces (matches the evidence stamp), teal on light */
+  --mint: #6EE7B7;
+  --mint-ink: #0F766E;
+
+  /* Status */
+  --ok: #16A34A;      --ok-bg: #DCFCE7;    --ok-ink: #14532D;
+  --warn: #D97706;    --warn-bg: #FEF3C7;  --warn-ink: #78350F;
+  --bad: #DC2626;     --bad-bg: #FEE2E2;   --bad-ink: #7F1D1D;
+  --info: #2563EB;    --info-bg: #DBEAFE;  --info-ink: #1E3A8A;
+  --neutral-bg: #EEF2F6; --neutral-ink: #334155;
+
+  --radius: 10px;
+  --radius-sm: 6px;
+  --shadow-1: 0 1px 2px rgba(11, 31, 58, .06), 0 1px 1px rgba(11, 31, 58, .04);
+  --shadow-2: 0 8px 24px rgba(11, 31, 58, .10);
+
+  --font-sans: "Segoe UI", Inter, -apple-system, system-ui, Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: ui-monospace, "Cascadia Mono", "SF Mono", Menlo, Consolas, monospace;
+}
+
+/* ---------------------------------------------------------------- base --- */
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--paper-2);
+  color: var(--ink-2);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+h1, h2, h3, h4 { color: var(--ink); font-weight: 700; line-height: 1.25; }
+h1 { font-size: 28px; margin: 0 0 4px; }
+h2 { font-size: 22px; margin: 0 0 8px; }
+h3 { font-size: 18px; margin: 0 0 6px; }
+h4 { font-size: 15px; margin: 0 0 4px; }
+
+a { color: var(--info-ink); }
+a:hover { color: var(--info); }
+
+:where(a, button, [tabindex], summary, input, select, textarea):focus-visible {
+  outline: 2px solid var(--info);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  letter-spacing: 0;
+}
+
+.muted { color: var(--muted); }
+
+.small { font-size: 13px; }
+
+.break-all { word-break: break-all; overflow-wrap: anywhere; }
+
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap;
+}
+
+/* --------------------------------------------------------------- chips --- */
+
+/* A status chip reads like a rubber stamp: uppercase, boxed, never colour alone
+ * — the text always says what the status is. */
+.chip {
+  display: inline-block;
+  padding: 3px 9px;
+  border-radius: 999px;
+  border: 1.5px solid currentColor;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.chip.found, .chip.pass, .chip.ok { background: var(--ok-bg); color: var(--ok-ink); }
+.chip.not-found, .chip.flag, .chip.bad { background: var(--bad-bg); color: var(--bad-ink); }
+.chip.needs-review, .chip.warn { background: var(--warn-bg); color: var(--warn-ink); }
+.chip.internal, .chip.neutral { background: var(--neutral-bg); color: var(--neutral-ink); }
+.chip.needs-document, .chip.info { background: var(--info-bg); color: var(--info-ink); }
+.chip.pending {
+  background: transparent;
+  color: var(--muted);
+  border-style: dashed;
+  border-width: 1.5px;
+}
+
+/* --------------------------------------------------------------- cards --- */
+
+.card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+}
+
+.card + .card { margin-top: 12px; }
+
+/* ------------------------------------------------------------- buttons --- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 13px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--ink);
+  font: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.btn:hover { border-color: var(--muted); }
+.btn:active { transform: translateY(1px); }
+.btn[disabled] { opacity: .5; cursor: not-allowed; }
+
+.btn-primary { background: var(--ink); border-color: var(--ink); color: #fff; }
+.btn-primary:hover { background: #133055; border-color: #133055; }
+
+.btn-ghost { background: transparent; border-color: transparent; color: var(--muted); }
+.btn-ghost:hover { background: var(--paper-3); color: var(--ink); border-color: transparent; }
+
+.btn-sm { padding: 3px 8px; font-size: 12px; }
+
+/* ------------------------------------------------------ key/value table --- */
+
+.kv {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  font-size: 14px;
+}
+.kv th {
+  width: 210px;
+  padding: 9px 14px;
+  text-align: left;
+  vertical-align: top;
+  color: var(--muted);
+  font-weight: 600;
+  border-bottom: 1px solid var(--line-soft);
+}
+.kv td {
+  padding: 9px 14px;
+  vertical-align: top;
+  border-bottom: 1px solid var(--line-soft);
+  overflow-wrap: anywhere;
+}
+.kv tr:last-child th, .kv tr:last-child td { border-bottom: none; }
+.kv tr:nth-child(even) th, .kv tr:nth-child(even) td { background: #FCFDFE; }
+
+/* ------------------------------------------------------------- banners --- */
+
+.banner {
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  padding: 12px 16px;
+  font-size: 14px;
+}
+.banner + .banner { margin-top: 10px; }
+.banner strong { letter-spacing: .02em; }
+.banner.warn { background: var(--warn-bg); border-color: #FCD34D; color: var(--warn-ink); }
+.banner.appeal { background: var(--info-bg); border-color: #93C5FD; color: var(--info-ink); }
+.banner.ok { background: var(--ok-bg); border-color: #86EFAC; color: var(--ok-ink); }
+.banner.bad { background: var(--bad-bg); border-color: #FCA5A5; color: var(--bad-ink); }
+
+/* ------------------------------------------------- segmented status bar --- */
+
+/* Proportional bar of the website checks: found / not found / needs review.
+ * Counts are always spelled out next to it — the bar is a summary, not the
+ * only carrier of the information. */
+.seg {
+  display: flex;
+  width: 100%;
+  height: 8px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: var(--paper-3);
+}
+.seg > span { display: block; height: 100%; }
+.seg .s-found { background: var(--ok); }
+.seg .s-not-found { background: var(--bad); }
+.seg .s-needs-review { background: var(--warn); }
+.seg .s-pending { background: var(--line); }
+
+.seg-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  margin-top: 8px;
+  font-size: 12.5px;
+  color: var(--muted);
+}
+.seg-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.seg-legend i {
+  width: 9px; height: 9px; border-radius: 2px; display: inline-block; flex: none;
+}
+.seg-legend .s-found { background: var(--ok); }
+.seg-legend .s-not-found { background: var(--bad); }
+.seg-legend .s-needs-review { background: var(--warn); }
+
+/* ------------------------------------------------------------ stamp bar --- */
+
+/* The dark slate + mint strip: the same visual language as the banner burned
+ * into every evidence PNG, so the report and the captures read as one artifact. */
+.stamp-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 20px;
+  align-items: baseline;
+  background: #111827;
+  color: #E5E7EB;
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  line-height: 1.6;
+}
+.stamp-bar .f { display: flex; gap: 7px; align-items: baseline; min-width: 0; }
+.stamp-bar .k {
+  color: var(--mint);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  font-size: 10.5px;
+  flex: none;
+}
+.stamp-bar .v { overflow-wrap: anywhere; }
+.stamp-bar a { color: #BFDBFE; }
+
+/* ---------------------------------------------------------------- misc --- */
+
+.rule { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+
+.row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }

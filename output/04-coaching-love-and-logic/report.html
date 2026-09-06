@@ -5,243 +5,866 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ProofPack — Love and Logic Parenting Online (webinar course) (Aisha Rahman)</title>
 <style>
-  :root {
-    --ink: #111827; --muted: #6b7280; --line: #e5e7eb; --bg: #f9fafb;
-    --green-bg: #d1fae5; --green-ink: #065f46;
-    --red-bg: #fee2e2;   --red-ink: #991b1b;
-    --amber-bg: #fef3c7; --amber-ink: #92400e;
-    --grey-bg: #f3f4f6;  --grey-ink: #374151;
-    --blue-bg: #dbeafe;  --blue-ink: #1e40af;
-  }
-  * { box-sizing: border-box; }
-  body { font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif; color: var(--ink);
-         margin: 0; background: var(--bg); line-height: 1.5; }
-  .wrap { max-width: 960px; margin: 0 auto; padding: 32px 24px 64px; }
-  header.doc { border-bottom: 3px solid var(--ink); padding-bottom: 16px; margin-bottom: 24px; }
-  header.doc h1 { margin: 0 0 4px; font-size: 26px; }
-  header.doc .sub { color: var(--muted); font-size: 14px; }
-  h2 { font-size: 18px; margin: 32px 0 12px; border-bottom: 1px solid var(--line); padding-bottom: 6px; }
-  table.kv { width: 100%; border-collapse: collapse; font-size: 14px; background: #fff;
-             border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
-  table.kv th { text-align: left; width: 220px; color: var(--muted); font-weight: 600;
-                padding: 8px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
-  table.kv td { padding: 8px 12px; border-bottom: 1px solid var(--line); word-break: break-word; }
-  table.kv tr:last-child th, table.kv tr:last-child td { border-bottom: none; }
-  .chip { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 12.5px;
-          font-weight: 700; letter-spacing: .2px; white-space: nowrap; }
-  .chip.found { background: var(--green-bg); color: var(--green-ink); }
-  .chip.not-found { background: var(--red-bg); color: var(--red-ink); }
-  .chip.needs-review { background: var(--amber-bg); color: var(--amber-ink); }
-  .chip.internal { background: var(--grey-bg); color: var(--grey-ink); }
-  .chip.needs-document { background: var(--blue-bg); color: var(--blue-ink); }
-  .card { background: #fff; border: 1px solid var(--line); border-radius: 8px;
-          padding: 14px 16px; margin-bottom: 12px; }
-  .card .q { font-weight: 600; margin-bottom: 2px; }
-  .card .req { color: var(--muted); font-size: 13px; margin-bottom: 8px; }
-  .card .note { font-size: 14px; margin: 8px 0 0; }
-  blockquote { margin: 10px 0 0; padding: 8px 12px; border-left: 3px solid var(--ink);
-               background: var(--bg); font-size: 13.5px; font-style: italic; }
-  blockquote .src { display: block; font-style: normal; color: var(--muted); font-size: 12px; margin-top: 4px; }
-  .ev-links { margin-top: 8px; font-size: 13px; }
-  .ev-links a { color: #1d4ed8; }
-  .summary { background: #fff; border: 1px solid var(--line); border-left: 4px solid var(--ink);
-             border-radius: 8px; padding: 14px 16px; font-size: 14.5px; white-space: pre-wrap; }
-  .banner { border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; font-size: 14px; }
-  .banner.warn { background: var(--amber-bg); color: var(--amber-ink); border: 1px solid #fcd34d; }
-  .banner.appeal { background: var(--blue-bg); color: var(--blue-ink); border: 1px solid #93c5fd; }
-  .rate { display: flex; gap: 16px; flex-wrap: wrap; }
-  .rate .box { flex: 1 1 240px; background: #fff; border: 1px solid var(--line);
-               border-radius: 8px; padding: 12px 16px; }
-  .rate .box .h { color: var(--muted); font-size: 12px; font-weight: 700; text-transform: uppercase;
-                  letter-spacing: .5px; margin-bottom: 4px; }
-  .rate .box .v { font-size: 15px; font-weight: 600; }
-  figure { margin: 0 0 20px; background: #fff; border: 1px solid var(--line); border-radius: 8px;
-           padding: 12px; }
-  figure img { max-width: 100%; border: 1px solid var(--line); border-radius: 4px; }
-  figcaption { font-size: 12.5px; color: var(--muted); margin-top: 8px; word-break: break-all; }
-  ul.notes { font-size: 13.5px; color: var(--grey-ink); }
-  footer { margin-top: 40px; padding-top: 12px; border-top: 1px solid var(--line);
-           color: var(--muted); font-size: 12.5px; }
-  @media print {
-    body { background: #fff; }
-    .wrap { padding: 0; max-width: none; }
-    figure { break-inside: avoid; }
-    .card { break-inside: avoid; }
-  }
+/* ProofPack design system — "the case file".
+ *
+ * One stylesheet shared by the report (inlined at render time, so the report
+ * stays a single self-contained file that works from file://) and the local
+ * reviewer workbench (served at /static/theme.css). Tokens first, then the
+ * handful of components both surfaces use: chips, cards, banners, the segmented
+ * status bar and the dark "stamp" strip that mirrors the burned-in banner on
+ * every evidence capture.
+ *
+ * No CDNs, no fonts to download, no build step: everything here must work
+ * offline from a local file.
+ */
+
+:root {
+  /* Ink and paper */
+  --ink: #0B1F3A;
+  --ink-2: #111827;
+  --muted: #5B6B7F;
+  --line: #D9E0E8;
+  --line-soft: #EAEFF4;
+  --paper: #FFFFFF;
+  --paper-2: #F5F7FA;
+  --paper-3: #EEF2F6;
+
+  /* Accents — mint on dark surfaces (matches the evidence stamp), teal on light */
+  --mint: #6EE7B7;
+  --mint-ink: #0F766E;
+
+  /* Status */
+  --ok: #16A34A;      --ok-bg: #DCFCE7;    --ok-ink: #14532D;
+  --warn: #D97706;    --warn-bg: #FEF3C7;  --warn-ink: #78350F;
+  --bad: #DC2626;     --bad-bg: #FEE2E2;   --bad-ink: #7F1D1D;
+  --info: #2563EB;    --info-bg: #DBEAFE;  --info-ink: #1E3A8A;
+  --neutral-bg: #EEF2F6; --neutral-ink: #334155;
+
+  --radius: 10px;
+  --radius-sm: 6px;
+  --shadow-1: 0 1px 2px rgba(11, 31, 58, .06), 0 1px 1px rgba(11, 31, 58, .04);
+  --shadow-2: 0 8px 24px rgba(11, 31, 58, .10);
+
+  --font-sans: "Segoe UI", Inter, -apple-system, system-ui, Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: ui-monospace, "Cascadia Mono", "SF Mono", Menlo, Consolas, monospace;
+}
+
+/* ---------------------------------------------------------------- base --- */
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--paper-2);
+  color: var(--ink-2);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+h1, h2, h3, h4 { color: var(--ink); font-weight: 700; line-height: 1.25; }
+h1 { font-size: 28px; margin: 0 0 4px; }
+h2 { font-size: 22px; margin: 0 0 8px; }
+h3 { font-size: 18px; margin: 0 0 6px; }
+h4 { font-size: 15px; margin: 0 0 4px; }
+
+a { color: var(--info-ink); }
+a:hover { color: var(--info); }
+
+:where(a, button, [tabindex], summary, input, select, textarea):focus-visible {
+  outline: 2px solid var(--info);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  letter-spacing: 0;
+}
+
+.muted { color: var(--muted); }
+
+.small { font-size: 13px; }
+
+.break-all { word-break: break-all; overflow-wrap: anywhere; }
+
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap;
+}
+
+/* --------------------------------------------------------------- chips --- */
+
+/* A status chip reads like a rubber stamp: uppercase, boxed, never colour alone
+ * — the text always says what the status is. */
+.chip {
+  display: inline-block;
+  padding: 3px 9px;
+  border-radius: 999px;
+  border: 1.5px solid currentColor;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.chip.found, .chip.pass, .chip.ok { background: var(--ok-bg); color: var(--ok-ink); }
+.chip.not-found, .chip.flag, .chip.bad { background: var(--bad-bg); color: var(--bad-ink); }
+.chip.needs-review, .chip.warn { background: var(--warn-bg); color: var(--warn-ink); }
+.chip.internal, .chip.neutral { background: var(--neutral-bg); color: var(--neutral-ink); }
+.chip.needs-document, .chip.info { background: var(--info-bg); color: var(--info-ink); }
+.chip.pending {
+  background: transparent;
+  color: var(--muted);
+  border-style: dashed;
+  border-width: 1.5px;
+}
+
+/* --------------------------------------------------------------- cards --- */
+
+.card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+}
+
+.card + .card { margin-top: 12px; }
+
+/* ------------------------------------------------------------- buttons --- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 13px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--ink);
+  font: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.btn:hover { border-color: var(--muted); }
+.btn:active { transform: translateY(1px); }
+.btn[disabled] { opacity: .5; cursor: not-allowed; }
+
+.btn-primary { background: var(--ink); border-color: var(--ink); color: #fff; }
+.btn-primary:hover { background: #133055; border-color: #133055; }
+
+.btn-ghost { background: transparent; border-color: transparent; color: var(--muted); }
+.btn-ghost:hover { background: var(--paper-3); color: var(--ink); border-color: transparent; }
+
+.btn-sm { padding: 3px 8px; font-size: 12px; }
+
+/* ------------------------------------------------------ key/value table --- */
+
+.kv {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  font-size: 14px;
+}
+.kv th {
+  width: 210px;
+  padding: 9px 14px;
+  text-align: left;
+  vertical-align: top;
+  color: var(--muted);
+  font-weight: 600;
+  border-bottom: 1px solid var(--line-soft);
+}
+.kv td {
+  padding: 9px 14px;
+  vertical-align: top;
+  border-bottom: 1px solid var(--line-soft);
+  overflow-wrap: anywhere;
+}
+.kv tr:last-child th, .kv tr:last-child td { border-bottom: none; }
+.kv tr:nth-child(even) th, .kv tr:nth-child(even) td { background: #FCFDFE; }
+
+/* ------------------------------------------------------------- banners --- */
+
+.banner {
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  padding: 12px 16px;
+  font-size: 14px;
+}
+.banner + .banner { margin-top: 10px; }
+.banner strong { letter-spacing: .02em; }
+.banner.warn { background: var(--warn-bg); border-color: #FCD34D; color: var(--warn-ink); }
+.banner.appeal { background: var(--info-bg); border-color: #93C5FD; color: var(--info-ink); }
+.banner.ok { background: var(--ok-bg); border-color: #86EFAC; color: var(--ok-ink); }
+.banner.bad { background: var(--bad-bg); border-color: #FCA5A5; color: var(--bad-ink); }
+
+/* ------------------------------------------------- segmented status bar --- */
+
+/* Proportional bar of the website checks: found / not found / needs review.
+ * Counts are always spelled out next to it — the bar is a summary, not the
+ * only carrier of the information. */
+.seg {
+  display: flex;
+  width: 100%;
+  height: 8px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: var(--paper-3);
+}
+.seg > span { display: block; height: 100%; }
+.seg .s-found { background: var(--ok); }
+.seg .s-not-found { background: var(--bad); }
+.seg .s-needs-review { background: var(--warn); }
+.seg .s-pending { background: var(--line); }
+
+.seg-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  margin-top: 8px;
+  font-size: 12.5px;
+  color: var(--muted);
+}
+.seg-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.seg-legend i {
+  width: 9px; height: 9px; border-radius: 2px; display: inline-block; flex: none;
+}
+.seg-legend .s-found { background: var(--ok); }
+.seg-legend .s-not-found { background: var(--bad); }
+.seg-legend .s-needs-review { background: var(--warn); }
+
+/* ------------------------------------------------------------ stamp bar --- */
+
+/* The dark slate + mint strip: the same visual language as the banner burned
+ * into every evidence PNG, so the report and the captures read as one artifact. */
+.stamp-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 20px;
+  align-items: baseline;
+  background: #111827;
+  color: #E5E7EB;
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  line-height: 1.6;
+}
+.stamp-bar .f { display: flex; gap: 7px; align-items: baseline; min-width: 0; }
+.stamp-bar .k {
+  color: var(--mint);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  font-size: 10.5px;
+  flex: none;
+}
+.stamp-bar .v { overflow-wrap: anywhere; }
+.stamp-bar a { color: #BFDBFE; }
+
+/* ---------------------------------------------------------------- misc --- */
+
+.rule { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+
+.row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+
+/* ---- report-specific layout (the shared tokens/components are above) ---- */
+
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+.masthead { background: var(--ink); color: #fff; padding: 20px 0 18px; }
+.masthead .wrap { display: flex; gap: 14px; align-items: flex-start; }
+.masthead h1 { color: #fff; font-size: 25px; letter-spacing: -.01em; }
+.masthead .sub { color: #C2D2E4; font-size: 13px; margin-top: 6px; line-height: 1.6; }
+.mark { flex: none; margin-top: 3px; color: #fff; }
+.badge {
+  display: inline-block; margin-left: 2px; padding: 1px 8px; border-radius: 999px;
+  background: rgba(110, 231, 183, .14); border: 1px solid rgba(110, 231, 183, .55);
+  color: var(--mint); font-size: 11px; font-weight: 700; letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+nav.toc {
+  position: sticky; top: 0; z-index: 20;
+  background: var(--paper-2); border-bottom: 1px solid var(--line);
+}
+nav.toc .wrap { display: flex; flex-wrap: wrap; gap: 4px; padding-top: 7px; padding-bottom: 7px; }
+nav.toc a {
+  padding: 4px 10px; border-radius: 999px; border: 1px solid transparent;
+  color: var(--muted); font-size: 12.5px; font-weight: 600; text-decoration: none;
+}
+nav.toc a:hover { background: var(--paper); border-color: var(--line); color: var(--ink); }
+
+main { padding-bottom: 56px; }
+section { margin-top: 34px; scroll-margin-top: 56px; }
+.sec-head {
+  display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;
+  border-bottom: 2px solid var(--ink); padding-bottom: 6px; margin-bottom: 14px;
+}
+.sec-head h2 { font-size: 19px; margin: 0; }
+.sec-head .count { color: var(--muted); font-size: 13px; font-weight: 600; }
+.lede { color: var(--muted); font-size: 13.5px; margin: -6px 0 12px; }
+
+.banners { margin-top: 20px; }
+
+/* ---- verdict strip ---- */
+.verdict { display: grid; grid-template-columns: repeat(auto-fit, minmax(228px, 1fr)); gap: 12px; margin-top: 20px; }
+.tile {
+  background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius);
+  box-shadow: var(--shadow-1); padding: 13px 15px 15px;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.tile .t-label {
+  color: var(--muted); font-size: 10.5px; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase;
+}
+.tile .t-big { color: var(--ink); font-size: 21px; font-weight: 700; line-height: 1.15; }
+.tile .t-big .of { color: var(--muted); font-size: 13.5px; font-weight: 600; }
+.tile .t-sub { color: var(--muted); font-size: 13px; }
+.t-fees { margin: 0; font-size: 13px; display: grid; gap: 3px; }
+.t-fees .fee { display: flex; gap: 8px; }
+.t-fees dt { flex: none; width: 68px; color: var(--muted); }
+.t-fees dd { margin: 0; overflow-wrap: anywhere; }
+.runline { margin: 10px 0 0; color: var(--muted); }
+
+/* ---- findings ---- */
+.finding { box-shadow: var(--shadow-1); }
+.f-head { display: flex; gap: 12px; align-items: flex-start; justify-content: space-between; }
+.f-head h3 { font-size: 16px; margin: 0; }
+.f-head .chip { flex: none; margin-top: 1px; }
+.f-q { margin: 5px 0 0; font-size: 13px; color: var(--muted); }
+.f-note { margin: 10px 0 0; font-size: 14.5px; }
+blockquote.receipt {
+  margin: 12px 0 0; padding: 10px 14px;
+  background: var(--paper-2); border: 1px solid var(--line-soft);
+  border-left: 3px solid var(--mint-ink); border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+blockquote.receipt p { margin: 0; font-size: 14px; font-style: italic; }
+blockquote.receipt .src { margin-top: 6px; color: var(--muted); }
+
+.thumbs { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+.thumbs-label {
+  margin-top: 14px; color: var(--muted); font-size: 10.5px; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase;
+}
+.thumbs-label + .thumbs { margin-top: 6px; }
+.thumb { display: block; width: 188px; color: var(--muted); text-decoration: none; }
+.thumb img {
+  display: block; width: 100%; height: 110px; object-fit: cover; object-position: top;
+  border: 1px solid var(--line); border-radius: var(--radius-sm);
+  background: var(--paper-2); cursor: zoom-in;
+}
+.thumb:hover img { border-color: var(--mint-ink); box-shadow: var(--shadow-1); }
+.thumb .cap { display: block; margin-top: 5px; font-size: 11.5px; line-height: 1.35; overflow-wrap: anywhere; }
+
+/* ---- compact rows (internal / document items) ---- */
+ul.compact {
+  list-style: none; margin: 0; padding: 0;
+  background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius);
+  box-shadow: var(--shadow-1);
+}
+ul.compact li {
+  display: flex; gap: 14px; align-items: flex-start; justify-content: space-between;
+  padding: 10px 15px; border-bottom: 1px solid var(--line-soft);
+}
+ul.compact li:last-child { border-bottom: none; }
+ul.compact .q { font-size: 14px; font-weight: 600; color: var(--ink); }
+ul.compact .why { font-size: 13px; color: var(--muted); margin-top: 2px; }
+ul.compact .chip { flex: none; margin-top: 2px; }
+
+.summary {
+  background: var(--paper); border: 1px solid var(--line); border-left: 4px solid var(--ink);
+  border-radius: var(--radius); padding: 15px 17px; font-size: 14.5px; white-space: pre-wrap;
+  box-shadow: var(--shadow-1);
+}
+ul.notes { margin: 0; padding-left: 20px; font-size: 14px; }
+ul.notes li { margin-bottom: 4px; }
+
+/* ---- evidence appendix ---- */
+figure.ev {
+  margin: 0 0 16px; padding: 13px 15px 15px; scroll-margin-top: 56px;
+  background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius);
+  box-shadow: var(--shadow-1);
+}
+.ev-head { display: flex; gap: 10px; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.ev-head h3 { font-size: 15px; margin: 0; }
+.ev-head .n { color: var(--muted); font-family: var(--font-mono); font-size: 12.5px; }
+.ev-frame { border: 1px solid var(--line); border-radius: var(--radius-sm); overflow: hidden; background: var(--paper-2); }
+.ev-frame.tall { max-height: 520px; overflow: auto; }
+.ev-frame img { display: block; width: 100%; height: auto; cursor: zoom-in; }
+.ev-hint { margin: 6px 0 0; }
+figure.ev figcaption { margin-top: 10px; }
+.sha-copy { margin-left: 2px; }
+
+footer {
+  margin-top: 40px; padding-top: 14px; border-top: 1px solid var(--line);
+  color: var(--muted); font-size: 12.5px;
+}
+footer code { font-family: var(--font-mono); font-size: 12px; }
+
+/* ---- lightbox ---- */
+dialog#lightbox {
+  width: min(1120px, 94vw); max-width: none; max-height: 92vh; padding: 0;
+  border: 1px solid var(--line); border-radius: var(--radius);
+  box-shadow: var(--shadow-2); background: var(--paper); color: var(--ink-2);
+  overflow: hidden;
+}
+dialog#lightbox[open] { display: flex; flex-direction: column; }
+dialog#lightbox::backdrop { background: rgba(11, 31, 58, .62); }
+.lb-top {
+  display: flex; gap: 12px; align-items: center; justify-content: space-between;
+  padding: 10px 12px; border-bottom: 1px solid var(--line);
+}
+.lb-title { font-weight: 700; color: var(--ink); font-size: 15px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.lb-tools { display: flex; gap: 6px; align-items: center; flex: none; }
+.lb-body { background: var(--paper-3); overflow: auto; flex: 1 1 auto; }
+.lb-body img { display: block; width: 100%; height: auto; }
+.lb-meta { border-radius: 0; }
+
+@media (max-width: 640px) {
+  .masthead h1 { font-size: 21px; }
+  .thumb { width: calc(50% - 5px); }
+}
+
+@page { margin: 14mm; }
+
+@media print {
+  body { background: #fff; font-size: 12pt; }
+  .wrap { max-width: none; padding: 0; }
+  .masthead { background: #fff; color: var(--ink); border-bottom: 3px solid var(--ink); padding: 0 0 10px; }
+  .masthead h1 { color: var(--ink); }
+  .masthead .sub { color: var(--muted); }
+  .mark { color: var(--ink); }
+  .badge { background: none; color: var(--mint-ink); border-color: var(--mint-ink); }
+  nav.toc, dialog, .btn, .sha-copy { display: none !important; }
+  .card, .tile, figure.ev, ul.compact li, blockquote.receipt { break-inside: avoid; box-shadow: none; }
+  .sec-head, h2, h3 { break-after: avoid; }
+  .ev-frame.tall { max-height: none; overflow: visible; }
+  img { max-width: 100%; }
+  .stamp-bar { background: #fff; color: var(--ink-2); border: 1px solid var(--line); }
+  .stamp-bar .k { color: var(--mint-ink); }
+  .stamp-bar a { color: var(--ink-2); }
+  a { text-decoration: none; }
+}
 </style>
 </head>
-<body>
-<div class="wrap">
-
-<header class="doc">
-  <h1>Pre-Approval Website Verification Report</h1>
-  <div class="sub">
-    Coaching (for Parents/Spouse) &middot; reviewed 2026-08-18T01:56:06+05:30 &middot;
-    source form: 04-coaching-love-and-logic.pdf &middot; ProofPack v0.1.0 (gemini-3.7-flash)
+<body><header class="masthead">
+  <div class="wrap">
+    <svg class="mark" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M5.75 2.75h7.9L18.5 7.6v13.65H5.75z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+      <path d="M13.4 2.9V7.7h4.9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+      <path d="M8.5 13.7l2.6 2.6 4.7-5.1" fill="none" stroke="var(--mint)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <div>
+      <h1>Pre-Approval Website Verification Report</h1>
+      <div class="sub">
+        Coaching (for Parents/Spouse) &middot; reviewed 2026-08-18T01:56:06+05:30 &middot;
+        source form: 04-coaching-love-and-logic.pdf &middot; ProofPack v0.1.0 (gemini-3.7-flash)
+      </div>
+    </div>
   </div>
 </header>
 
+<nav class="toc" aria-label="Report sections">
+  <div class="wrap">
+    <a href="#request">Request</a><a href="#summary">Summary</a>
+    <a href="#rate">Rate</a>
+    <a href="#website">Website checks</a><a href="#form-checks">Form checks</a><a href="#internal">Internal</a><a href="#notes">Notes</a>
+    <a href="#evidence">Evidence</a>
+  </div>
+</nav>
+
+<main class="wrap">
 
 
+<div class="verdict">
 
+  <div class="tile">
+    <div class="t-label">Rate comparison</div>
+    <div><span class="chip not-found">differs from application</span></div>
+    <dl class="t-fees">
+      <div class="fee"><dt>Form</dt><dd>Fee per Class: n/a | Fee per Private Class: n/a | Fee per Course: $150</dd></div>
+      <div class="fee"><dt>Published</dt><dd>$125.00 per person</dd></div>
+    </dl>
+  </div>
 
-<h2>The request at a glance</h2>
-<table class="kv">
-  <tr><th>Participant</th><td>Aisha Rahman (age 27)</td></tr>
-  <tr><th>Category</th><td>Coaching (for Parents/Spouse)</td></tr>
-  <tr><th>Requested</th><td>Love and Logic Parenting Online (webinar course)</td></tr>
-  <tr><th>Provider / Vendor</th><td>Love and Logic Institute</td></tr>
-  <tr><th>Website / link</th><td><a href="https://www.loveandlogic.com/products/love-and-logic-parenting-online">https://www.loveandlogic.com/products/love-and-logic-parenting-online</a></td></tr>
-  <tr><th>Fee on application</th><td>Fee per Class: n/a | Fee per Private Class: n/a | Fee per Course: $150</td></tr>
-  <tr><th>Duration / billing</th><td>Self-paced online course, approx. 7 hours of video</td></tr>
+  <div class="tile">
+    <div class="t-label">Website checks</div>
+    <div class="t-big">2 <span class="of">of 2 found</span></div>
+    <div class="seg" role="img"
+         aria-label="2 found, 0 not found, 0 needs review, out of 2 checks"><span class="s-found" style="width: 100.0%"></span>
+    </div>
+    <div class="seg-legend">
+      <span><i class="s-found"></i>2 found</span>
+      <span><i class="s-not-found"></i>0 not found</span>
+      <span><i class="s-needs-review"></i>0 needs review</span>
+    </div>
+  </div>
+
   
-  <tr><th>Review date</th><td>2026-08-18T01:56:06+05:30</td></tr>
-</table>
+  <div class="tile">
+    <div class="t-label">Form checks</div>
+    <div class="t-big">2 <span class="of">passed</span></div>
+    <div class="t-sub">
+      0 flagged &middot; 2 need review
+    </div>
+    <div class="t-sub small">Deterministic: fee caps and age, checked in code.</div>
+  </div>
+  
 
+  <div class="tile">
+    <div class="t-label">For the reviewer</div>
+    <div class="t-big">4 <span class="of">internal</span></div>
+    <div class="t-sub">0 need a document</div>
+    <div class="t-sub small">Not answerable from a website — never guessed.</div>
+  </div>
 
-<h2>Summary for the reviewer</h2>
-<div class="summary">The provider website for the Love and Logic Parenting Online webinar course was reviewed and verified. The course content is a genuine educational parenting instruction program offering approximately six hours of streaming video modules and digital workbook materials. A public price is published on the site at $125.00 per person, which differs from the $150.00 requested on the application. The reviewer should note the $25.00 discrepancy between the application amount and the lower published website fee.</div>
-
-
-<h2>Rate comparison</h2>
-<div class="rate">
-  <div class="box"><div class="h">Fee on application</div><div class="v">Fee per Class: n/a | Fee per Private Class: n/a | Fee per Course: $150</div></div>
-  <div class="box"><div class="h">Fee found on website</div><div class="v">$125.00 per person</div></div>
-  <div class="box"><div class="h">Verdict</div><div class="v"><span class="chip not-found">differs from application</span></div></div>
 </div>
-<p class="note">The application requests $150 per course, but the provider's website lists the published price for the course as $125.00 ($125.00 per person).</p>
 
-<p class="ev-links">Evidence:
-  <a href="evidence/02-evidence-evidence-published-course-fee.png">evidence/02-evidence-evidence-published-course-fee.png</a>
-   &middot; seen at <a href="https://www.loveandlogic.com/products/love-and-logic-parenting-online">https://www.loveandlogic.com/products/love-and-logic-parenting-online</a>
+<p class="runline mono">
+  gemini-3.7-flash &middot;
+  34,228 in / 2,349 out tokens
+  across 10 requests &middot; est. $0.02
+  &middot; 3 captures
 </p>
 
+<section id="request">
+  <div class="sec-head"><h2>The request at a glance</h2></div>
+  <table class="kv">
+    <tbody>
+      <tr><th>Participant</th><td>Aisha Rahman (age 27)</td></tr>
+      <tr><th>Category</th><td>Coaching (for Parents/Spouse)</td></tr>
+      <tr><th>Requested</th><td>Love and Logic Parenting Online (webinar course)</td></tr>
+      <tr><th>Provider / Vendor</th><td>Love and Logic Institute</td></tr>
+      <tr><th>Website / link</th><td><a class="mono break-all" href="https://www.loveandlogic.com/products/love-and-logic-parenting-online">https://www.loveandlogic.com/products/love-and-logic-parenting-online</a></td></tr>
+      <tr><th>Fee on application</th><td>Fee per Class: n/a | Fee per Private Class: n/a | Fee per Course: $150</td></tr>
+      <tr><th>Duration / billing</th><td>Self-paced online course, approx. 7 hours of video</td></tr>
+      
+      <tr><th>Review date</th><td>2026-08-18T01:56:06+05:30</td></tr>
+    </tbody>
+  </table>
+</section>
 
-<h2>Website verification — checked on the provider's public website</h2>
 
-<div class="card">
-  <div class="q">Published fees exist for the course/class on the provider's website &nbsp;<span class="chip found">Found</span></div>
-  <div class="req">Form question: (program guideline) Published fees exist for the course/class</div>
-  <div class="note">The website lists the published price for the Love and Logic Parenting Online webinar course as $125.00 per person.</div>
-  
-  <blockquote>&ldquo;Price: $125.00 per person&rdquo;
-    <span class="src">— https://www.loveandlogic.com/products/love-and-logic-parenting-online</span>
-  </blockquote>
-  
-  
-  <div class="ev-links">Evidence:
-    <a href="evidence/02-evidence-evidence-published-course-fee.png">evidence/02-evidence-evidence-published-course-fee.png</a>
+<section id="summary">
+  <div class="sec-head"><h2>Summary for the reviewer</h2></div>
+  <div class="summary">The provider website for the Love and Logic Parenting Online webinar course was reviewed and verified. The course content is a genuine educational parenting instruction program offering approximately six hours of streaming video modules and digital workbook materials. A public price is published on the site at $125.00 per person, which differs from the $150.00 requested on the application. The reviewer should note the $25.00 discrepancy between the application amount and the lower published website fee.</div>
+</section>
+
+
+<section id="rate">
+  <div class="sec-head">
+    <h2>Rate comparison</h2>
+    <span class="count">application fee vs. the price published on the website</span>
+  </div>
+  <table class="kv">
+    <tbody>
+      <tr><th>Fee on application</th><td>Fee per Class: n/a | Fee per Private Class: n/a | Fee per Course: $150</td></tr>
+      <tr><th>Fee found on website</th><td>$125.00 per person</td></tr>
+      <tr><th>Verdict</th><td><span class="chip not-found">differs from application</span></td></tr>
+      <tr><th>Detail</th><td>The application requests $150 per course, but the provider&#39;s website lists the published price for the course as $125.00 ($125.00 per person).</td></tr>
+      <tr><th>Seen at</th><td><a class="mono break-all" href="https://www.loveandlogic.com/products/love-and-logic-parenting-online">https://www.loveandlogic.com/products/love-and-logic-parenting-online</a></td></tr>
+    </tbody>
+  </table>
+  <div class="thumbs-label">Evidence for this comparison</div>
+<div class="thumbs">
+  <a class="thumb" href="evidence/02-evidence-evidence-published-course-fee.png"
+     data-lb
+     data-src="evidence/02-evidence-evidence-published-course-fee.png"
+     data-label="Evidence: published course fee"
+     data-kind="targeted"
+     data-url="https://www.loveandlogic.com/products/love-and-logic-parenting-online"
+     data-time="2026-08-18 01:55:58 India Standard Time"
+     data-sha="e1a723a065d823bff139c2df8234f73301d0e26b77d82a345123b9d8db574cbb">
+    <img src="evidence/02-evidence-evidence-published-course-fee.png" alt="Evidence capture — Evidence: published course fee" loading="lazy">
+    <span class="cap">Evidence: published course fee</span>
+  </a>
+</div>
+</section>
+
+<section id="website">
+  <div class="sec-head">
+    <h2>Website verification</h2>
+    <span class="count">2 items checked on the provider's public website</span>
   </div>
   
+  <article class="card finding" id="item-published_fees">
+    <div class="f-head">
+      <h3>Published fees exist for the course/class on the provider&#39;s website</h3>
+      <span class="chip found">Found</span>
+    </div>
+    <p class="f-q">Form question: (program guideline) Published fees exist for the course/class</p>
+    <p class="f-note">The website lists the published price for the Love and Logic Parenting Online webinar course as $125.00 per person.</p>
+    
+    <blockquote class="receipt">
+      <p>&ldquo;Price: $125.00 per person&rdquo;</p>
+      <div class="src mono break-all">https://www.loveandlogic.com/products/love-and-logic-parenting-online</div>
+    </blockquote>
+    
+    
+<div class="thumbs">
+  <a class="thumb" href="evidence/02-evidence-evidence-published-course-fee.png"
+     data-lb
+     data-src="evidence/02-evidence-evidence-published-course-fee.png"
+     data-label="Evidence: published course fee"
+     data-kind="targeted"
+     data-url="https://www.loveandlogic.com/products/love-and-logic-parenting-online"
+     data-time="2026-08-18 01:55:58 India Standard Time"
+     data-sha="e1a723a065d823bff139c2df8234f73301d0e26b77d82a345123b9d8db574cbb">
+    <img src="evidence/02-evidence-evidence-published-course-fee.png" alt="Evidence capture — Evidence: published course fee" loading="lazy">
+    <span class="cap">Evidence: published course fee</span>
+  </a>
 </div>
+  </article>
+  
+  <article class="card finding" id="item-educational_content">
+    <div class="f-head">
+      <h3>Content is a genuine educational/coaching opportunity (not lodging/travel)</h3>
+      <span class="chip found">Found</span>
+    </div>
+    <p class="f-q">Form question: (program guideline) Content is a genuine educational/coaching opportunity</p>
+    <p class="f-note">The offering is a genuine educational parenting webinar course comprising approximately 6 hours of instruction across multiple learning modules.</p>
+    
+    <blockquote class="receipt">
+      <p>&ldquo;Enhance your parenting skills with the Love and Logic Parenting Online webinar, offering practical solutions to common challenges and fostering a harmonious family environment.&rdquo;</p>
+      <div class="src mono break-all">https://www.loveandlogic.com/products/love-and-logic-parenting-online</div>
+    </blockquote>
+    
+    
+<div class="thumbs">
+  <a class="thumb" href="evidence/03-evidence-evidence-educational-parenting-webinar-c.png"
+     data-lb
+     data-src="evidence/03-evidence-evidence-educational-parenting-webinar-c.png"
+     data-label="Evidence: educational parenting webinar content"
+     data-kind="targeted"
+     data-url="https://www.loveandlogic.com/products/love-and-logic-parenting-online"
+     data-time="2026-08-18 01:56:00 India Standard Time"
+     data-sha="314402fe40f3ecf9e6dfbe22d41dffcb9eaf3f7d6697f121f7ff6569d4aeb8d0">
+    <img src="evidence/03-evidence-evidence-educational-parenting-webinar-c.png" alt="Evidence capture — Evidence: educational parenting webinar content" loading="lazy">
+    <span class="cap">Evidence: educational parenting webinar content</span>
+  </a>
+</div>
+  </article>
+  
+</section>
 
-<div class="card">
-  <div class="q">Content is a genuine educational/coaching opportunity (not lodging/travel) &nbsp;<span class="chip found">Found</span></div>
-  <div class="req">Form question: (program guideline) Content is a genuine educational/coaching opportunity</div>
-  <div class="note">The offering is a genuine educational parenting webinar course comprising approximately 6 hours of instruction across multiple learning modules.</div>
-  
-  <blockquote>&ldquo;Enhance your parenting skills with the Love and Logic Parenting Online webinar, offering practical solutions to common challenges and fostering a harmonious family environment.&rdquo;
-    <span class="src">— https://www.loveandlogic.com/products/love-and-logic-parenting-online</span>
-  </blockquote>
-  
-  
-  <div class="ev-links">Evidence:
-    <a href="evidence/03-evidence-evidence-educational-parenting-webinar-c.png">evidence/03-evidence-evidence-educational-parenting-webinar-c.png</a>
+
+<section id="form-checks">
+  <div class="sec-head">
+    <h2>Form-level checks</h2>
+    <span class="count">deterministic — computed in code from the form, not by the model</span>
   </div>
   
-</div>
-
-
-
-<h2>Form-level checks (deterministic)</h2>
-
-<div class="card">
-  <div class="q">Tuition ≤ $55 per group class &nbsp;<span class="chip needs-review">Needs Review</span></div>
-  <div class="note">No fee on the form could be matched to this cap — reviewer should check.</div>
-</div>
-
-<div class="card">
-  <div class="q">Tuition ≤ $111 per private class &nbsp;<span class="chip needs-review">Needs Review</span></div>
-  <div class="note">No fee on the form could be matched to this cap — reviewer should check.</div>
-</div>
-
-<div class="card">
-  <div class="q">Program capped at $500 per year &nbsp;<span class="chip found">Pass</span></div>
-  <div class="note">Form states $150 per course — within the Program capped at $500 per year cap.</div>
-</div>
-
-<div class="card">
-  <div class="q">Participant is 18 or older (checked against the age stated on the form) &nbsp;<span class="chip found">Pass</span></div>
-  <div class="note">Adults-only category; form states age 27 (≥ 18).</div>
-</div>
-
-
-
-
-
-<h2>Internal items — for the reviewer (not answered by this tool)</h2>
-
-<div class="card">
-  <div class="q">Is coaching education currently approved in the budget? &nbsp;<span class="chip internal">Internal</span></div>
-  <div class="note">Internal — not website-verifiable. Participant budget data lives in internal systems.</div>
-</div>
-
-<div class="card">
-  <div class="q">Is the individual over 18? &nbsp;<span class="chip internal">Internal</span></div>
-  <div class="note">Internal — not website-verifiable. Checked deterministically from the form's stated age (see fee/eligibility checks) — official proof of age is internal.</div>
-</div>
-
-<div class="card">
-  <div class="q">Does the coaching address the individual's goals being worked on in the LP? &nbsp;<span class="chip internal">Internal</span></div>
-  <div class="note">Internal — not website-verifiable. Requires the participant's Life Plan.</div>
-</div>
-
-<div class="card">
-  <div class="q">Can the coaching program be funded by other public programs? &nbsp;<span class="chip internal">Internal</span></div>
-  <div class="note">Internal — not website-verifiable. Requires knowledge of other funding sources for this participant.</div>
-</div>
-
-
-
-<h2>Program notes for this category</h2>
-<ul class="notes">
-  <li>Educational opportunities for parents/spouses that help the individual achieve Life Plan goals.</li><li>May include registration/conference fees. Overnight lodging or travel is NOT reimbursable.</li>
-</ul>
+  <article class="card finding" id="item-cap_group_class">
+    <div class="f-head">
+      <h3>Tuition ≤ $55 per group class</h3>
+      <span class="chip needs-review">Needs Review</span>
+    </div>
+    <p class="f-note">No fee on the form could be matched to this cap — reviewer should check.</p>
+  </article>
+  
+  <article class="card finding" id="item-cap_private_class">
+    <div class="f-head">
+      <h3>Tuition ≤ $111 per private class</h3>
+      <span class="chip needs-review">Needs Review</span>
+    </div>
+    <p class="f-note">No fee on the form could be matched to this cap — reviewer should check.</p>
+  </article>
+  
+  <article class="card finding" id="item-cap_program_year">
+    <div class="f-head">
+      <h3>Program capped at $500 per year</h3>
+      <span class="chip found">Pass</span>
+    </div>
+    <p class="f-note">Form states $150 per course — within the Program capped at $500 per year cap.</p>
+  </article>
+  
+  <article class="card finding" id="item-eligibility_age">
+    <div class="f-head">
+      <h3>Participant is 18 or older (checked against the age stated on the form)</h3>
+      <span class="chip found">Pass</span>
+    </div>
+    <p class="f-note">Adults-only category; form states age 27 (≥ 18).</p>
+  </article>
+  
+</section>
 
 
 
 
-<h2>Evidence captures</h2>
-<p class="ev-links">Each capture is stamped in-image with its capture time and URL.
-Integrity hashes: <a href="manifest.json">manifest.json</a>.</p>
 
-<figure id="evidence/01-full-full-page-love-and-logic-parenting-onlin.png">
-  <img src="evidence/01-full-full-page-love-and-logic-parenting-onlin.png" alt="Full page: Love and Logic Parenting Online product page">
-  <figcaption>
-    <strong>Full page: Love and Logic Parenting Online product page</strong> (full_page)<br>
-    https://www.loveandlogic.com/products/love-and-logic-parenting-online<br>
-    Captured 2026-08-18 01:55:56 India Standard Time &middot; SHA-256 e3d4cdcc504cd5f6&hellip;
-  </figcaption>
-</figure>
+<section id="internal">
+  <div class="sec-head">
+    <h2>Internal items — for the reviewer</h2>
+    <span class="count">4 items this tool deliberately did not answer</span>
+  </div>
+  <p class="lede">A website cannot answer these. They are listed so nothing is lost — and never guessed.</p>
+  <ul class="compact">
+    
+    <li id="item-budget_approved">
+      <div>
+        <div class="q">Is coaching education currently approved in the budget?</div>
+        
+        <div class="why">Participant budget data lives in internal systems.</div>
+      </div>
+      <span class="chip internal">Internal</span>
+    </li>
+    
+    <li id="item-over_18">
+      <div>
+        <div class="q">Is the individual over 18?</div>
+        
+        <div class="why">Checked deterministically from the form&#39;s stated age (see fee/eligibility checks) — official proof of age is internal.</div>
+      </div>
+      <span class="chip internal">Internal</span>
+    </li>
+    
+    <li id="item-addresses_lp_goals">
+      <div>
+        <div class="q">Does the coaching address the individual&#39;s goals being worked on in the LP?</div>
+        
+        <div class="why">Requires the participant&#39;s Life Plan.</div>
+      </div>
+      <span class="chip internal">Internal</span>
+    </li>
+    
+    <li id="item-other_funding">
+      <div>
+        <div class="q">Can the coaching program be funded by other public programs?</div>
+        
+        <div class="why">Requires knowledge of other funding sources for this participant.</div>
+      </div>
+      <span class="chip internal">Internal</span>
+    </li>
+    
+  </ul>
+</section>
 
-<figure id="evidence/02-evidence-evidence-published-course-fee.png">
-  <img src="evidence/02-evidence-evidence-published-course-fee.png" alt="Evidence: published course fee">
-  <figcaption>
-    <strong>Evidence: published course fee</strong> (targeted)<br>
-    https://www.loveandlogic.com/products/love-and-logic-parenting-online<br>
-    Captured 2026-08-18 01:55:58 India Standard Time &middot; SHA-256 e1a723a065d823bf&hellip;
-  </figcaption>
-</figure>
 
-<figure id="evidence/03-evidence-evidence-educational-parenting-webinar-c.png">
-  <img src="evidence/03-evidence-evidence-educational-parenting-webinar-c.png" alt="Evidence: educational parenting webinar content">
-  <figcaption>
-    <strong>Evidence: educational parenting webinar content</strong> (targeted)<br>
-    https://www.loveandlogic.com/products/love-and-logic-parenting-online<br>
-    Captured 2026-08-18 01:56:00 India Standard Time &middot; SHA-256 314402fe40f3ecf9&hellip;
-  </figcaption>
-</figure>
 
+<section id="notes">
+  <div class="sec-head"><h2>Notes</h2></div>
+  
+  <div class="card">
+    <h3>Program notes for this category</h3>
+    <ul class="notes">
+      <li>Educational opportunities for parents/spouses that help the individual achieve Life Plan goals.</li><li>May include registration/conference fees. Overnight lodging or travel is NOT reimbursable.</li>
+    </ul>
+  </div>
+  
+  
+</section>
+
+
+<section id="evidence">
+  <div class="sec-head">
+    <h2>Evidence captures</h2>
+    <span class="count">3 captures, each stamped in-image with its capture time and URL</span>
+  </div>
+  <p class="lede">Integrity hashes for every file are in <a href="manifest.json">manifest.json</a>. Click any capture to enlarge it.</p>
+  
+  <figure class="ev" id="evidence/01-full-full-page-love-and-logic-parenting-onlin.png">
+    <div class="ev-head">
+      <h3><span class="n">01</span> &nbsp;Full page: Love and Logic Parenting Online product page</h3>
+      <span class="chip info">Full page</span>
+    </div>
+    <div class="ev-frame tall">
+      <a href="evidence/01-full-full-page-love-and-logic-parenting-onlin.png"
+         data-lb
+         data-src="evidence/01-full-full-page-love-and-logic-parenting-onlin.png"
+         data-label="Full page: Love and Logic Parenting Online product page"
+         data-kind="full_page"
+         data-url="https://www.loveandlogic.com/products/love-and-logic-parenting-online"
+         data-time="2026-08-18 01:55:56 India Standard Time"
+         data-sha="e3d4cdcc504cd5f6cb5eabefc12fbb5b8f29f9d9472e0eb40f3e5c30b8f6c4bd">
+        <img src="evidence/01-full-full-page-love-and-logic-parenting-onlin.png" alt="Full page: Love and Logic Parenting Online product page — capture of https://www.loveandlogic.com/products/love-and-logic-parenting-online taken 2026-08-18 01:55:56 India Standard Time">
+      </a>
+    </div>
+    <p class="ev-hint muted small">Tall capture — scrolls inside this frame; click it to see the whole page.</p>
+    <figcaption>
+      <div class="stamp-bar">
+        <div class="f"><span class="k">File</span><span class="v break-all">evidence/01-full-full-page-love-and-logic-parenting-onlin.png</span></div>
+        <div class="f"><span class="k">URL</span><span class="v break-all">https://www.loveandlogic.com/products/love-and-logic-parenting-online</span></div>
+        <div class="f"><span class="k">Captured</span><span class="v">2026-08-18 01:55:56 India Standard Time</span></div>
+        <div class="f"><span class="k">SHA-256</span><span class="v break-all">e3d4cdcc504cd5f6cb5eabefc12fbb5b8f29f9d9472e0eb40f3e5c30b8f6c4bd</span>
+          <button type="button" class="btn btn-sm sha-copy" data-copy="e3d4cdcc504cd5f6cb5eabefc12fbb5b8f29f9d9472e0eb40f3e5c30b8f6c4bd" hidden>Copy</button>
+        </div>
+      </div>
+    </figcaption>
+  </figure>
+  
+  <figure class="ev" id="evidence/02-evidence-evidence-published-course-fee.png">
+    <div class="ev-head">
+      <h3><span class="n">02</span> &nbsp;Evidence: published course fee</h3>
+      <span class="chip neutral">Targeted</span>
+    </div>
+    <div class="ev-frame">
+      <a href="evidence/02-evidence-evidence-published-course-fee.png"
+         data-lb
+         data-src="evidence/02-evidence-evidence-published-course-fee.png"
+         data-label="Evidence: published course fee"
+         data-kind="targeted"
+         data-url="https://www.loveandlogic.com/products/love-and-logic-parenting-online"
+         data-time="2026-08-18 01:55:58 India Standard Time"
+         data-sha="e1a723a065d823bff139c2df8234f73301d0e26b77d82a345123b9d8db574cbb">
+        <img src="evidence/02-evidence-evidence-published-course-fee.png" alt="Evidence: published course fee — capture of https://www.loveandlogic.com/products/love-and-logic-parenting-online taken 2026-08-18 01:55:58 India Standard Time">
+      </a>
+    </div>
+    
+    <figcaption>
+      <div class="stamp-bar">
+        <div class="f"><span class="k">File</span><span class="v break-all">evidence/02-evidence-evidence-published-course-fee.png</span></div>
+        <div class="f"><span class="k">URL</span><span class="v break-all">https://www.loveandlogic.com/products/love-and-logic-parenting-online</span></div>
+        <div class="f"><span class="k">Captured</span><span class="v">2026-08-18 01:55:58 India Standard Time</span></div>
+        <div class="f"><span class="k">SHA-256</span><span class="v break-all">e1a723a065d823bff139c2df8234f73301d0e26b77d82a345123b9d8db574cbb</span>
+          <button type="button" class="btn btn-sm sha-copy" data-copy="e1a723a065d823bff139c2df8234f73301d0e26b77d82a345123b9d8db574cbb" hidden>Copy</button>
+        </div>
+      </div>
+    </figcaption>
+  </figure>
+  
+  <figure class="ev" id="evidence/03-evidence-evidence-educational-parenting-webinar-c.png">
+    <div class="ev-head">
+      <h3><span class="n">03</span> &nbsp;Evidence: educational parenting webinar content</h3>
+      <span class="chip neutral">Targeted</span>
+    </div>
+    <div class="ev-frame">
+      <a href="evidence/03-evidence-evidence-educational-parenting-webinar-c.png"
+         data-lb
+         data-src="evidence/03-evidence-evidence-educational-parenting-webinar-c.png"
+         data-label="Evidence: educational parenting webinar content"
+         data-kind="targeted"
+         data-url="https://www.loveandlogic.com/products/love-and-logic-parenting-online"
+         data-time="2026-08-18 01:56:00 India Standard Time"
+         data-sha="314402fe40f3ecf9e6dfbe22d41dffcb9eaf3f7d6697f121f7ff6569d4aeb8d0">
+        <img src="evidence/03-evidence-evidence-educational-parenting-webinar-c.png" alt="Evidence: educational parenting webinar content — capture of https://www.loveandlogic.com/products/love-and-logic-parenting-online taken 2026-08-18 01:56:00 India Standard Time">
+      </a>
+    </div>
+    
+    <figcaption>
+      <div class="stamp-bar">
+        <div class="f"><span class="k">File</span><span class="v break-all">evidence/03-evidence-evidence-educational-parenting-webinar-c.png</span></div>
+        <div class="f"><span class="k">URL</span><span class="v break-all">https://www.loveandlogic.com/products/love-and-logic-parenting-online</span></div>
+        <div class="f"><span class="k">Captured</span><span class="v">2026-08-18 01:56:00 India Standard Time</span></div>
+        <div class="f"><span class="k">SHA-256</span><span class="v break-all">314402fe40f3ecf9e6dfbe22d41dffcb9eaf3f7d6697f121f7ff6569d4aeb8d0</span>
+          <button type="button" class="btn btn-sm sha-copy" data-copy="314402fe40f3ecf9e6dfbe22d41dffcb9eaf3f7d6697f121f7ff6569d4aeb8d0" hidden>Copy</button>
+        </div>
+      </div>
+    </figcaption>
+  </figure>
+  
+</section>
 
 <footer>
   This report was produced by the Pre-Approval Website-Verification Tool to assist the
@@ -256,6 +879,106 @@ Integrity hashes: <a href="manifest.json">manifest.json</a>.</p>
   The agent's full action trail for this review is in <code>run.log</code>.
 </footer>
 
-</div>
+</main><dialog id="lightbox" aria-label="Evidence capture viewer">
+  <div class="lb-top">
+    <div class="lb-title" id="lb-title"></div>
+    <div class="lb-tools">
+      <span class="mono muted" id="lb-count"></span>
+      <button type="button" class="btn btn-sm" id="lb-prev" aria-label="Previous capture">&larr;</button>
+      <button type="button" class="btn btn-sm" id="lb-next" aria-label="Next capture">&rarr;</button>
+      <a class="btn btn-sm" id="lb-open" href="#">Open PNG</a>
+      <button type="button" class="btn btn-sm" id="lb-close" aria-label="Close viewer">&#10005;</button>
+    </div>
+  </div>
+  <div class="lb-body"><img id="lb-img" src="" alt=""></div>
+  <div class="stamp-bar lb-meta">
+    <div class="f"><span class="k">URL</span><span class="v break-all" id="lb-url"></span></div>
+    <div class="f"><span class="k">Captured</span><span class="v" id="lb-time"></span></div>
+    <div class="f"><span class="k">SHA-256</span><span class="v break-all" id="lb-sha"></span></div>
+  </div>
+</dialog>
+
+<script>
+/* Evidence lightbox — vanilla, no dependencies, works from file://.
+   Thumbnails remain real links: if this script never runs, clicking one just
+   opens the PNG. */
+(function () {
+  var dlg = document.getElementById("lightbox");
+  if (!dlg || typeof dlg.showModal !== "function") return;
+
+  var links = Array.prototype.slice.call(document.querySelectorAll("a[data-lb]"));
+  // Same capture can be cited by several findings; the viewer walks the unique
+  // set so the arrow keys move between captures, not between citations.
+  var items = [], bySrc = {};
+  links.forEach(function (a) {
+    var src = a.getAttribute("data-src");
+    if (!(src in bySrc)) { bySrc[src] = items.length; items.push(a.dataset); }
+  });
+  if (!items.length) return;
+
+  var img = document.getElementById("lb-img");
+  var el = {
+    title: document.getElementById("lb-title"), count: document.getElementById("lb-count"),
+    url: document.getElementById("lb-url"), time: document.getElementById("lb-time"),
+    sha: document.getElementById("lb-sha"), open: document.getElementById("lb-open")
+  };
+  var at = 0;
+
+  function show(i) {
+    at = (i + items.length) % items.length;
+    var d = items[at];
+    img.src = d.src;
+    img.alt = d.label + " — capture of " + d.url;
+    el.title.textContent = d.label;
+    el.title.title = d.label;
+    el.count.textContent = (at + 1) + " / " + items.length;
+    el.url.textContent = d.url;
+    el.time.textContent = d.time;
+    el.sha.textContent = d.sha;
+    el.open.href = d.src;
+    dlg.querySelector(".lb-body").scrollTop = 0;
+  }
+
+  links.forEach(function (a) {
+    a.addEventListener("click", function (ev) {
+      if (ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.button) return;  // let people open it in a tab
+      ev.preventDefault();
+      show(bySrc[a.getAttribute("data-src")]);
+      if (!dlg.open) dlg.showModal();
+    });
+  });
+
+  document.getElementById("lb-next").addEventListener("click", function () { show(at + 1); });
+  document.getElementById("lb-prev").addEventListener("click", function () { show(at - 1); });
+  document.getElementById("lb-close").addEventListener("click", function () { dlg.close(); });
+  dlg.addEventListener("click", function (ev) { if (ev.target === dlg) dlg.close(); });  // backdrop
+  dlg.addEventListener("keydown", function (ev) {
+    if (ev.key === "ArrowRight") { ev.preventDefault(); show(at + 1); }
+    else if (ev.key === "ArrowLeft") { ev.preventDefault(); show(at - 1); }
+  });
+
+  // Copy a full SHA-256 without hunting for it with the mouse.
+  Array.prototype.forEach.call(document.querySelectorAll("[data-copy]"), function (btn) {
+    btn.hidden = false;
+    btn.addEventListener("click", function () {
+      var text = btn.getAttribute("data-copy"), done = function () {
+        var was = btn.textContent; btn.textContent = "Copied";
+        setTimeout(function () { btn.textContent = was; }, 1200);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, fallback);
+      } else { fallback(); }
+      function fallback() {
+        var ta = document.createElement("textarea");
+        ta.value = text; ta.setAttribute("readonly", "");
+        ta.style.position = "fixed"; ta.style.opacity = "0";
+        document.body.appendChild(ta); ta.select();
+        try { document.execCommand("copy"); done(); } catch (e) { /* nothing we can do */ }
+        document.body.removeChild(ta);
+      }
+    });
+  });
+})();
+</script>
 </body>
 </html>

@@ -26,6 +26,7 @@ from .evidence import EvidenceStore
 from .llm import new_chat, run_tool_loop
 from .models import ApplicationData, Finding, RateComparison, Status, TokenUsage
 
+REJECTED = "REJECTED: "
 VALID_AGENT_STATUSES = {"found", "not_found", "needs_review"}
 VALID_VERDICTS = {
     "matches application exactly",
@@ -254,6 +255,7 @@ def build_tools(session: VerifySession) -> list:
         record = session.store.register(
             path, kind="full_page", label=label, url=session.browser.page.url
         )
+        session.log(f"  -> {record.file}")
         return f"Captured full page -> {record.file} (stamped {record.captured_at})"
 
     def capture_evidence(locate_text: str, label: str) -> str:
@@ -270,6 +272,7 @@ def build_tools(session: VerifySession) -> list:
         ok = session.browser.capture_region_around_text(locate_text, path)
         if not ok:
             path.unlink(missing_ok=True)
+            session.log("  -> could not locate text; no capture")
             return (
                 f"Could not locate {locate_text!r} as on-page text. Try a shorter, exact "
                 "fragment from find_on_page, or use capture_page for a full-page capture."
@@ -277,6 +280,7 @@ def build_tools(session: VerifySession) -> list:
         record = session.store.register(
             path, kind="targeted", label=label, url=session.browser.page.url
         )
+        session.log(f"  -> {record.file}")
         return f"Captured -> {record.file} (stamped {record.captured_at})"
 
     def record_finding(
@@ -305,7 +309,11 @@ def build_tools(session: VerifySession) -> list:
             evidence_file: A capture filename returned by capture_evidence/capture_page
                 (e.g. "evidence/03-evidence-published-fees.png"). Required for "found".
         """
-        return session.apply_finding(item_id, status, note, quote, evidence_file)
+        result = session.apply_finding(item_id, status, note, quote, evidence_file)
+        # A refused claim is the most informative line in the log — surface it.
+        if result.startswith(REJECTED):
+            session.log(f"REJECTED record_finding {item_id}: {result[len(REJECTED):]}")
+        return result
 
     def record_rate_comparison(
         published_fee: str,
@@ -325,7 +333,10 @@ def build_tools(session: VerifySession) -> list:
             evidence_file: Capture filename backing this. Required for "matches
                 application exactly" and "differs from application".
         """
-        return session.apply_rate_comparison(published_fee, verdict, detail, evidence_file)
+        result = session.apply_rate_comparison(published_fee, verdict, detail, evidence_file)
+        if result.startswith(REJECTED):
+            session.log(f"REJECTED record_rate_comparison: {result[len(REJECTED):]}")
+        return result
 
     return [
         open_url,

@@ -1,3 +1,7 @@
+{#- The reviewer's artifact: one self-contained HTML file. The shared design
+    system is inlined below (never linked), so this file works from file://,
+    survives being e-mailed as part of the package, and prints. Keep it free of
+    external requests: no CDNs, no fonts, no analytics. -#}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,201 +9,510 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ProofPack — {{ r.application.requested_item }} ({{ r.application.participant_name }})</title>
 <style>
-  :root {
-    --ink: #111827; --muted: #6b7280; --line: #e5e7eb; --bg: #f9fafb;
-    --green-bg: #d1fae5; --green-ink: #065f46;
-    --red-bg: #fee2e2;   --red-ink: #991b1b;
-    --amber-bg: #fef3c7; --amber-ink: #92400e;
-    --grey-bg: #f3f4f6;  --grey-ink: #374151;
-    --blue-bg: #dbeafe;  --blue-ink: #1e40af;
-  }
-  * { box-sizing: border-box; }
-  body { font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif; color: var(--ink);
-         margin: 0; background: var(--bg); line-height: 1.5; }
-  .wrap { max-width: 960px; margin: 0 auto; padding: 32px 24px 64px; }
-  header.doc { border-bottom: 3px solid var(--ink); padding-bottom: 16px; margin-bottom: 24px; }
-  header.doc h1 { margin: 0 0 4px; font-size: 26px; }
-  header.doc .sub { color: var(--muted); font-size: 14px; }
-  h2 { font-size: 18px; margin: 32px 0 12px; border-bottom: 1px solid var(--line); padding-bottom: 6px; }
-  table.kv { width: 100%; border-collapse: collapse; font-size: 14px; background: #fff;
-             border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
-  table.kv th { text-align: left; width: 220px; color: var(--muted); font-weight: 600;
-                padding: 8px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
-  table.kv td { padding: 8px 12px; border-bottom: 1px solid var(--line); word-break: break-word; }
-  table.kv tr:last-child th, table.kv tr:last-child td { border-bottom: none; }
-  .chip { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 12.5px;
-          font-weight: 700; letter-spacing: .2px; white-space: nowrap; }
-  .chip.found { background: var(--green-bg); color: var(--green-ink); }
-  .chip.not-found { background: var(--red-bg); color: var(--red-ink); }
-  .chip.needs-review { background: var(--amber-bg); color: var(--amber-ink); }
-  .chip.internal { background: var(--grey-bg); color: var(--grey-ink); }
-  .chip.needs-document { background: var(--blue-bg); color: var(--blue-ink); }
-  .card { background: #fff; border: 1px solid var(--line); border-radius: 8px;
-          padding: 14px 16px; margin-bottom: 12px; }
-  .card .q { font-weight: 600; margin-bottom: 2px; }
-  .card .req { color: var(--muted); font-size: 13px; margin-bottom: 8px; }
-  .card .note { font-size: 14px; margin: 8px 0 0; }
-  blockquote { margin: 10px 0 0; padding: 8px 12px; border-left: 3px solid var(--ink);
-               background: var(--bg); font-size: 13.5px; font-style: italic; }
-  blockquote .src { display: block; font-style: normal; color: var(--muted); font-size: 12px; margin-top: 4px; }
-  .ev-links { margin-top: 8px; font-size: 13px; }
-  .ev-links a { color: #1d4ed8; }
-  .summary { background: #fff; border: 1px solid var(--line); border-left: 4px solid var(--ink);
-             border-radius: 8px; padding: 14px 16px; font-size: 14.5px; white-space: pre-wrap; }
-  .banner { border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; font-size: 14px; }
-  .banner.warn { background: var(--amber-bg); color: var(--amber-ink); border: 1px solid #fcd34d; }
-  .banner.appeal { background: var(--blue-bg); color: var(--blue-ink); border: 1px solid #93c5fd; }
-  .rate { display: flex; gap: 16px; flex-wrap: wrap; }
-  .rate .box { flex: 1 1 240px; background: #fff; border: 1px solid var(--line);
-               border-radius: 8px; padding: 12px 16px; }
-  .rate .box .h { color: var(--muted); font-size: 12px; font-weight: 700; text-transform: uppercase;
-                  letter-spacing: .5px; margin-bottom: 4px; }
-  .rate .box .v { font-size: 15px; font-weight: 600; }
-  figure { margin: 0 0 20px; background: #fff; border: 1px solid var(--line); border-radius: 8px;
-           padding: 12px; }
-  figure img { max-width: 100%; border: 1px solid var(--line); border-radius: 4px; }
-  figcaption { font-size: 12.5px; color: var(--muted); margin-top: 8px; word-break: break-all; }
-  ul.notes { font-size: 13.5px; color: var(--grey-ink); }
-  footer { margin-top: 40px; padding-top: 12px; border-top: 1px solid var(--line);
-           color: var(--muted); font-size: 12.5px; }
-  @media print {
-    body { background: #fff; }
-    .wrap { padding: 0; max-width: none; }
-    figure { break-inside: avoid; }
-    .card { break-inside: avoid; }
-  }
+{% include "theme.css" %}
+
+/* ---- report-specific layout (the shared tokens/components are above) ---- */
+
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+.masthead { background: var(--ink); color: #fff; padding: 20px 0 18px; }
+.masthead .wrap { display: flex; gap: 14px; align-items: flex-start; }
+.masthead h1 { color: #fff; font-size: 25px; letter-spacing: -.01em; }
+.masthead .sub { color: #C2D2E4; font-size: 13px; margin-top: 6px; line-height: 1.6; }
+.mark { flex: none; margin-top: 3px; color: #fff; }
+.badge {
+  display: inline-block; margin-left: 2px; padding: 1px 8px; border-radius: 999px;
+  background: rgba(110, 231, 183, .14); border: 1px solid rgba(110, 231, 183, .55);
+  color: var(--mint); font-size: 11px; font-weight: 700; letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+nav.toc {
+  position: sticky; top: 0; z-index: 20;
+  background: var(--paper-2); border-bottom: 1px solid var(--line);
+}
+nav.toc .wrap { display: flex; flex-wrap: wrap; gap: 4px; padding-top: 7px; padding-bottom: 7px; }
+nav.toc a {
+  padding: 4px 10px; border-radius: 999px; border: 1px solid transparent;
+  color: var(--muted); font-size: 12.5px; font-weight: 600; text-decoration: none;
+}
+nav.toc a:hover { background: var(--paper); border-color: var(--line); color: var(--ink); }
+
+main { padding-bottom: 56px; }
+section { margin-top: 34px; scroll-margin-top: 56px; }
+.sec-head {
+  display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;
+  border-bottom: 2px solid var(--ink); padding-bottom: 6px; margin-bottom: 14px;
+}
+.sec-head h2 { font-size: 19px; margin: 0; }
+.sec-head .count { color: var(--muted); font-size: 13px; font-weight: 600; }
+.lede { color: var(--muted); font-size: 13.5px; margin: -6px 0 12px; }
+
+.banners { margin-top: 20px; }
+
+/* ---- verdict strip ---- */
+.verdict { display: grid; grid-template-columns: repeat(auto-fit, minmax(228px, 1fr)); gap: 12px; margin-top: 20px; }
+.tile {
+  background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius);
+  box-shadow: var(--shadow-1); padding: 13px 15px 15px;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.tile .t-label {
+  color: var(--muted); font-size: 10.5px; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase;
+}
+.tile .t-big { color: var(--ink); font-size: 21px; font-weight: 700; line-height: 1.15; }
+.tile .t-big .of { color: var(--muted); font-size: 13.5px; font-weight: 600; }
+.tile .t-sub { color: var(--muted); font-size: 13px; }
+.t-fees { margin: 0; font-size: 13px; display: grid; gap: 3px; }
+.t-fees .fee { display: flex; gap: 8px; }
+.t-fees dt { flex: none; width: 68px; color: var(--muted); }
+.t-fees dd { margin: 0; overflow-wrap: anywhere; }
+.runline { margin: 10px 0 0; color: var(--muted); }
+
+/* ---- findings ---- */
+.finding { box-shadow: var(--shadow-1); }
+.f-head { display: flex; gap: 12px; align-items: flex-start; justify-content: space-between; }
+.f-head h3 { font-size: 16px; margin: 0; }
+.f-head .chip { flex: none; margin-top: 1px; }
+.f-q { margin: 5px 0 0; font-size: 13px; color: var(--muted); }
+.f-note { margin: 10px 0 0; font-size: 14.5px; }
+blockquote.receipt {
+  margin: 12px 0 0; padding: 10px 14px;
+  background: var(--paper-2); border: 1px solid var(--line-soft);
+  border-left: 3px solid var(--mint-ink); border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+blockquote.receipt p { margin: 0; font-size: 14px; font-style: italic; }
+blockquote.receipt .src { margin-top: 6px; color: var(--muted); }
+
+.thumbs { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+.thumbs-label {
+  margin-top: 14px; color: var(--muted); font-size: 10.5px; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase;
+}
+.thumbs-label + .thumbs { margin-top: 6px; }
+.thumb { display: block; width: 188px; color: var(--muted); text-decoration: none; }
+.thumb img {
+  display: block; width: 100%; height: 110px; object-fit: cover; object-position: top;
+  border: 1px solid var(--line); border-radius: var(--radius-sm);
+  background: var(--paper-2); cursor: zoom-in;
+}
+.thumb:hover img { border-color: var(--mint-ink); box-shadow: var(--shadow-1); }
+.thumb .cap { display: block; margin-top: 5px; font-size: 11.5px; line-height: 1.35; overflow-wrap: anywhere; }
+
+/* ---- compact rows (internal / document items) ---- */
+ul.compact {
+  list-style: none; margin: 0; padding: 0;
+  background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius);
+  box-shadow: var(--shadow-1);
+}
+ul.compact li {
+  display: flex; gap: 14px; align-items: flex-start; justify-content: space-between;
+  padding: 10px 15px; border-bottom: 1px solid var(--line-soft);
+}
+ul.compact li:last-child { border-bottom: none; }
+ul.compact .q { font-size: 14px; font-weight: 600; color: var(--ink); }
+ul.compact .why { font-size: 13px; color: var(--muted); margin-top: 2px; }
+ul.compact .chip { flex: none; margin-top: 2px; }
+
+.summary {
+  background: var(--paper); border: 1px solid var(--line); border-left: 4px solid var(--ink);
+  border-radius: var(--radius); padding: 15px 17px; font-size: 14.5px; white-space: pre-wrap;
+  box-shadow: var(--shadow-1);
+}
+ul.notes { margin: 0; padding-left: 20px; font-size: 14px; }
+ul.notes li { margin-bottom: 4px; }
+
+/* ---- evidence appendix ---- */
+figure.ev {
+  margin: 0 0 16px; padding: 13px 15px 15px; scroll-margin-top: 56px;
+  background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius);
+  box-shadow: var(--shadow-1);
+}
+.ev-head { display: flex; gap: 10px; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.ev-head h3 { font-size: 15px; margin: 0; }
+.ev-head .n { color: var(--muted); font-family: var(--font-mono); font-size: 12.5px; }
+.ev-frame { border: 1px solid var(--line); border-radius: var(--radius-sm); overflow: hidden; background: var(--paper-2); }
+.ev-frame.tall { max-height: 520px; overflow: auto; }
+.ev-frame img { display: block; width: 100%; height: auto; cursor: zoom-in; }
+.ev-hint { margin: 6px 0 0; }
+figure.ev figcaption { margin-top: 10px; }
+.sha-copy { margin-left: 2px; }
+
+footer {
+  margin-top: 40px; padding-top: 14px; border-top: 1px solid var(--line);
+  color: var(--muted); font-size: 12.5px;
+}
+footer code { font-family: var(--font-mono); font-size: 12px; }
+
+/* ---- lightbox ---- */
+dialog#lightbox {
+  width: min(1120px, 94vw); max-width: none; max-height: 92vh; padding: 0;
+  border: 1px solid var(--line); border-radius: var(--radius);
+  box-shadow: var(--shadow-2); background: var(--paper); color: var(--ink-2);
+  overflow: hidden;
+}
+dialog#lightbox[open] { display: flex; flex-direction: column; }
+dialog#lightbox::backdrop { background: rgba(11, 31, 58, .62); }
+.lb-top {
+  display: flex; gap: 12px; align-items: center; justify-content: space-between;
+  padding: 10px 12px; border-bottom: 1px solid var(--line);
+}
+.lb-title { font-weight: 700; color: var(--ink); font-size: 15px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.lb-tools { display: flex; gap: 6px; align-items: center; flex: none; }
+.lb-body { background: var(--paper-3); overflow: auto; flex: 1 1 auto; }
+.lb-body img { display: block; width: 100%; height: auto; }
+.lb-meta { border-radius: 0; }
+
+@media (max-width: 640px) {
+  .masthead h1 { font-size: 21px; }
+  .thumb { width: calc(50% - 5px); }
+}
+
+@page { margin: 14mm; }
+
+@media print {
+  body { background: #fff; font-size: 12pt; }
+  .wrap { max-width: none; padding: 0; }
+  .masthead { background: #fff; color: var(--ink); border-bottom: 3px solid var(--ink); padding: 0 0 10px; }
+  .masthead h1 { color: var(--ink); }
+  .masthead .sub { color: var(--muted); }
+  .mark { color: var(--ink); }
+  .badge { background: none; color: var(--mint-ink); border-color: var(--mint-ink); }
+  nav.toc, dialog, .btn, .sha-copy { display: none !important; }
+  .card, .tile, figure.ev, ul.compact li, blockquote.receipt { break-inside: avoid; box-shadow: none; }
+  .sec-head, h2, h3 { break-after: avoid; }
+  .ev-frame.tall { max-height: none; overflow: visible; }
+  img { max-width: 100%; }
+  .stamp-bar { background: #fff; color: var(--ink-2); border: 1px solid var(--line); }
+  .stamp-bar .k { color: var(--mint-ink); }
+  .stamp-bar a { color: var(--ink-2); }
+  a { text-decoration: none; }
+}
 </style>
 </head>
 <body>
-<div class="wrap">
 
-<header class="doc">
-  <h1>Pre-Approval Website Verification Report</h1>
-  <div class="sub">
-    {{ r.category_display }} &middot; reviewed {{ r.reviewed_at }} &middot;
-    source form: {{ r.source_pdf }} &middot; ProofPack v{{ r.tool_version }} ({{ r.model }})
-    {%- if r.review_count > 1 %} &middot; <strong>re-run #{{ r.review_count }}</strong>{% endif %}
+{%- macro thumbs(files, by_file, label="") -%}
+{%- if files %}
+{%- if label %}<div class="thumbs-label">{{ label }}</div>{% endif %}
+<div class="thumbs">
+  {%- for file in files %}
+  {%- set e = by_file.get(file) %}
+  <a class="thumb" href="{{ file }}"
+     data-lb
+     data-src="{{ file }}"
+     data-label="{{ e.label if e else file }}"
+     data-kind="{{ e.kind if e else '' }}"
+     data-url="{{ e.url if e else '' }}"
+     data-time="{{ e.captured_at if e else '' }}"
+     data-sha="{{ e.sha256 if e else '' }}">
+    <img src="{{ file }}" alt="Evidence capture — {{ e.label if e else file }}" loading="lazy">
+    <span class="cap">{{ e.label if e else file }}</span>
+  </a>
+  {%- endfor %}
+</div>
+{%- endif %}
+{%- endmacro -%}
+
+<header class="masthead">
+  <div class="wrap">
+    <svg class="mark" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M5.75 2.75h7.9L18.5 7.6v13.65H5.75z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+      <path d="M13.4 2.9V7.7h4.9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+      <path d="M8.5 13.7l2.6 2.6 4.7-5.1" fill="none" stroke="var(--mint)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <div>
+      <h1>Pre-Approval Website Verification Report</h1>
+      <div class="sub">
+        {{ r.category_display }} &middot; reviewed {{ r.reviewed_at }} &middot;
+        source form: {{ r.source_pdf }} &middot; ProofPack v{{ r.tool_version }} ({{ r.model }})
+        {%- if r.review_count > 1 %} <span class="badge">re-run #{{ r.review_count }}</span>{% endif %}
+      </div>
+    </div>
   </div>
 </header>
 
-{% for w in r.warnings %}
-<div class="banner warn"><strong>Attention:</strong> {{ w }}</div>
-{% endfor %}
+<nav class="toc" aria-label="Report sections">
+  <div class="wrap">
+    <a href="#request">Request</a>
+    {%- if agent_summary %}<a href="#summary">Summary</a>{% endif %}
+    <a href="#rate">Rate</a>
+    <a href="#website">Website checks</a>
+    {%- if form_checks %}<a href="#form-checks">Form checks</a>{% endif %}
+    {%- if document_findings %}<a href="#documents">Documents</a>{% endif %}
+    {%- if internal_findings %}<a href="#internal">Internal</a>{% endif %}
+    {%- if r.checklist_notes or r.reviewer_notes %}<a href="#notes">Notes</a>{% endif %}
+    <a href="#evidence">Evidence</a>
+  </div>
+</nav>
 
-{% if r.application.denial_reason %}
-<div class="banner appeal">
-  <strong>APPEAL</strong> — original denial {{ r.application.denial_date or "" }}:
-  &ldquo;{{ r.application.denial_reason }}&rdquo;<br>
-  Applicant's justification: {{ r.application.appeal_justification or "—" }}
+<main class="wrap">
+
+{% if r.warnings or r.application.denial_reason %}
+<div class="banners">
+  {%- for w in r.warnings %}
+  <div class="banner warn"><strong>Attention:</strong> {{ w }}</div>
+  {%- endfor %}
+  {%- if r.application.denial_reason %}
+  <div class="banner appeal">
+    <strong>APPEAL</strong> — original denial {{ r.application.denial_date or "" }}:
+    &ldquo;{{ r.application.denial_reason }}&rdquo;<br>
+    Applicant's justification: {{ r.application.appeal_justification or "—" }}
+  </div>
+  {%- endif %}
 </div>
 {% endif %}
 
-<h2>The request at a glance</h2>
-<table class="kv">
-  <tr><th>Participant</th><td>{{ r.application.participant_name }}{% if r.application.participant_age is not none %} (age {{ r.application.participant_age }}){% endif %}</td></tr>
-  <tr><th>Category</th><td>{{ r.category_display }}</td></tr>
-  <tr><th>Requested</th><td>{{ r.application.requested_item }}</td></tr>
-  <tr><th>Provider / Vendor</th><td>{{ r.application.provider_name or "—" }}</td></tr>
-  <tr><th>Website / link</th><td><a href="{{ r.application.url }}">{{ r.application.url }}</a></td></tr>
-  <tr><th>Fee on application</th><td>{{ r.application.fee_text }}</td></tr>
-  {% if r.application.duration_text %}<tr><th>Duration / billing</th><td>{{ r.application.duration_text }}</td></tr>{% endif %}
-  {% if r.application.safety_features %}<tr><th>Safety features (form)</th><td>{{ r.application.safety_features }}</td></tr>{% endif %}
-  <tr><th>Review date</th><td>{{ r.reviewed_at }}</td></tr>
-</table>
+{#- The verdict strip: everything a reviewer needs before deciding whether to
+    read further. Each tile spells its numbers out — no status by colour alone. -#}
+{% set fc_review = form_checks | selectattr("status.value", "equalto", "needs_review") | list | length %}
+<div class="verdict">
 
-{% if agent_summary %}
-<h2>Summary for the reviewer</h2>
-<div class="summary">{{ agent_summary }}</div>
-{% endif %}
+  <div class="tile">
+    <div class="t-label">Rate comparison</div>
+    <div><span class="chip {{ verdict_class }}">{{ r.rate_comparison.verdict }}</span></div>
+    <dl class="t-fees">
+      <div class="fee"><dt>Form</dt><dd>{{ r.rate_comparison.form_fee }}</dd></div>
+      <div class="fee"><dt>Published</dt><dd>{{ r.rate_comparison.published_fee or "none published" }}</dd></div>
+    </dl>
+  </div>
 
-<h2>Rate comparison</h2>
-<div class="rate">
-  <div class="box"><div class="h">Fee on application</div><div class="v">{{ r.rate_comparison.form_fee }}</div></div>
-  <div class="box"><div class="h">Fee found on website</div><div class="v">{{ r.rate_comparison.published_fee or "— none published —" }}</div></div>
-  <div class="box"><div class="h">Verdict</div><div class="v"><span class="chip {{ verdict_class }}">{{ r.rate_comparison.verdict }}</span></div></div>
-</div>
-{% if r.rate_comparison.detail %}<p class="note">{{ r.rate_comparison.detail }}</p>{% endif %}
-{% if r.rate_comparison.evidence_files %}
-<p class="ev-links">Evidence:
-  {% for f in r.rate_comparison.evidence_files %}<a href="{{ f }}">{{ f }}</a>{% if not loop.last %}, {% endif %}{% endfor %}
-  {% if r.rate_comparison.evidence_url %} &middot; seen at <a href="{{ r.rate_comparison.evidence_url }}">{{ r.rate_comparison.evidence_url }}</a>{% endif %}
-</p>
-{% endif %}
+  <div class="tile">
+    <div class="t-label">Website checks</div>
+    <div class="t-big">{{ website_counts.found }} <span class="of">of {{ website_total }} found</span></div>
+    <div class="seg" role="img"
+         aria-label="{{ website_counts.found }} found, {{ website_counts.not_found }} not found, {{ website_counts.needs_review }} needs review, out of {{ website_total }} checks">
+      {%- if website_total %}
+      {%- if website_counts.found %}<span class="s-found" style="width: {{ (100 * website_counts.found / website_total)|round(2) }}%"></span>{% endif %}
+      {%- if website_counts.not_found %}<span class="s-not-found" style="width: {{ (100 * website_counts.not_found / website_total)|round(2) }}%"></span>{% endif %}
+      {%- if website_counts.needs_review %}<span class="s-needs-review" style="width: {{ (100 * website_counts.needs_review / website_total)|round(2) }}%"></span>{% endif %}
+      {%- else %}<span class="s-pending" style="width: 100%"></span>{% endif %}
+    </div>
+    <div class="seg-legend">
+      <span><i class="s-found"></i>{{ website_counts.found }} found</span>
+      <span><i class="s-not-found"></i>{{ website_counts.not_found }} not found</span>
+      <span><i class="s-needs-review"></i>{{ website_counts.needs_review }} needs review</span>
+    </div>
+  </div>
 
-<h2>Website verification — checked on the provider's public website</h2>
-{% for f in website_findings %}
-<div class="card">
-  <div class="q">{{ f.requirement or f.form_question }} &nbsp;<span class="chip {{ f.status.value|status_class }}">{{ f.status.value|status_label }}</span></div>
-  <div class="req">Form question: {{ f.form_question }}</div>
-  {% if f.note %}<div class="note">{{ f.note }}</div>{% endif %}
-  {% if f.quote %}
-  <blockquote>&ldquo;{{ f.quote }}&rdquo;
-    {% if f.evidence_url %}<span class="src">— {{ f.evidence_url }}</span>{% endif %}
-  </blockquote>
-  {% endif %}
-  {% if f.evidence_files %}
-  <div class="ev-links">Evidence:
-    {% for file in f.evidence_files %}<a href="{{ file }}">{{ file }}</a>{% if not loop.last %}, {% endif %}{% endfor %}
+  {% if form_checks %}
+  <div class="tile">
+    <div class="t-label">Form checks</div>
+    <div class="t-big">{{ counts["pass"] }} <span class="of">passed</span></div>
+    <div class="t-sub">
+      {{ counts["flag"] }} flagged{% if fc_review %} &middot; {{ fc_review }} need{{ "s" if fc_review == 1 else "" }} review{% endif %}
+    </div>
+    <div class="t-sub small">Deterministic: fee caps and age, checked in code.</div>
   </div>
   {% endif %}
+
+  <div class="tile">
+    <div class="t-label">For the reviewer</div>
+    <div class="t-big">{{ counts["internal"] }} <span class="of">internal</span></div>
+    <div class="t-sub">{{ counts["needs_document"] }} need{{ "s" if counts["needs_document"] == 1 else "" }} a document</div>
+    <div class="t-sub small">Not answerable from a website — never guessed.</div>
+  </div>
+
 </div>
-{% endfor %}
+
+<p class="runline mono">
+  {{ r.model }} &middot;
+  {{ "{:,}".format(r.usage.input_tokens) }} in / {{ "{:,}".format(r.usage.output_tokens) }} out tokens
+  across {{ r.usage.requests }} request{{ "" if r.usage.requests == 1 else "s" }}
+  {%- if r.estimated_cost_usd is not none %} &middot; est. ${{ "%.2f"|format(r.estimated_cost_usd) }}{% endif %}
+  &middot; {{ r.evidence|length }} capture{{ "" if r.evidence|length == 1 else "s" }}
+</p>
+
+<section id="request">
+  <div class="sec-head"><h2>The request at a glance</h2></div>
+  <table class="kv">
+    <tbody>
+      <tr><th>Participant</th><td>{{ r.application.participant_name }}{% if r.application.participant_age is not none %} (age {{ r.application.participant_age }}){% endif %}</td></tr>
+      <tr><th>Category</th><td>{{ r.category_display }}</td></tr>
+      <tr><th>Requested</th><td>{{ r.application.requested_item }}</td></tr>
+      <tr><th>Provider / Vendor</th><td>{{ r.application.provider_name or "—" }}</td></tr>
+      <tr><th>Website / link</th><td>{% if r.application.url %}<a class="mono break-all" href="{{ r.application.url }}">{{ r.application.url }}</a>{% else %}—{% endif %}</td></tr>
+      <tr><th>Fee on application</th><td>{{ r.application.fee_text }}</td></tr>
+      {% if r.application.duration_text %}<tr><th>Duration / billing</th><td>{{ r.application.duration_text }}</td></tr>{% endif %}
+      {% if r.application.safety_features %}<tr><th>Safety features (form)</th><td>{{ r.application.safety_features }}</td></tr>{% endif %}
+      <tr><th>Review date</th><td>{{ r.reviewed_at }}</td></tr>
+    </tbody>
+  </table>
+</section>
+
+{% if agent_summary %}
+<section id="summary">
+  <div class="sec-head"><h2>Summary for the reviewer</h2></div>
+  <div class="summary">{{ agent_summary }}</div>
+</section>
+{% endif %}
+
+<section id="rate">
+  <div class="sec-head">
+    <h2>Rate comparison</h2>
+    <span class="count">application fee vs. the price published on the website</span>
+  </div>
+  <table class="kv">
+    <tbody>
+      <tr><th>Fee on application</th><td>{{ r.rate_comparison.form_fee }}</td></tr>
+      <tr><th>Fee found on website</th><td>{{ r.rate_comparison.published_fee or "— none published —" }}</td></tr>
+      <tr><th>Verdict</th><td><span class="chip {{ verdict_class }}">{{ r.rate_comparison.verdict }}</span></td></tr>
+      {% if r.rate_comparison.detail %}<tr><th>Detail</th><td>{{ r.rate_comparison.detail }}</td></tr>{% endif %}
+      {% if r.rate_comparison.evidence_url %}<tr><th>Seen at</th><td><a class="mono break-all" href="{{ r.rate_comparison.evidence_url }}">{{ r.rate_comparison.evidence_url }}</a></td></tr>{% endif %}
+    </tbody>
+  </table>
+  {{ thumbs(r.rate_comparison.evidence_files, evidence_by_file, "Evidence for this comparison") }}
+</section>
+
+<section id="website">
+  <div class="sec-head">
+    <h2>Website verification</h2>
+    <span class="count">{{ website_total }} item{{ "" if website_total == 1 else "s" }} checked on the provider's public website</span>
+  </div>
+  {% for f in website_findings %}
+  <article class="card finding" id="item-{{ f.item_id }}">
+    <div class="f-head">
+      <h3>{{ f.requirement or f.form_question }}</h3>
+      <span class="chip {{ f.status.value|status_class }}">{{ f.status.value|status_label }}</span>
+    </div>
+    <p class="f-q">Form question: {{ f.form_question }}</p>
+    {% if f.note %}<p class="f-note">{{ f.note }}</p>{% endif %}
+    {% if f.quote %}
+    <blockquote class="receipt">
+      <p>&ldquo;{{ f.quote }}&rdquo;</p>
+      {% if f.evidence_url %}<div class="src mono break-all">{{ f.evidence_url }}</div>{% endif %}
+    </blockquote>
+    {% endif %}
+    {{ thumbs(f.evidence_files, evidence_by_file) }}
+  </article>
+  {% else %}
+  <div class="card muted">No website items were checked for this application.</div>
+  {% endfor %}
+</section>
 
 {% if form_checks %}
-<h2>Form-level checks (deterministic)</h2>
-{% for f in form_checks %}
-<div class="card">
-  <div class="q">{{ f.requirement or f.form_question }} &nbsp;<span class="chip {{ f.status.value|status_class }}">{{ f.status.value|status_label }}</span></div>
-  {% if f.note %}<div class="note">{{ f.note }}</div>{% endif %}
-</div>
-{% endfor %}
+<section id="form-checks">
+  <div class="sec-head">
+    <h2>Form-level checks</h2>
+    <span class="count">deterministic — computed in code from the form, not by the model</span>
+  </div>
+  {% for f in form_checks %}
+  <article class="card finding" id="item-{{ f.item_id }}">
+    <div class="f-head">
+      <h3>{{ f.requirement or f.form_question }}</h3>
+      <span class="chip {{ f.status.value|status_class }}">{{ f.status.value|status_label }}</span>
+    </div>
+    {% if f.note %}<p class="f-note">{{ f.note }}</p>{% endif %}
+  </article>
+  {% endfor %}
+</section>
 {% endif %}
 
 {% if document_findings %}
-<h2>Requires a document (not the website)</h2>
-{% for f in document_findings %}
-<div class="card">
-  <div class="q">{{ f.form_question }} &nbsp;<span class="chip needs-document">Needs Document</span></div>
-  {% if f.note %}<div class="note">{{ f.note }}</div>{% endif %}
-</div>
-{% endfor %}
+<section id="documents">
+  <div class="sec-head">
+    <h2>Requires a document</h2>
+    <span class="count">proven by paperwork, not by the website</span>
+  </div>
+  <ul class="compact">
+    {% for f in document_findings %}
+    <li id="item-{{ f.item_id }}">
+      <div>
+        <div class="q">{{ f.form_question }}</div>
+        {% if f.note %}<div class="why">{{ f.note }}</div>{% endif %}
+      </div>
+      <span class="chip needs-document">Needs Document</span>
+    </li>
+    {% endfor %}
+  </ul>
+</section>
 {% endif %}
 
-<h2>Internal items — for the reviewer (not answered by this tool)</h2>
-{% for f in internal_findings %}
-<div class="card">
-  <div class="q">{{ f.form_question }} &nbsp;<span class="chip internal">Internal</span></div>
-  {% if f.note %}<div class="note">{{ f.note }}</div>{% endif %}
-</div>
-{% endfor %}
-
-{% if r.checklist_notes %}
-<h2>Program notes for this category</h2>
-<ul class="notes">
-  {% for n in r.checklist_notes %}<li>{{ n }}</li>{% endfor %}
-</ul>
+{% if internal_findings %}
+<section id="internal">
+  <div class="sec-head">
+    <h2>Internal items — for the reviewer</h2>
+    <span class="count">{{ internal_findings|length }} item{{ "" if internal_findings|length == 1 else "s" }} this tool deliberately did not answer</span>
+  </div>
+  <p class="lede">A website cannot answer these. They are listed so nothing is lost — and never guessed.</p>
+  <ul class="compact">
+    {% for f in internal_findings %}
+    <li id="item-{{ f.item_id }}">
+      <div>
+        <div class="q">{{ f.form_question }}</div>
+        {% set why = f.note.replace("Internal — not website-verifiable.", "")|trim %}
+        {% if why %}<div class="why">{{ why }}</div>{% endif %}
+      </div>
+      <span class="chip internal">Internal</span>
+    </li>
+    {% endfor %}
+  </ul>
+</section>
 {% endif %}
 
-{% if r.reviewer_notes %}
-<h2>Reviewer notes</h2>
-<ul class="notes">
-  {% for n in r.reviewer_notes %}<li>{{ n }}</li>{% endfor %}
-</ul>
+{% if r.checklist_notes or r.reviewer_notes %}
+<section id="notes">
+  <div class="sec-head"><h2>Notes</h2></div>
+  {% if r.checklist_notes %}
+  <div class="card">
+    <h3>Program notes for this category</h3>
+    <ul class="notes">
+      {% for n in r.checklist_notes %}<li>{{ n }}</li>{% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+  {% if r.reviewer_notes %}
+  <div class="card">
+    <h3>Reviewer notes</h3>
+    <ul class="notes">
+      {% for n in r.reviewer_notes %}<li>{{ n }}</li>{% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+</section>
 {% endif %}
 
-<h2>Evidence captures</h2>
-<p class="ev-links">Each capture is stamped in-image with its capture time and URL.
-Integrity hashes: <a href="manifest.json">manifest.json</a>.</p>
-{% for e in r.evidence %}
-<figure id="{{ e.file }}">
-  <img src="{{ e.file }}" alt="{{ e.label }}">
-  <figcaption>
-    <strong>{{ e.label }}</strong> ({{ e.kind }})<br>
-    {{ e.url }}<br>
-    Captured {{ e.captured_at }} &middot; SHA-256 {{ e.sha256[:16] }}&hellip;
-  </figcaption>
-</figure>
-{% endfor %}
+<section id="evidence">
+  <div class="sec-head">
+    <h2>Evidence captures</h2>
+    <span class="count">{{ r.evidence|length }} capture{{ "" if r.evidence|length == 1 else "s" }}, each stamped in-image with its capture time and URL</span>
+  </div>
+  <p class="lede">Integrity hashes for every file are in <a href="manifest.json">manifest.json</a>. Click any capture to enlarge it.</p>
+  {% for e in r.evidence %}
+  <figure class="ev" id="{{ e.file }}">
+    <div class="ev-head">
+      <h3><span class="n">{{ "%02d"|format(loop.index) }}</span> &nbsp;{{ e.label }}</h3>
+      <span class="chip {{ 'info' if e.kind == 'full_page' else 'neutral' }}">{{ "Full page" if e.kind == "full_page" else "Targeted" }}</span>
+    </div>
+    <div class="ev-frame{% if e.kind == 'full_page' %} tall{% endif %}">
+      <a href="{{ e.file }}"
+         data-lb
+         data-src="{{ e.file }}"
+         data-label="{{ e.label }}"
+         data-kind="{{ e.kind }}"
+         data-url="{{ e.url }}"
+         data-time="{{ e.captured_at }}"
+         data-sha="{{ e.sha256 }}">
+        <img src="{{ e.file }}" alt="{{ e.label }} — capture of {{ e.url }} taken {{ e.captured_at }}">
+      </a>
+    </div>
+    {% if e.kind == "full_page" %}<p class="ev-hint muted small">Tall capture — scrolls inside this frame; click it to see the whole page.</p>{% endif %}
+    <figcaption>
+      <div class="stamp-bar">
+        <div class="f"><span class="k">File</span><span class="v break-all">{{ e.file }}</span></div>
+        <div class="f"><span class="k">URL</span><span class="v break-all">{{ e.url }}</span></div>
+        <div class="f"><span class="k">Captured</span><span class="v">{{ e.captured_at }}</span></div>
+        <div class="f"><span class="k">SHA-256</span><span class="v break-all">{{ e.sha256 }}</span>
+          <button type="button" class="btn btn-sm sha-copy" data-copy="{{ e.sha256 }}" hidden>Copy</button>
+        </div>
+      </div>
+    </figcaption>
+  </figure>
+  {% else %}
+  <div class="card muted">No captures were recorded for this review.</div>
+  {% endfor %}
+</section>
 
 <footer>
   This report was produced by the Pre-Approval Website-Verification Tool to assist the
@@ -214,6 +527,110 @@ Integrity hashes: <a href="manifest.json">manifest.json</a>.</p>
   The agent's full action trail for this review is in <code>run.log</code>.
 </footer>
 
-</div>
+</main>
+
+{#- One lightbox for the whole document. Without JavaScript every thumbnail is
+    still a plain link to the PNG, so the report degrades cleanly. -#}
+<dialog id="lightbox" aria-label="Evidence capture viewer">
+  <div class="lb-top">
+    <div class="lb-title" id="lb-title"></div>
+    <div class="lb-tools">
+      <span class="mono muted" id="lb-count"></span>
+      <button type="button" class="btn btn-sm" id="lb-prev" aria-label="Previous capture">&larr;</button>
+      <button type="button" class="btn btn-sm" id="lb-next" aria-label="Next capture">&rarr;</button>
+      <a class="btn btn-sm" id="lb-open" href="#">Open PNG</a>
+      <button type="button" class="btn btn-sm" id="lb-close" aria-label="Close viewer">&#10005;</button>
+    </div>
+  </div>
+  <div class="lb-body"><img id="lb-img" src="" alt=""></div>
+  <div class="stamp-bar lb-meta">
+    <div class="f"><span class="k">URL</span><span class="v break-all" id="lb-url"></span></div>
+    <div class="f"><span class="k">Captured</span><span class="v" id="lb-time"></span></div>
+    <div class="f"><span class="k">SHA-256</span><span class="v break-all" id="lb-sha"></span></div>
+  </div>
+</dialog>
+
+<script>
+/* Evidence lightbox — vanilla, no dependencies, works from file://.
+   Thumbnails remain real links: if this script never runs, clicking one just
+   opens the PNG. */
+(function () {
+  var dlg = document.getElementById("lightbox");
+  if (!dlg || typeof dlg.showModal !== "function") return;
+
+  var links = Array.prototype.slice.call(document.querySelectorAll("a[data-lb]"));
+  // Same capture can be cited by several findings; the viewer walks the unique
+  // set so the arrow keys move between captures, not between citations.
+  var items = [], bySrc = {};
+  links.forEach(function (a) {
+    var src = a.getAttribute("data-src");
+    if (!(src in bySrc)) { bySrc[src] = items.length; items.push(a.dataset); }
+  });
+  if (!items.length) return;
+
+  var img = document.getElementById("lb-img");
+  var el = {
+    title: document.getElementById("lb-title"), count: document.getElementById("lb-count"),
+    url: document.getElementById("lb-url"), time: document.getElementById("lb-time"),
+    sha: document.getElementById("lb-sha"), open: document.getElementById("lb-open")
+  };
+  var at = 0;
+
+  function show(i) {
+    at = (i + items.length) % items.length;
+    var d = items[at];
+    img.src = d.src;
+    img.alt = d.label + " — capture of " + d.url;
+    el.title.textContent = d.label;
+    el.title.title = d.label;
+    el.count.textContent = (at + 1) + " / " + items.length;
+    el.url.textContent = d.url;
+    el.time.textContent = d.time;
+    el.sha.textContent = d.sha;
+    el.open.href = d.src;
+    dlg.querySelector(".lb-body").scrollTop = 0;
+  }
+
+  links.forEach(function (a) {
+    a.addEventListener("click", function (ev) {
+      if (ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.button) return;  // let people open it in a tab
+      ev.preventDefault();
+      show(bySrc[a.getAttribute("data-src")]);
+      if (!dlg.open) dlg.showModal();
+    });
+  });
+
+  document.getElementById("lb-next").addEventListener("click", function () { show(at + 1); });
+  document.getElementById("lb-prev").addEventListener("click", function () { show(at - 1); });
+  document.getElementById("lb-close").addEventListener("click", function () { dlg.close(); });
+  dlg.addEventListener("click", function (ev) { if (ev.target === dlg) dlg.close(); });  // backdrop
+  dlg.addEventListener("keydown", function (ev) {
+    if (ev.key === "ArrowRight") { ev.preventDefault(); show(at + 1); }
+    else if (ev.key === "ArrowLeft") { ev.preventDefault(); show(at - 1); }
+  });
+
+  // Copy a full SHA-256 without hunting for it with the mouse.
+  Array.prototype.forEach.call(document.querySelectorAll("[data-copy]"), function (btn) {
+    btn.hidden = false;
+    btn.addEventListener("click", function () {
+      var text = btn.getAttribute("data-copy"), done = function () {
+        var was = btn.textContent; btn.textContent = "Copied";
+        setTimeout(function () { btn.textContent = was; }, 1200);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, fallback);
+      } else { fallback(); }
+      function fallback() {
+        var ta = document.createElement("textarea");
+        ta.value = text; ta.setAttribute("readonly", "");
+        ta.style.position = "fixed"; ta.style.opacity = "0";
+        document.body.appendChild(ta); ta.select();
+        try { document.execCommand("copy"); done(); } catch (e) { /* nothing we can do */ }
+        document.body.removeChild(ta);
+      }
+    });
+  });
+})();
+</script>
 </body>
 </html>

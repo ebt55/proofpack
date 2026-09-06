@@ -5,271 +5,915 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ProofPack — Apple MacBook Air 13-inch laptop (Marcus Bell)</title>
 <style>
-  :root {
-    --ink: #111827; --muted: #6b7280; --line: #e5e7eb; --bg: #f9fafb;
-    --green-bg: #d1fae5; --green-ink: #065f46;
-    --red-bg: #fee2e2;   --red-ink: #991b1b;
-    --amber-bg: #fef3c7; --amber-ink: #92400e;
-    --grey-bg: #f3f4f6;  --grey-ink: #374151;
-    --blue-bg: #dbeafe;  --blue-ink: #1e40af;
-  }
-  * { box-sizing: border-box; }
-  body { font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif; color: var(--ink);
-         margin: 0; background: var(--bg); line-height: 1.5; }
-  .wrap { max-width: 960px; margin: 0 auto; padding: 32px 24px 64px; }
-  header.doc { border-bottom: 3px solid var(--ink); padding-bottom: 16px; margin-bottom: 24px; }
-  header.doc h1 { margin: 0 0 4px; font-size: 26px; }
-  header.doc .sub { color: var(--muted); font-size: 14px; }
-  h2 { font-size: 18px; margin: 32px 0 12px; border-bottom: 1px solid var(--line); padding-bottom: 6px; }
-  table.kv { width: 100%; border-collapse: collapse; font-size: 14px; background: #fff;
-             border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
-  table.kv th { text-align: left; width: 220px; color: var(--muted); font-weight: 600;
-                padding: 8px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
-  table.kv td { padding: 8px 12px; border-bottom: 1px solid var(--line); word-break: break-word; }
-  table.kv tr:last-child th, table.kv tr:last-child td { border-bottom: none; }
-  .chip { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 12.5px;
-          font-weight: 700; letter-spacing: .2px; white-space: nowrap; }
-  .chip.found { background: var(--green-bg); color: var(--green-ink); }
-  .chip.not-found { background: var(--red-bg); color: var(--red-ink); }
-  .chip.needs-review { background: var(--amber-bg); color: var(--amber-ink); }
-  .chip.internal { background: var(--grey-bg); color: var(--grey-ink); }
-  .chip.needs-document { background: var(--blue-bg); color: var(--blue-ink); }
-  .card { background: #fff; border: 1px solid var(--line); border-radius: 8px;
-          padding: 14px 16px; margin-bottom: 12px; }
-  .card .q { font-weight: 600; margin-bottom: 2px; }
-  .card .req { color: var(--muted); font-size: 13px; margin-bottom: 8px; }
-  .card .note { font-size: 14px; margin: 8px 0 0; }
-  blockquote { margin: 10px 0 0; padding: 8px 12px; border-left: 3px solid var(--ink);
-               background: var(--bg); font-size: 13.5px; font-style: italic; }
-  blockquote .src { display: block; font-style: normal; color: var(--muted); font-size: 12px; margin-top: 4px; }
-  .ev-links { margin-top: 8px; font-size: 13px; }
-  .ev-links a { color: #1d4ed8; }
-  .summary { background: #fff; border: 1px solid var(--line); border-left: 4px solid var(--ink);
-             border-radius: 8px; padding: 14px 16px; font-size: 14.5px; white-space: pre-wrap; }
-  .banner { border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; font-size: 14px; }
-  .banner.warn { background: var(--amber-bg); color: var(--amber-ink); border: 1px solid #fcd34d; }
-  .banner.appeal { background: var(--blue-bg); color: var(--blue-ink); border: 1px solid #93c5fd; }
-  .rate { display: flex; gap: 16px; flex-wrap: wrap; }
-  .rate .box { flex: 1 1 240px; background: #fff; border: 1px solid var(--line);
-               border-radius: 8px; padding: 12px 16px; }
-  .rate .box .h { color: var(--muted); font-size: 12px; font-weight: 700; text-transform: uppercase;
-                  letter-spacing: .5px; margin-bottom: 4px; }
-  .rate .box .v { font-size: 15px; font-weight: 600; }
-  figure { margin: 0 0 20px; background: #fff; border: 1px solid var(--line); border-radius: 8px;
-           padding: 12px; }
-  figure img { max-width: 100%; border: 1px solid var(--line); border-radius: 4px; }
-  figcaption { font-size: 12.5px; color: var(--muted); margin-top: 8px; word-break: break-all; }
-  ul.notes { font-size: 13.5px; color: var(--grey-ink); }
-  footer { margin-top: 40px; padding-top: 12px; border-top: 1px solid var(--line);
-           color: var(--muted); font-size: 12.5px; }
-  @media print {
-    body { background: #fff; }
-    .wrap { padding: 0; max-width: none; }
-    figure { break-inside: avoid; }
-    .card { break-inside: avoid; }
-  }
+/* ProofPack design system — "the case file".
+ *
+ * One stylesheet shared by the report (inlined at render time, so the report
+ * stays a single self-contained file that works from file://) and the local
+ * reviewer workbench (served at /static/theme.css). Tokens first, then the
+ * handful of components both surfaces use: chips, cards, banners, the segmented
+ * status bar and the dark "stamp" strip that mirrors the burned-in banner on
+ * every evidence capture.
+ *
+ * No CDNs, no fonts to download, no build step: everything here must work
+ * offline from a local file.
+ */
+
+:root {
+  /* Ink and paper */
+  --ink: #0B1F3A;
+  --ink-2: #111827;
+  --muted: #5B6B7F;
+  --line: #D9E0E8;
+  --line-soft: #EAEFF4;
+  --paper: #FFFFFF;
+  --paper-2: #F5F7FA;
+  --paper-3: #EEF2F6;
+
+  /* Accents — mint on dark surfaces (matches the evidence stamp), teal on light */
+  --mint: #6EE7B7;
+  --mint-ink: #0F766E;
+
+  /* Status */
+  --ok: #16A34A;      --ok-bg: #DCFCE7;    --ok-ink: #14532D;
+  --warn: #D97706;    --warn-bg: #FEF3C7;  --warn-ink: #78350F;
+  --bad: #DC2626;     --bad-bg: #FEE2E2;   --bad-ink: #7F1D1D;
+  --info: #2563EB;    --info-bg: #DBEAFE;  --info-ink: #1E3A8A;
+  --neutral-bg: #EEF2F6; --neutral-ink: #334155;
+
+  --radius: 10px;
+  --radius-sm: 6px;
+  --shadow-1: 0 1px 2px rgba(11, 31, 58, .06), 0 1px 1px rgba(11, 31, 58, .04);
+  --shadow-2: 0 8px 24px rgba(11, 31, 58, .10);
+
+  --font-sans: "Segoe UI", Inter, -apple-system, system-ui, Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: ui-monospace, "Cascadia Mono", "SF Mono", Menlo, Consolas, monospace;
+}
+
+/* ---------------------------------------------------------------- base --- */
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--paper-2);
+  color: var(--ink-2);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+h1, h2, h3, h4 { color: var(--ink); font-weight: 700; line-height: 1.25; }
+h1 { font-size: 28px; margin: 0 0 4px; }
+h2 { font-size: 22px; margin: 0 0 8px; }
+h3 { font-size: 18px; margin: 0 0 6px; }
+h4 { font-size: 15px; margin: 0 0 4px; }
+
+a { color: var(--info-ink); }
+a:hover { color: var(--info); }
+
+:where(a, button, [tabindex], summary, input, select, textarea):focus-visible {
+  outline: 2px solid var(--info);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  letter-spacing: 0;
+}
+
+.muted { color: var(--muted); }
+
+.small { font-size: 13px; }
+
+.break-all { word-break: break-all; overflow-wrap: anywhere; }
+
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap;
+}
+
+/* --------------------------------------------------------------- chips --- */
+
+/* A status chip reads like a rubber stamp: uppercase, boxed, never colour alone
+ * — the text always says what the status is. */
+.chip {
+  display: inline-block;
+  padding: 3px 9px;
+  border-radius: 999px;
+  border: 1.5px solid currentColor;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.chip.found, .chip.pass, .chip.ok { background: var(--ok-bg); color: var(--ok-ink); }
+.chip.not-found, .chip.flag, .chip.bad { background: var(--bad-bg); color: var(--bad-ink); }
+.chip.needs-review, .chip.warn { background: var(--warn-bg); color: var(--warn-ink); }
+.chip.internal, .chip.neutral { background: var(--neutral-bg); color: var(--neutral-ink); }
+.chip.needs-document, .chip.info { background: var(--info-bg); color: var(--info-ink); }
+.chip.pending {
+  background: transparent;
+  color: var(--muted);
+  border-style: dashed;
+  border-width: 1.5px;
+}
+
+/* --------------------------------------------------------------- cards --- */
+
+.card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+}
+
+.card + .card { margin-top: 12px; }
+
+/* ------------------------------------------------------------- buttons --- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 13px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--ink);
+  font: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.btn:hover { border-color: var(--muted); }
+.btn:active { transform: translateY(1px); }
+.btn[disabled] { opacity: .5; cursor: not-allowed; }
+
+.btn-primary { background: var(--ink); border-color: var(--ink); color: #fff; }
+.btn-primary:hover { background: #133055; border-color: #133055; }
+
+.btn-ghost { background: transparent; border-color: transparent; color: var(--muted); }
+.btn-ghost:hover { background: var(--paper-3); color: var(--ink); border-color: transparent; }
+
+.btn-sm { padding: 3px 8px; font-size: 12px; }
+
+/* ------------------------------------------------------ key/value table --- */
+
+.kv {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  font-size: 14px;
+}
+.kv th {
+  width: 210px;
+  padding: 9px 14px;
+  text-align: left;
+  vertical-align: top;
+  color: var(--muted);
+  font-weight: 600;
+  border-bottom: 1px solid var(--line-soft);
+}
+.kv td {
+  padding: 9px 14px;
+  vertical-align: top;
+  border-bottom: 1px solid var(--line-soft);
+  overflow-wrap: anywhere;
+}
+.kv tr:last-child th, .kv tr:last-child td { border-bottom: none; }
+.kv tr:nth-child(even) th, .kv tr:nth-child(even) td { background: #FCFDFE; }
+
+/* ------------------------------------------------------------- banners --- */
+
+.banner {
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  padding: 12px 16px;
+  font-size: 14px;
+}
+.banner + .banner { margin-top: 10px; }
+.banner strong { letter-spacing: .02em; }
+.banner.warn { background: var(--warn-bg); border-color: #FCD34D; color: var(--warn-ink); }
+.banner.appeal { background: var(--info-bg); border-color: #93C5FD; color: var(--info-ink); }
+.banner.ok { background: var(--ok-bg); border-color: #86EFAC; color: var(--ok-ink); }
+.banner.bad { background: var(--bad-bg); border-color: #FCA5A5; color: var(--bad-ink); }
+
+/* ------------------------------------------------- segmented status bar --- */
+
+/* Proportional bar of the website checks: found / not found / needs review.
+ * Counts are always spelled out next to it — the bar is a summary, not the
+ * only carrier of the information. */
+.seg {
+  display: flex;
+  width: 100%;
+  height: 8px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: var(--paper-3);
+}
+.seg > span { display: block; height: 100%; }
+.seg .s-found { background: var(--ok); }
+.seg .s-not-found { background: var(--bad); }
+.seg .s-needs-review { background: var(--warn); }
+.seg .s-pending { background: var(--line); }
+
+.seg-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  margin-top: 8px;
+  font-size: 12.5px;
+  color: var(--muted);
+}
+.seg-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.seg-legend i {
+  width: 9px; height: 9px; border-radius: 2px; display: inline-block; flex: none;
+}
+.seg-legend .s-found { background: var(--ok); }
+.seg-legend .s-not-found { background: var(--bad); }
+.seg-legend .s-needs-review { background: var(--warn); }
+
+/* ------------------------------------------------------------ stamp bar --- */
+
+/* The dark slate + mint strip: the same visual language as the banner burned
+ * into every evidence PNG, so the report and the captures read as one artifact. */
+.stamp-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 20px;
+  align-items: baseline;
+  background: #111827;
+  color: #E5E7EB;
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  line-height: 1.6;
+}
+.stamp-bar .f { display: flex; gap: 7px; align-items: baseline; min-width: 0; }
+.stamp-bar .k {
+  color: var(--mint);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  font-size: 10.5px;
+  flex: none;
+}
+.stamp-bar .v { overflow-wrap: anywhere; }
+.stamp-bar a { color: #BFDBFE; }
+
+/* ---------------------------------------------------------------- misc --- */
+
+.rule { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+
+.row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+
+/* ---- report-specific layout (the shared tokens/components are above) ---- */
+
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+.masthead { background: var(--ink); color: #fff; padding: 20px 0 18px; }
+.masthead .wrap { display: flex; gap: 14px; align-items: flex-start; }
+.masthead h1 { color: #fff; font-size: 25px; letter-spacing: -.01em; }
+.masthead .sub { color: #C2D2E4; font-size: 13px; margin-top: 6px; line-height: 1.6; }
+.mark { flex: none; margin-top: 3px; color: #fff; }
+.badge {
+  display: inline-block; margin-left: 2px; padding: 1px 8px; border-radius: 999px;
+  background: rgba(110, 231, 183, .14); border: 1px solid rgba(110, 231, 183, .55);
+  color: var(--mint); font-size: 11px; font-weight: 700; letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+nav.toc {
+  position: sticky; top: 0; z-index: 20;
+  background: var(--paper-2); border-bottom: 1px solid var(--line);
+}
+nav.toc .wrap { display: flex; flex-wrap: wrap; gap: 4px; padding-top: 7px; padding-bottom: 7px; }
+nav.toc a {
+  padding: 4px 10px; border-radius: 999px; border: 1px solid transparent;
+  color: var(--muted); font-size: 12.5px; font-weight: 600; text-decoration: none;
+}
+nav.toc a:hover { background: var(--paper); border-color: var(--line); color: var(--ink); }
+
+main { padding-bottom: 56px; }
+section { margin-top: 34px; scroll-margin-top: 56px; }
+.sec-head {
+  display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;
+  border-bottom: 2px solid var(--ink); padding-bottom: 6px; margin-bottom: 14px;
+}
+.sec-head h2 { font-size: 19px; margin: 0; }
+.sec-head .count { color: var(--muted); font-size: 13px; font-weight: 600; }
+.lede { color: var(--muted); font-size: 13.5px; margin: -6px 0 12px; }
+
+.banners { margin-top: 20px; }
+
+/* ---- verdict strip ---- */
+.verdict { display: grid; grid-template-columns: repeat(auto-fit, minmax(228px, 1fr)); gap: 12px; margin-top: 20px; }
+.tile {
+  background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius);
+  box-shadow: var(--shadow-1); padding: 13px 15px 15px;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.tile .t-label {
+  color: var(--muted); font-size: 10.5px; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase;
+}
+.tile .t-big { color: var(--ink); font-size: 21px; font-weight: 700; line-height: 1.15; }
+.tile .t-big .of { color: var(--muted); font-size: 13.5px; font-weight: 600; }
+.tile .t-sub { color: var(--muted); font-size: 13px; }
+.t-fees { margin: 0; font-size: 13px; display: grid; gap: 3px; }
+.t-fees .fee { display: flex; gap: 8px; }
+.t-fees dt { flex: none; width: 68px; color: var(--muted); }
+.t-fees dd { margin: 0; overflow-wrap: anywhere; }
+.runline { margin: 10px 0 0; color: var(--muted); }
+
+/* ---- findings ---- */
+.finding { box-shadow: var(--shadow-1); }
+.f-head { display: flex; gap: 12px; align-items: flex-start; justify-content: space-between; }
+.f-head h3 { font-size: 16px; margin: 0; }
+.f-head .chip { flex: none; margin-top: 1px; }
+.f-q { margin: 5px 0 0; font-size: 13px; color: var(--muted); }
+.f-note { margin: 10px 0 0; font-size: 14.5px; }
+blockquote.receipt {
+  margin: 12px 0 0; padding: 10px 14px;
+  background: var(--paper-2); border: 1px solid var(--line-soft);
+  border-left: 3px solid var(--mint-ink); border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+blockquote.receipt p { margin: 0; font-size: 14px; font-style: italic; }
+blockquote.receipt .src { margin-top: 6px; color: var(--muted); }
+
+.thumbs { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+.thumbs-label {
+  margin-top: 14px; color: var(--muted); font-size: 10.5px; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase;
+}
+.thumbs-label + .thumbs { margin-top: 6px; }
+.thumb { display: block; width: 188px; color: var(--muted); text-decoration: none; }
+.thumb img {
+  display: block; width: 100%; height: 110px; object-fit: cover; object-position: top;
+  border: 1px solid var(--line); border-radius: var(--radius-sm);
+  background: var(--paper-2); cursor: zoom-in;
+}
+.thumb:hover img { border-color: var(--mint-ink); box-shadow: var(--shadow-1); }
+.thumb .cap { display: block; margin-top: 5px; font-size: 11.5px; line-height: 1.35; overflow-wrap: anywhere; }
+
+/* ---- compact rows (internal / document items) ---- */
+ul.compact {
+  list-style: none; margin: 0; padding: 0;
+  background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius);
+  box-shadow: var(--shadow-1);
+}
+ul.compact li {
+  display: flex; gap: 14px; align-items: flex-start; justify-content: space-between;
+  padding: 10px 15px; border-bottom: 1px solid var(--line-soft);
+}
+ul.compact li:last-child { border-bottom: none; }
+ul.compact .q { font-size: 14px; font-weight: 600; color: var(--ink); }
+ul.compact .why { font-size: 13px; color: var(--muted); margin-top: 2px; }
+ul.compact .chip { flex: none; margin-top: 2px; }
+
+.summary {
+  background: var(--paper); border: 1px solid var(--line); border-left: 4px solid var(--ink);
+  border-radius: var(--radius); padding: 15px 17px; font-size: 14.5px; white-space: pre-wrap;
+  box-shadow: var(--shadow-1);
+}
+ul.notes { margin: 0; padding-left: 20px; font-size: 14px; }
+ul.notes li { margin-bottom: 4px; }
+
+/* ---- evidence appendix ---- */
+figure.ev {
+  margin: 0 0 16px; padding: 13px 15px 15px; scroll-margin-top: 56px;
+  background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius);
+  box-shadow: var(--shadow-1);
+}
+.ev-head { display: flex; gap: 10px; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.ev-head h3 { font-size: 15px; margin: 0; }
+.ev-head .n { color: var(--muted); font-family: var(--font-mono); font-size: 12.5px; }
+.ev-frame { border: 1px solid var(--line); border-radius: var(--radius-sm); overflow: hidden; background: var(--paper-2); }
+.ev-frame.tall { max-height: 520px; overflow: auto; }
+.ev-frame img { display: block; width: 100%; height: auto; cursor: zoom-in; }
+.ev-hint { margin: 6px 0 0; }
+figure.ev figcaption { margin-top: 10px; }
+.sha-copy { margin-left: 2px; }
+
+footer {
+  margin-top: 40px; padding-top: 14px; border-top: 1px solid var(--line);
+  color: var(--muted); font-size: 12.5px;
+}
+footer code { font-family: var(--font-mono); font-size: 12px; }
+
+/* ---- lightbox ---- */
+dialog#lightbox {
+  width: min(1120px, 94vw); max-width: none; max-height: 92vh; padding: 0;
+  border: 1px solid var(--line); border-radius: var(--radius);
+  box-shadow: var(--shadow-2); background: var(--paper); color: var(--ink-2);
+  overflow: hidden;
+}
+dialog#lightbox[open] { display: flex; flex-direction: column; }
+dialog#lightbox::backdrop { background: rgba(11, 31, 58, .62); }
+.lb-top {
+  display: flex; gap: 12px; align-items: center; justify-content: space-between;
+  padding: 10px 12px; border-bottom: 1px solid var(--line);
+}
+.lb-title { font-weight: 700; color: var(--ink); font-size: 15px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.lb-tools { display: flex; gap: 6px; align-items: center; flex: none; }
+.lb-body { background: var(--paper-3); overflow: auto; flex: 1 1 auto; }
+.lb-body img { display: block; width: 100%; height: auto; }
+.lb-meta { border-radius: 0; }
+
+@media (max-width: 640px) {
+  .masthead h1 { font-size: 21px; }
+  .thumb { width: calc(50% - 5px); }
+}
+
+@page { margin: 14mm; }
+
+@media print {
+  body { background: #fff; font-size: 12pt; }
+  .wrap { max-width: none; padding: 0; }
+  .masthead { background: #fff; color: var(--ink); border-bottom: 3px solid var(--ink); padding: 0 0 10px; }
+  .masthead h1 { color: var(--ink); }
+  .masthead .sub { color: var(--muted); }
+  .mark { color: var(--ink); }
+  .badge { background: none; color: var(--mint-ink); border-color: var(--mint-ink); }
+  nav.toc, dialog, .btn, .sha-copy { display: none !important; }
+  .card, .tile, figure.ev, ul.compact li, blockquote.receipt { break-inside: avoid; box-shadow: none; }
+  .sec-head, h2, h3 { break-after: avoid; }
+  .ev-frame.tall { max-height: none; overflow: visible; }
+  img { max-width: 100%; }
+  .stamp-bar { background: #fff; color: var(--ink-2); border: 1px solid var(--line); }
+  .stamp-bar .k { color: var(--mint-ink); }
+  .stamp-bar a { color: var(--ink-2); }
+  a { text-decoration: none; }
+}
 </style>
 </head>
-<body>
-<div class="wrap">
-
-<header class="doc">
-  <h1>Pre-Approval Website Verification Report</h1>
-  <div class="sub">
-    Household Related Items (HRI) &middot; reviewed 2026-08-18T01:57:05+05:30 &middot;
-    source form: 05-hri-laptop-macbook-air.pdf &middot; ProofPack v0.1.0 (gemini-3.7-flash)
+<body><header class="masthead">
+  <div class="wrap">
+    <svg class="mark" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M5.75 2.75h7.9L18.5 7.6v13.65H5.75z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+      <path d="M13.4 2.9V7.7h4.9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+      <path d="M8.5 13.7l2.6 2.6 4.7-5.1" fill="none" stroke="var(--mint)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <div>
+      <h1>Pre-Approval Website Verification Report</h1>
+      <div class="sub">
+        Household Related Items (HRI) &middot; reviewed 2026-08-18T01:57:05+05:30 &middot;
+        source form: 05-hri-laptop-macbook-air.pdf &middot; ProofPack v0.1.0 (gemini-3.7-flash)
+      </div>
+    </div>
   </div>
 </header>
 
+<nav class="toc" aria-label="Report sections">
+  <div class="wrap">
+    <a href="#request">Request</a><a href="#summary">Summary</a>
+    <a href="#rate">Rate</a>
+    <a href="#website">Website checks</a><a href="#form-checks">Form checks</a><a href="#internal">Internal</a><a href="#notes">Notes</a>
+    <a href="#evidence">Evidence</a>
+  </div>
+</nav>
+
+<main class="wrap">
 
 
+<div class="verdict">
 
+  <div class="tile">
+    <div class="t-label">Rate comparison</div>
+    <div><span class="chip found">matches application exactly</span></div>
+    <dl class="t-fees">
+      <div class="fee"><dt>Form</dt><dd>$1,299 one-time</dd></div>
+      <div class="fee"><dt>Published</dt><dd>$1299</dd></div>
+    </dl>
+  </div>
 
-<h2>The request at a glance</h2>
-<table class="kv">
-  <tr><th>Participant</th><td>Marcus Bell (age 34)</td></tr>
-  <tr><th>Category</th><td>Household Related Items (HRI)</td></tr>
-  <tr><th>Requested</th><td>Apple MacBook Air 13-inch laptop</td></tr>
-  <tr><th>Provider / Vendor</th><td>Apple</td></tr>
-  <tr><th>Website / link</th><td><a href="https://www.apple.com/shop/buy-mac/macbook-air">https://www.apple.com/shop/buy-mac/macbook-air</a></td></tr>
-  <tr><th>Fee on application</th><td>$1,299 one-time</td></tr>
+  <div class="tile">
+    <div class="t-label">Website checks</div>
+    <div class="t-big">2 <span class="of">of 3 found</span></div>
+    <div class="seg" role="img"
+         aria-label="2 found, 1 not found, 0 needs review, out of 3 checks"><span class="s-found" style="width: 66.67%"></span><span class="s-not-found" style="width: 33.33%"></span>
+    </div>
+    <div class="seg-legend">
+      <span><i class="s-found"></i>2 found</span>
+      <span><i class="s-not-found"></i>1 not found</span>
+      <span><i class="s-needs-review"></i>0 needs review</span>
+    </div>
+  </div>
+
   
-  <tr><th>Safety features (form)</th><td>None — general-purpose laptop</td></tr>
-  <tr><th>Review date</th><td>2026-08-18T01:57:05+05:30</td></tr>
-</table>
+  <div class="tile">
+    <div class="t-label">Form checks</div>
+    <div class="t-big">2 <span class="of">passed</span></div>
+    <div class="t-sub">
+      0 flagged
+    </div>
+    <div class="t-sub small">Deterministic: fee caps and age, checked in code.</div>
+  </div>
+  
 
+  <div class="tile">
+    <div class="t-label">For the reviewer</div>
+    <div class="t-big">10 <span class="of">internal</span></div>
+    <div class="t-sub">0 need a document</div>
+    <div class="t-sub small">Not answerable from a website — never guessed.</div>
+  </div>
 
-<h2>Summary for the reviewer</h2>
-<div class="summary">The Apple MacBook Air 13-inch laptop was verified on Apple's official online store at a published base price of $1,299, which matches the one-time purchase price stated on the application exactly. Full-page and targeted screenshots were captured to document the product availability, general specifications, and pricing. The application indicates no specialized safety features, and the product page confirms standard consumer laptop features. However, the requested item constitutes computer hardware, which is explicitly listed on the Household Related Items exclusion list. The reviewer's attention is directed to this exclusion determination for final eligibility assessment.</div>
-
-
-<h2>Rate comparison</h2>
-<div class="rate">
-  <div class="box"><div class="h">Fee on application</div><div class="v">$1,299 one-time</div></div>
-  <div class="box"><div class="h">Fee found on website</div><div class="v">$1299</div></div>
-  <div class="box"><div class="h">Verdict</div><div class="v"><span class="chip found">matches application exactly</span></div></div>
 </div>
-<p class="note">The Apple website lists the 13-inch MacBook Air with pricing starting at $1,299 for a one-time purchase, matching the $1,299 fee stated on the application exactly.</p>
 
-<p class="ev-links">Evidence:
-  <a href="evidence/02-evidence-evidence-macbook-air-13-inch-pricing.png">evidence/02-evidence-evidence-macbook-air-13-inch-pricing.png</a>
-   &middot; seen at <a href="https://www.apple.com/shop/buy-mac/macbook-air">https://www.apple.com/shop/buy-mac/macbook-air</a>
+<p class="runline mono">
+  gemini-3.7-flash &middot;
+  113,625 in / 5,147 out tokens
+  across 17 requests &middot; est. $0.07
+  &middot; 3 captures
 </p>
 
+<section id="request">
+  <div class="sec-head"><h2>The request at a glance</h2></div>
+  <table class="kv">
+    <tbody>
+      <tr><th>Participant</th><td>Marcus Bell (age 34)</td></tr>
+      <tr><th>Category</th><td>Household Related Items (HRI)</td></tr>
+      <tr><th>Requested</th><td>Apple MacBook Air 13-inch laptop</td></tr>
+      <tr><th>Provider / Vendor</th><td>Apple</td></tr>
+      <tr><th>Website / link</th><td><a class="mono break-all" href="https://www.apple.com/shop/buy-mac/macbook-air">https://www.apple.com/shop/buy-mac/macbook-air</a></td></tr>
+      <tr><th>Fee on application</th><td>$1,299 one-time</td></tr>
+      
+      <tr><th>Safety features (form)</th><td>None — general-purpose laptop</td></tr>
+      <tr><th>Review date</th><td>2026-08-18T01:57:05+05:30</td></tr>
+    </tbody>
+  </table>
+</section>
 
-<h2>Website verification — checked on the provider's public website</h2>
 
-<div class="card">
-  <div class="q">The item exists at the linked page with a visible price &nbsp;<span class="chip found">Found</span></div>
-  <div class="req">Form question: (program guideline) The item exists at the linked page, with a visible price</div>
-  <div class="note">The 13-inch MacBook Air is available on Apple's public store page with a starting price of $1,299. The product is active and available for purchase with free shipping or store pickup.</div>
-  
-  <blockquote>&ldquo;Model. Choose your size. 13-inch Footnote 1 Buy from $1299&rdquo;
-    <span class="src">— https://www.apple.com/shop/buy-mac/macbook-air</span>
-  </blockquote>
-  
-  
-  <div class="ev-links">Evidence:
-    <a href="evidence/02-evidence-evidence-macbook-air-13-inch-pricing.png">evidence/02-evidence-evidence-macbook-air-13-inch-pricing.png</a>
+<section id="summary">
+  <div class="sec-head"><h2>Summary for the reviewer</h2></div>
+  <div class="summary">The Apple MacBook Air 13-inch laptop was verified on Apple&#39;s official online store at a published base price of $1,299, which matches the one-time purchase price stated on the application exactly. Full-page and targeted screenshots were captured to document the product availability, general specifications, and pricing. The application indicates no specialized safety features, and the product page confirms standard consumer laptop features. However, the requested item constitutes computer hardware, which is explicitly listed on the Household Related Items exclusion list. The reviewer&#39;s attention is directed to this exclusion determination for final eligibility assessment.</div>
+</section>
+
+
+<section id="rate">
+  <div class="sec-head">
+    <h2>Rate comparison</h2>
+    <span class="count">application fee vs. the price published on the website</span>
+  </div>
+  <table class="kv">
+    <tbody>
+      <tr><th>Fee on application</th><td>$1,299 one-time</td></tr>
+      <tr><th>Fee found on website</th><td>$1299</td></tr>
+      <tr><th>Verdict</th><td><span class="chip found">matches application exactly</span></td></tr>
+      <tr><th>Detail</th><td>The Apple website lists the 13-inch MacBook Air with pricing starting at $1,299 for a one-time purchase, matching the $1,299 fee stated on the application exactly.</td></tr>
+      <tr><th>Seen at</th><td><a class="mono break-all" href="https://www.apple.com/shop/buy-mac/macbook-air">https://www.apple.com/shop/buy-mac/macbook-air</a></td></tr>
+    </tbody>
+  </table>
+  <div class="thumbs-label">Evidence for this comparison</div>
+<div class="thumbs">
+  <a class="thumb" href="evidence/02-evidence-evidence-macbook-air-13-inch-pricing.png"
+     data-lb
+     data-src="evidence/02-evidence-evidence-macbook-air-13-inch-pricing.png"
+     data-label="Evidence: MacBook Air 13-inch pricing"
+     data-kind="targeted"
+     data-url="https://www.apple.com/shop/buy-mac/macbook-air"
+     data-time="2026-08-18 01:56:44 India Standard Time"
+     data-sha="65d3c31c617ae282592108f792f2bfa63b26024140484474b99cd1f8dbf2ba16">
+    <img src="evidence/02-evidence-evidence-macbook-air-13-inch-pricing.png" alt="Evidence capture — Evidence: MacBook Air 13-inch pricing" loading="lazy">
+    <span class="cap">Evidence: MacBook Air 13-inch pricing</span>
+  </a>
+</div>
+</section>
+
+<section id="website">
+  <div class="sec-head">
+    <h2>Website verification</h2>
+    <span class="count">3 items checked on the provider's public website</span>
   </div>
   
+  <article class="card finding" id="item-item_exists_with_price">
+    <div class="f-head">
+      <h3>The item exists at the linked page with a visible price</h3>
+      <span class="chip found">Found</span>
+    </div>
+    <p class="f-q">Form question: (program guideline) The item exists at the linked page, with a visible price</p>
+    <p class="f-note">The 13-inch MacBook Air is available on Apple&#39;s public store page with a starting price of $1,299. The product is active and available for purchase with free shipping or store pickup.</p>
+    
+    <blockquote class="receipt">
+      <p>&ldquo;Model. Choose your size. 13-inch Footnote 1 Buy from $1299&rdquo;</p>
+      <div class="src mono break-all">https://www.apple.com/shop/buy-mac/macbook-air</div>
+    </blockquote>
+    
+    
+<div class="thumbs">
+  <a class="thumb" href="evidence/02-evidence-evidence-macbook-air-13-inch-pricing.png"
+     data-lb
+     data-src="evidence/02-evidence-evidence-macbook-air-13-inch-pricing.png"
+     data-label="Evidence: MacBook Air 13-inch pricing"
+     data-kind="targeted"
+     data-url="https://www.apple.com/shop/buy-mac/macbook-air"
+     data-time="2026-08-18 01:56:44 India Standard Time"
+     data-sha="65d3c31c617ae282592108f792f2bfa63b26024140484474b99cd1f8dbf2ba16">
+    <img src="evidence/02-evidence-evidence-macbook-air-13-inch-pricing.png" alt="Evidence capture — Evidence: MacBook Air 13-inch pricing" loading="lazy">
+    <span class="cap">Evidence: MacBook Air 13-inch pricing</span>
+  </a>
 </div>
-
-<div class="card">
-  <div class="q">Item is plausibly NOT on the HRI exclusion list &nbsp;<span class="chip not-found">Not Found</span></div>
-  <div class="req">Form question: (program guideline) Item is not on the IDGS/HRI exclusion list</div>
-  <div class="note">The requested item is an Apple MacBook Air 13-inch laptop, which is computer hardware. Computer hardware is an explicitly excluded category under Household Related Items (HRI), so this requirement is not met.</div>
+  </article>
   
+  <article class="card finding" id="item-not_excluded">
+    <div class="f-head">
+      <h3>Item is plausibly NOT on the HRI exclusion list</h3>
+      <span class="chip not-found">Not Found</span>
+    </div>
+    <p class="f-q">Form question: (program guideline) Item is not on the IDGS/HRI exclusion list</p>
+    <p class="f-note">The requested item is an Apple MacBook Air 13-inch laptop, which is computer hardware. Computer hardware is an explicitly excluded category under Household Related Items (HRI), so this requirement is not met.</p>
+    
+    
+  </article>
   
+  <article class="card finding" id="item-safety_features_supported">
+    <div class="f-head">
+      <h3>Safety features described on the form are supported by the product page</h3>
+      <span class="chip found">Found</span>
+    </div>
+    <p class="f-q">Form question: Safety features for the item (as described on the form)</p>
+    <p class="f-note">The application states no safety features are claimed as this is a general-purpose laptop. The product page confirms standard consumer laptop specifications with general processing power, memory, and display features, with no specialized safety claims.</p>
+    
+    <blockquote class="receipt">
+      <p>&ldquo;Both sizes feature the Liquid Retina display, which delivers rich contrast and sharp detail.&rdquo;</p>
+      <div class="src mono break-all">https://www.apple.com/shop/buy-mac/macbook-air</div>
+    </blockquote>
+    
+    
+<div class="thumbs">
+  <a class="thumb" href="evidence/04-evidence-evidence-product-description-and-process.png"
+     data-lb
+     data-src="evidence/04-evidence-evidence-product-description-and-process.png"
+     data-label="Evidence: product description and processing power"
+     data-kind="targeted"
+     data-url="https://www.apple.com/shop/buy-mac/macbook-air"
+     data-time="2026-08-18 01:56:50 India Standard Time"
+     data-sha="7675ef8d246c715c388a3a162842bedbdd8effba6676a106d4e9dfa27709a1b4">
+    <img src="evidence/04-evidence-evidence-product-description-and-process.png" alt="Evidence capture — Evidence: product description and processing power" loading="lazy">
+    <span class="cap">Evidence: product description and processing power</span>
+  </a>
 </div>
+  </article>
+  
+</section>
 
-<div class="card">
-  <div class="q">Safety features described on the form are supported by the product page &nbsp;<span class="chip found">Found</span></div>
-  <div class="req">Form question: Safety features for the item (as described on the form)</div>
-  <div class="note">The application states no safety features are claimed as this is a general-purpose laptop. The product page confirms standard consumer laptop specifications with general processing power, memory, and display features, with no specialized safety claims.</div>
-  
-  <blockquote>&ldquo;Both sizes feature the Liquid Retina display, which delivers rich contrast and sharp detail.&rdquo;
-    <span class="src">— https://www.apple.com/shop/buy-mac/macbook-air</span>
-  </blockquote>
-  
-  
-  <div class="ev-links">Evidence:
-    <a href="evidence/04-evidence-evidence-product-description-and-process.png">evidence/04-evidence-evidence-product-description-and-process.png</a>
+
+<section id="form-checks">
+  <div class="sec-head">
+    <h2>Form-level checks</h2>
+    <span class="count">deterministic — computed in code from the form, not by the model</span>
   </div>
   
-</div>
-
-
-
-<h2>Form-level checks (deterministic)</h2>
-
-<div class="card">
-  <div class="q">Capped at $1,500 per budget year &nbsp;<span class="chip found">Pass</span></div>
-  <div class="note">Form states $1299 one-time item price — within the Capped at $1,500 per budget year cap.</div>
-</div>
-
-<div class="card">
-  <div class="q">Participant is 18 or older (checked against the age stated on the form) &nbsp;<span class="chip found">Pass</span></div>
-  <div class="note">Adults-only category; form states age 34 (≥ 18).</div>
-</div>
-
-
-
-
-
-<h2>Internal items — for the reviewer (not answered by this tool)</h2>
-
-<div class="card">
-  <div class="q">Is Household-Related Items approved in the budget? &nbsp;<span class="chip internal">Internal</span></div>
-  <div class="note">Internal — not website-verifiable. Participant budget data lives in internal systems.</div>
-</div>
-
-<div class="card">
-  <div class="q">Is the individual over 18? &nbsp;<span class="chip internal">Internal</span></div>
-  <div class="note">Internal — not website-verifiable. Checked deterministically from the form's stated age — official proof of age is internal.</div>
-</div>
-
-<div class="card">
-  <div class="q">Is the item related to a need or goal identified in the Life Plan? &nbsp;<span class="chip internal">Internal</span></div>
-  <div class="note">Internal — not website-verifiable. Requires the participant's Life Plan.</div>
-</div>
-
-<div class="card">
-  <div class="q">Will the item increase independence, or substitute for human assistance? &nbsp;<span class="chip internal">Internal</span></div>
-  <div class="note">Internal — not website-verifiable. Depends on the participant's situation.</div>
-</div>
-
-<div class="card">
-  <div class="q">Does the item increase safety of the participant in their home environment? &nbsp;<span class="chip internal">Internal</span></div>
-  <div class="note">Internal — not website-verifiable. The need is individual; the product's safety features are checked separately on the website.</div>
-</div>
-
-<div class="card">
-  <div class="q">Is the item exclusively needed for the participant? &nbsp;<span class="chip internal">Internal</span></div>
-  <div class="note">Internal — not website-verifiable. About how the item is used at home.</div>
-</div>
-
-<div class="card">
-  <div class="q">Does the item increase the participant's health and safety? &nbsp;<span class="chip internal">Internal</span></div>
-  <div class="note">Internal — not website-verifiable. Individual determination.</div>
-</div>
-
-<div class="card">
-  <div class="q">Does the individual live in their own home? (for Household support only) &nbsp;<span class="chip internal">Internal</span></div>
-  <div class="note">Internal — not website-verifiable. Residence information is internal.</div>
-</div>
-
-<div class="card">
-  <div class="q">Was the same item bought already in this budget year? &nbsp;<span class="chip internal">Internal</span></div>
-  <div class="note">Internal — not website-verifiable. Requires purchase history.</div>
-</div>
-
-<div class="card">
-  <div class="q">Can the item be funded through other sources? &nbsp;<span class="chip internal">Internal</span></div>
-  <div class="note">Internal — not website-verifiable. Requires knowledge of other funding sources (care manager attests).</div>
-</div>
-
-
-
-<h2>Program notes for this category</h2>
-<ul class="notes">
-  <li>Approval is valid for 3 months, then resubmit.</li><li>Landlord-provided items (standard fridge/oven) are not covered.</li><li>Must increase the individual's independence and safety; specific to the disability.</li>
-</ul>
+  <article class="card finding" id="item-cap_budget_year">
+    <div class="f-head">
+      <h3>Capped at $1,500 per budget year</h3>
+      <span class="chip found">Pass</span>
+    </div>
+    <p class="f-note">Form states $1299 one-time item price — within the Capped at $1,500 per budget year cap.</p>
+  </article>
+  
+  <article class="card finding" id="item-eligibility_age">
+    <div class="f-head">
+      <h3>Participant is 18 or older (checked against the age stated on the form)</h3>
+      <span class="chip found">Pass</span>
+    </div>
+    <p class="f-note">Adults-only category; form states age 34 (≥ 18).</p>
+  </article>
+  
+</section>
 
 
 
 
-<h2>Evidence captures</h2>
-<p class="ev-links">Each capture is stamped in-image with its capture time and URL.
-Integrity hashes: <a href="manifest.json">manifest.json</a>.</p>
 
-<figure id="evidence/01-full-full-page-apple-macbook-air-product-and-.png">
-  <img src="evidence/01-full-full-page-apple-macbook-air-product-and-.png" alt="Full page: Apple MacBook Air product and pricing page">
-  <figcaption>
-    <strong>Full page: Apple MacBook Air product and pricing page</strong> (full_page)<br>
-    https://www.apple.com/shop/buy-mac/macbook-air<br>
-    Captured 2026-08-18 01:56:39 India Standard Time &middot; SHA-256 eaf48f1a4d012e90&hellip;
-  </figcaption>
-</figure>
+<section id="internal">
+  <div class="sec-head">
+    <h2>Internal items — for the reviewer</h2>
+    <span class="count">10 items this tool deliberately did not answer</span>
+  </div>
+  <p class="lede">A website cannot answer these. They are listed so nothing is lost — and never guessed.</p>
+  <ul class="compact">
+    
+    <li id="item-budget_approved">
+      <div>
+        <div class="q">Is Household-Related Items approved in the budget?</div>
+        
+        <div class="why">Participant budget data lives in internal systems.</div>
+      </div>
+      <span class="chip internal">Internal</span>
+    </li>
+    
+    <li id="item-over_18">
+      <div>
+        <div class="q">Is the individual over 18?</div>
+        
+        <div class="why">Checked deterministically from the form&#39;s stated age — official proof of age is internal.</div>
+      </div>
+      <span class="chip internal">Internal</span>
+    </li>
+    
+    <li id="item-lp_need">
+      <div>
+        <div class="q">Is the item related to a need or goal identified in the Life Plan?</div>
+        
+        <div class="why">Requires the participant&#39;s Life Plan.</div>
+      </div>
+      <span class="chip internal">Internal</span>
+    </li>
+    
+    <li id="item-increases_independence">
+      <div>
+        <div class="q">Will the item increase independence, or substitute for human assistance?</div>
+        
+        <div class="why">Depends on the participant&#39;s situation.</div>
+      </div>
+      <span class="chip internal">Internal</span>
+    </li>
+    
+    <li id="item-increases_home_safety">
+      <div>
+        <div class="q">Does the item increase safety of the participant in their home environment?</div>
+        
+        <div class="why">The need is individual; the product&#39;s safety features are checked separately on the website.</div>
+      </div>
+      <span class="chip internal">Internal</span>
+    </li>
+    
+    <li id="item-exclusive_need">
+      <div>
+        <div class="q">Is the item exclusively needed for the participant?</div>
+        
+        <div class="why">About how the item is used at home.</div>
+      </div>
+      <span class="chip internal">Internal</span>
+    </li>
+    
+    <li id="item-health_safety">
+      <div>
+        <div class="q">Does the item increase the participant&#39;s health and safety?</div>
+        
+        <div class="why">Individual determination.</div>
+      </div>
+      <span class="chip internal">Internal</span>
+    </li>
+    
+    <li id="item-own_home">
+      <div>
+        <div class="q">Does the individual live in their own home? (for Household support only)</div>
+        
+        <div class="why">Residence information is internal.</div>
+      </div>
+      <span class="chip internal">Internal</span>
+    </li>
+    
+    <li id="item-already_bought">
+      <div>
+        <div class="q">Was the same item bought already in this budget year?</div>
+        
+        <div class="why">Requires purchase history.</div>
+      </div>
+      <span class="chip internal">Internal</span>
+    </li>
+    
+    <li id="item-other_funding">
+      <div>
+        <div class="q">Can the item be funded through other sources?</div>
+        
+        <div class="why">Requires knowledge of other funding sources (care manager attests).</div>
+      </div>
+      <span class="chip internal">Internal</span>
+    </li>
+    
+  </ul>
+</section>
 
-<figure id="evidence/02-evidence-evidence-macbook-air-13-inch-pricing.png">
-  <img src="evidence/02-evidence-evidence-macbook-air-13-inch-pricing.png" alt="Evidence: MacBook Air 13-inch pricing">
-  <figcaption>
-    <strong>Evidence: MacBook Air 13-inch pricing</strong> (targeted)<br>
-    https://www.apple.com/shop/buy-mac/macbook-air<br>
-    Captured 2026-08-18 01:56:44 India Standard Time &middot; SHA-256 65d3c31c617ae282&hellip;
-  </figcaption>
-</figure>
 
-<figure id="evidence/04-evidence-evidence-product-description-and-process.png">
-  <img src="evidence/04-evidence-evidence-product-description-and-process.png" alt="Evidence: product description and processing power">
-  <figcaption>
-    <strong>Evidence: product description and processing power</strong> (targeted)<br>
-    https://www.apple.com/shop/buy-mac/macbook-air<br>
-    Captured 2026-08-18 01:56:50 India Standard Time &middot; SHA-256 7675ef8d246c715c&hellip;
-  </figcaption>
-</figure>
 
+<section id="notes">
+  <div class="sec-head"><h2>Notes</h2></div>
+  
+  <div class="card">
+    <h3>Program notes for this category</h3>
+    <ul class="notes">
+      <li>Approval is valid for 3 months, then resubmit.</li><li>Landlord-provided items (standard fridge/oven) are not covered.</li><li>Must increase the individual&#39;s independence and safety; specific to the disability.</li>
+    </ul>
+  </div>
+  
+  
+</section>
+
+
+<section id="evidence">
+  <div class="sec-head">
+    <h2>Evidence captures</h2>
+    <span class="count">3 captures, each stamped in-image with its capture time and URL</span>
+  </div>
+  <p class="lede">Integrity hashes for every file are in <a href="manifest.json">manifest.json</a>. Click any capture to enlarge it.</p>
+  
+  <figure class="ev" id="evidence/01-full-full-page-apple-macbook-air-product-and-.png">
+    <div class="ev-head">
+      <h3><span class="n">01</span> &nbsp;Full page: Apple MacBook Air product and pricing page</h3>
+      <span class="chip info">Full page</span>
+    </div>
+    <div class="ev-frame tall">
+      <a href="evidence/01-full-full-page-apple-macbook-air-product-and-.png"
+         data-lb
+         data-src="evidence/01-full-full-page-apple-macbook-air-product-and-.png"
+         data-label="Full page: Apple MacBook Air product and pricing page"
+         data-kind="full_page"
+         data-url="https://www.apple.com/shop/buy-mac/macbook-air"
+         data-time="2026-08-18 01:56:39 India Standard Time"
+         data-sha="eaf48f1a4d012e90c353aa33435e0bc6b484537a446427023517c254732098a5">
+        <img src="evidence/01-full-full-page-apple-macbook-air-product-and-.png" alt="Full page: Apple MacBook Air product and pricing page — capture of https://www.apple.com/shop/buy-mac/macbook-air taken 2026-08-18 01:56:39 India Standard Time">
+      </a>
+    </div>
+    <p class="ev-hint muted small">Tall capture — scrolls inside this frame; click it to see the whole page.</p>
+    <figcaption>
+      <div class="stamp-bar">
+        <div class="f"><span class="k">File</span><span class="v break-all">evidence/01-full-full-page-apple-macbook-air-product-and-.png</span></div>
+        <div class="f"><span class="k">URL</span><span class="v break-all">https://www.apple.com/shop/buy-mac/macbook-air</span></div>
+        <div class="f"><span class="k">Captured</span><span class="v">2026-08-18 01:56:39 India Standard Time</span></div>
+        <div class="f"><span class="k">SHA-256</span><span class="v break-all">eaf48f1a4d012e90c353aa33435e0bc6b484537a446427023517c254732098a5</span>
+          <button type="button" class="btn btn-sm sha-copy" data-copy="eaf48f1a4d012e90c353aa33435e0bc6b484537a446427023517c254732098a5" hidden>Copy</button>
+        </div>
+      </div>
+    </figcaption>
+  </figure>
+  
+  <figure class="ev" id="evidence/02-evidence-evidence-macbook-air-13-inch-pricing.png">
+    <div class="ev-head">
+      <h3><span class="n">02</span> &nbsp;Evidence: MacBook Air 13-inch pricing</h3>
+      <span class="chip neutral">Targeted</span>
+    </div>
+    <div class="ev-frame">
+      <a href="evidence/02-evidence-evidence-macbook-air-13-inch-pricing.png"
+         data-lb
+         data-src="evidence/02-evidence-evidence-macbook-air-13-inch-pricing.png"
+         data-label="Evidence: MacBook Air 13-inch pricing"
+         data-kind="targeted"
+         data-url="https://www.apple.com/shop/buy-mac/macbook-air"
+         data-time="2026-08-18 01:56:44 India Standard Time"
+         data-sha="65d3c31c617ae282592108f792f2bfa63b26024140484474b99cd1f8dbf2ba16">
+        <img src="evidence/02-evidence-evidence-macbook-air-13-inch-pricing.png" alt="Evidence: MacBook Air 13-inch pricing — capture of https://www.apple.com/shop/buy-mac/macbook-air taken 2026-08-18 01:56:44 India Standard Time">
+      </a>
+    </div>
+    
+    <figcaption>
+      <div class="stamp-bar">
+        <div class="f"><span class="k">File</span><span class="v break-all">evidence/02-evidence-evidence-macbook-air-13-inch-pricing.png</span></div>
+        <div class="f"><span class="k">URL</span><span class="v break-all">https://www.apple.com/shop/buy-mac/macbook-air</span></div>
+        <div class="f"><span class="k">Captured</span><span class="v">2026-08-18 01:56:44 India Standard Time</span></div>
+        <div class="f"><span class="k">SHA-256</span><span class="v break-all">65d3c31c617ae282592108f792f2bfa63b26024140484474b99cd1f8dbf2ba16</span>
+          <button type="button" class="btn btn-sm sha-copy" data-copy="65d3c31c617ae282592108f792f2bfa63b26024140484474b99cd1f8dbf2ba16" hidden>Copy</button>
+        </div>
+      </div>
+    </figcaption>
+  </figure>
+  
+  <figure class="ev" id="evidence/04-evidence-evidence-product-description-and-process.png">
+    <div class="ev-head">
+      <h3><span class="n">03</span> &nbsp;Evidence: product description and processing power</h3>
+      <span class="chip neutral">Targeted</span>
+    </div>
+    <div class="ev-frame">
+      <a href="evidence/04-evidence-evidence-product-description-and-process.png"
+         data-lb
+         data-src="evidence/04-evidence-evidence-product-description-and-process.png"
+         data-label="Evidence: product description and processing power"
+         data-kind="targeted"
+         data-url="https://www.apple.com/shop/buy-mac/macbook-air"
+         data-time="2026-08-18 01:56:50 India Standard Time"
+         data-sha="7675ef8d246c715c388a3a162842bedbdd8effba6676a106d4e9dfa27709a1b4">
+        <img src="evidence/04-evidence-evidence-product-description-and-process.png" alt="Evidence: product description and processing power — capture of https://www.apple.com/shop/buy-mac/macbook-air taken 2026-08-18 01:56:50 India Standard Time">
+      </a>
+    </div>
+    
+    <figcaption>
+      <div class="stamp-bar">
+        <div class="f"><span class="k">File</span><span class="v break-all">evidence/04-evidence-evidence-product-description-and-process.png</span></div>
+        <div class="f"><span class="k">URL</span><span class="v break-all">https://www.apple.com/shop/buy-mac/macbook-air</span></div>
+        <div class="f"><span class="k">Captured</span><span class="v">2026-08-18 01:56:50 India Standard Time</span></div>
+        <div class="f"><span class="k">SHA-256</span><span class="v break-all">7675ef8d246c715c388a3a162842bedbdd8effba6676a106d4e9dfa27709a1b4</span>
+          <button type="button" class="btn btn-sm sha-copy" data-copy="7675ef8d246c715c388a3a162842bedbdd8effba6676a106d4e9dfa27709a1b4" hidden>Copy</button>
+        </div>
+      </div>
+    </figcaption>
+  </figure>
+  
+</section>
 
 <footer>
   This report was produced by the Pre-Approval Website-Verification Tool to assist the
@@ -284,6 +928,106 @@ Integrity hashes: <a href="manifest.json">manifest.json</a>.</p>
   The agent's full action trail for this review is in <code>run.log</code>.
 </footer>
 
-</div>
+</main><dialog id="lightbox" aria-label="Evidence capture viewer">
+  <div class="lb-top">
+    <div class="lb-title" id="lb-title"></div>
+    <div class="lb-tools">
+      <span class="mono muted" id="lb-count"></span>
+      <button type="button" class="btn btn-sm" id="lb-prev" aria-label="Previous capture">&larr;</button>
+      <button type="button" class="btn btn-sm" id="lb-next" aria-label="Next capture">&rarr;</button>
+      <a class="btn btn-sm" id="lb-open" href="#">Open PNG</a>
+      <button type="button" class="btn btn-sm" id="lb-close" aria-label="Close viewer">&#10005;</button>
+    </div>
+  </div>
+  <div class="lb-body"><img id="lb-img" src="" alt=""></div>
+  <div class="stamp-bar lb-meta">
+    <div class="f"><span class="k">URL</span><span class="v break-all" id="lb-url"></span></div>
+    <div class="f"><span class="k">Captured</span><span class="v" id="lb-time"></span></div>
+    <div class="f"><span class="k">SHA-256</span><span class="v break-all" id="lb-sha"></span></div>
+  </div>
+</dialog>
+
+<script>
+/* Evidence lightbox — vanilla, no dependencies, works from file://.
+   Thumbnails remain real links: if this script never runs, clicking one just
+   opens the PNG. */
+(function () {
+  var dlg = document.getElementById("lightbox");
+  if (!dlg || typeof dlg.showModal !== "function") return;
+
+  var links = Array.prototype.slice.call(document.querySelectorAll("a[data-lb]"));
+  // Same capture can be cited by several findings; the viewer walks the unique
+  // set so the arrow keys move between captures, not between citations.
+  var items = [], bySrc = {};
+  links.forEach(function (a) {
+    var src = a.getAttribute("data-src");
+    if (!(src in bySrc)) { bySrc[src] = items.length; items.push(a.dataset); }
+  });
+  if (!items.length) return;
+
+  var img = document.getElementById("lb-img");
+  var el = {
+    title: document.getElementById("lb-title"), count: document.getElementById("lb-count"),
+    url: document.getElementById("lb-url"), time: document.getElementById("lb-time"),
+    sha: document.getElementById("lb-sha"), open: document.getElementById("lb-open")
+  };
+  var at = 0;
+
+  function show(i) {
+    at = (i + items.length) % items.length;
+    var d = items[at];
+    img.src = d.src;
+    img.alt = d.label + " — capture of " + d.url;
+    el.title.textContent = d.label;
+    el.title.title = d.label;
+    el.count.textContent = (at + 1) + " / " + items.length;
+    el.url.textContent = d.url;
+    el.time.textContent = d.time;
+    el.sha.textContent = d.sha;
+    el.open.href = d.src;
+    dlg.querySelector(".lb-body").scrollTop = 0;
+  }
+
+  links.forEach(function (a) {
+    a.addEventListener("click", function (ev) {
+      if (ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.button) return;  // let people open it in a tab
+      ev.preventDefault();
+      show(bySrc[a.getAttribute("data-src")]);
+      if (!dlg.open) dlg.showModal();
+    });
+  });
+
+  document.getElementById("lb-next").addEventListener("click", function () { show(at + 1); });
+  document.getElementById("lb-prev").addEventListener("click", function () { show(at - 1); });
+  document.getElementById("lb-close").addEventListener("click", function () { dlg.close(); });
+  dlg.addEventListener("click", function (ev) { if (ev.target === dlg) dlg.close(); });  // backdrop
+  dlg.addEventListener("keydown", function (ev) {
+    if (ev.key === "ArrowRight") { ev.preventDefault(); show(at + 1); }
+    else if (ev.key === "ArrowLeft") { ev.preventDefault(); show(at - 1); }
+  });
+
+  // Copy a full SHA-256 without hunting for it with the mouse.
+  Array.prototype.forEach.call(document.querySelectorAll("[data-copy]"), function (btn) {
+    btn.hidden = false;
+    btn.addEventListener("click", function () {
+      var text = btn.getAttribute("data-copy"), done = function () {
+        var was = btn.textContent; btn.textContent = "Copied";
+        setTimeout(function () { btn.textContent = was; }, 1200);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, fallback);
+      } else { fallback(); }
+      function fallback() {
+        var ta = document.createElement("textarea");
+        ta.value = text; ta.setAttribute("readonly", "");
+        ta.style.position = "fixed"; ta.style.opacity = "0";
+        document.body.appendChild(ta); ta.select();
+        try { document.execCommand("copy"); done(); } catch (e) { /* nothing we can do */ }
+        document.body.removeChild(ta);
+      }
+    });
+  });
+})();
+</script>
 </body>
 </html>

@@ -1,0 +1,73 @@
+{#- The reviewer workbench shell.
+
+    Everything below the top bar is drawn by static/app.js (a hash-routed vanilla
+    ES module). The shell renders only what the server already knows — model, key
+    status, output directory — so the chrome never flashes empty, and hands those
+    values to the script as data attributes rather than as embedded script text.
+
+    No CDNs, no build step: two stylesheets and one module, all served from
+    /static by the same process.
+-#}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ProofPack workbench</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5.75 2.75h7.9L18.5 7.6v13.65H5.75z' fill='%230B1F3A'/%3E%3Cpath d='M8.5 13.7l2.6 2.6 4.7-5.1' fill='none' stroke='%236EE7B7' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="/static/theme.css">
+<link rel="stylesheet" href="/static/app.css">
+</head>
+<body
+  data-api-key="{{ '1' if api_key_present else '0' }}"
+  data-model="{{ model }}"
+  data-output-dir="{{ output_dir }}"
+  data-version="{{ version }}"
+  data-fake="{{ '1' if fake_run else '0' }}">
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="#/">
+      <svg class="mark" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M5.75 2.75h7.9L18.5 7.6v13.65H5.75z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+        <path d="M13.4 2.9V7.7h4.9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+        <path d="M8.5 13.7l2.6 2.6 4.7-5.1" fill="none" stroke="#6EE7B7" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span>ProofPack</span>
+      <span class="brand-sub">reviewer workbench</span>
+    </a>
+
+    {% if fake_run %}
+    <span class="tag-demo" title="PROOFPACK_FAKE_RUN=1 — reviews are simulated, no website is visited and no model is called">Demo mode</span>
+    {% endif %}
+
+    <span class="topbar-spacer"></span>
+
+    <div class="topbar-meta">
+      <span class="mono" title="Model used for extraction, verification and chat">{{ model }}</span>
+      <span class="key-state {{ 'ok' if api_key_present else 'bad' }}"
+            title="{{ 'The server found a Gemini API key.' if api_key_present else 'Put GEMINI_API_KEY=... in the .env file at the repo root and restart the server.' }}">
+        <i class="dot" aria-hidden="true"></i>
+        {{ 'Gemini key found' if api_key_present else 'No API key — set GEMINI_API_KEY in .env' }}
+      </span>
+      <span class="mono out-dir" title="Review packages are written here">{{ output_dir }}</span>
+    </div>
+  </div>
+</header>
+
+<noscript>
+  <div class="wrap">
+    <div class="banner warn" style="margin-top:18px">
+      The workbench needs JavaScript. The finished packages are still readable
+      without it — open <code>report.html</code> inside a package directory.
+    </div>
+  </div>
+</noscript>
+
+<main id="app" class="wrap" tabindex="-1"></main>
+
+<div id="toasts" class="toasts" role="status" aria-live="polite"></div>
+
+<script type="module" src="/static/app.js"></script>
+</body>
+</html>

@@ -14,5 +14,11 @@ Thumbs.db
 # Scratch runs (committed sample outputs live in output/, curated by hand)
 output/_scratch/
 
+# Demo packages from PROOFPACK_FAKE_RUN=1 (fake findings — never audit artifacts)
+output/*-demo/
+
+# PDFs dropped into the workbench
+uploads/
+
 # Local tooling scratch
 tools/_*.py

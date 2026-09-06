@@ -79,8 +79,9 @@ behind them.
 
 - **Gemini API** (`gemini-3.7-flash`) via a Google AI Studio key on a billed Google Cloud
   project — three call sites: form extraction, the browsing agent, reviewer chat.
-- Roadmap: **Cloud Run** for the hosted intake queue and **Google Drive API** for
-  a watched-folder intake, because a shared Drive folder is how FI staff already move forms.
+- Roadmap: the reviewer workbench (`verify.py serve`) runs locally today; hosting it behind
+  authentication on **Cloud Run** is the next step, with the **Google Drive API** for a
+  watched-folder intake, because a shared Drive folder is how FI staff already move forms.
 
 ## Revenue, expenses, users (hackathon period, May 19 – Aug 17 2026)
 

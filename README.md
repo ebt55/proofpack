@@ -53,6 +53,7 @@ budgets 20–40 minutes per application.
 [Architecture](#architecture--stack) ·
 [Quickstart](#quickstart) ·
 [Output](#the-output-package) ·
+[Workbench](#the-reviewer-workbench) ·
 [Adding a form type](#adding-a-new-form-type) ·
 [Validation](#how-it-was-validated) ·
 [Limitations](#limitations--known-gaps)
@@ -153,7 +154,7 @@ flowchart TB
 
 This is the heart of the project, and the thing most likely to be done wrong.
 
-Every form carries 7–18 YES/NO questions. **A website can only answer some of them.** The rest
+Every form carries 6–18 YES/NO questions. **A website can only answer some of them.** The rest
 depend on internal records — whether the category is in the participant's budget, whether it
 matches a goal in their Life Plan, whether it duplicates a service they already receive.
 
@@ -277,9 +278,10 @@ all committed reports — any "Found" whose evidence is missing or altered fails
 
 ```mermaid
 flowchart LR
-    subgraph cli["🖥️ Interface — cli.py"]
-        R["review · review-all"]
-        CH["chat — plain-language edits"]
+    subgraph cli["🖥️ Interface"]
+        R["cli.py<br/><i>review · review-all · render</i>"]
+        CH["chat.py — plain-language edits"]
+        SV["server.py + jobs.py<br/><i>workbench: FastAPI · SSE</i>"]
     end
 
     subgraph orch["🧩 Orchestration — pipeline.py"]
@@ -323,7 +325,8 @@ flowchart LR
 | **Gemini PDF understanding + JSON response schema** for the form | Scanned and digital forms parse the same way — no brittle text-position rules — and the result is a **schema-validated object**, not free text to regex. |
 | **Playwright** | The evidence requirement picks the tool: full-page captures, region captures around located text, and JS-rendered pages. Selenium is clunkier here; HTTP+BeautifulSoup can't screenshot at all. |
 | **YAML checklists** | The form → checklist → verifiable-subset mapping is **domain knowledge, not code**. A non-engineer can add a category or change an agency's caps. See [docs/ADDING-A-CHECKLIST.md](docs/ADDING-A-CHECKLIST.md). |
-| **CLI + self-contained HTML report** — not a web app (yet) | The reviewer's artifact is the **report**, which opens in any browser and prints for the audit file. A CLI runs anywhere in two commands and makes batch validation (`review-all`) trivial. A hosted queue is the next step (see [docs/BUSINESS.md](docs/BUSINESS.md)). |
+| **FastAPI + server-sent events + vanilla JS** for the workbench — *not* a SPA framework | The workbench is one page with three views over a JSON API; the interesting part is a one-way stream of log lines, which SSE does in a few lines over plain HTTP. A build step and a framework would add hundreds of dependencies to a tool whose whole pitch is "few moving parts around the model" — and the report, the artifact that matters, has to stay dependency-free anyway. |
+| **Local workbench + self-contained HTML report** — not a hosted app (yet) | The reviewer's artifact is the **report**: it opens in any browser, prints for the audit file and needs no server. `serve` now wraps the pipeline in a localhost UI so a reviewer can drop in a PDF and watch the work, while the CLI still makes batch validation (`review-all`) trivial. What's missing before hosting is authentication and PHI-safe storage, not screens (see [docs/KNOWN-GAPS.md](docs/KNOWN-GAPS.md) and [docs/BUSINESS.md](docs/BUSINESS.md)). |
 
 ---
 
@@ -341,15 +344,31 @@ python -m venv .venv
 cp .env.example .env        # Windows: copy .env.example .env
 #   …then paste your key into .env as GEMINI_API_KEY=...
 
-# 3 · Review an application
+# 3 · Open the reviewer workbench
+.venv/bin/python verify.py serve            # → http://127.0.0.1:8765
+```
+
+![The reviewer workbench](docs/images/workbench-queue.png)
+
+Drop an application PDF on the page (or pick one of the samples), watch the agent work live,
+then open the finished package. The workbench binds to **127.0.0.1 only** and has no login — a
+local tool, not a hosted service. More on it below and in **[docs/WORKBENCH.md](docs/WORKBENCH.md)**.
+
+No key yet? `PROOFPACK_FAKE_RUN=1 python verify.py serve` walks the same interface on a scripted
+demo review — no website, no model, no cost.
+
+Prefer the terminal? The same review is one command, and always has been:
+
+```bash
 .venv/bin/python verify.py review samples/01-community-class-gallopnyc.pdf
 ```
 
-Then open the `report.html` it writes to `output/`. A run takes a few minutes, and the tool
-reports its own token use and estimated cost when it finishes.
+Either way the tool writes a package under `output/`; open its `report.html`. A run takes a few
+minutes, and the tool reports its own token use and estimated cost when it finishes.
 
-> **No terminal at all?** Every sample has already been run and committed — open any
-> `report.html` under [output/](output/) directly in a browser.
+> **Nothing to run yet?** Every sample in this repo has already been reviewed and committed —
+> start `serve` and open any package from the queue, or open an `output/*/report.html`
+> [directly in a browser](output/).
 
 **Other commands**
 
@@ -358,12 +377,16 @@ verify.py review-all                       # run every form in samples/
 verify.py review <pdf> --headed            # watch the browser work (also beats some bot checks)
 verify.py review <pdf> --url https://...   # supply or override the provider URL
 verify.py chat output/<package>            # adjust a finished report in plain language
+verify.py serve --host 127.0.0.1 --port 8765 --out output --model <id> --headed --open
+                                           # the workbench; --open launches your browser
+verify.py render output/<package> …        # re-render report.html from report.json
+verify.py render --all                     # …for every package in the output directory
 python tools/make_sample_forms.py          # regenerate the synthetic sample forms
 ```
 
-**Chat mode** lets the reviewer talk to a finished report: *"change published_fees to needs
-review"*, *"add a note that I called the provider"*, *"re-run the website check"*,
-*"regenerate the report"*. Edits are recorded as **reviewer overrides** (never silently
+**Chat mode** lets the reviewer talk to a finished report — on the command line, or in the
+workbench's chat panel: *"change published_fees to needs review"*, *"add a note that I called
+the provider"*, *"re-run the website check"*, *"regenerate the report"*. Edits are recorded as **reviewer overrides** (never silently
 rewritten as agent findings) and the HTML is re-rendered on the spot. A re-run visits the site
 again and refreshes the findings and evidence, keeping your notes — useful when a page was
 temporarily blocked or the provider updated their site.
@@ -396,7 +419,54 @@ output/01-community-class-gallopnyc/
 - **Internal items** — everything the website can't answer, listed explicitly and never guessed
 - **Evidence appendix** — every capture inline, with timestamps and hashes
 
+It opens with a **verdict strip** — rate verdict, website checks as an "N of M found" bar, form
+checks, and what is left for the reviewer — so the answer is visible before any scrolling. Each
+finding carries its evidence as thumbnails; clicking one opens a **lightbox** with that
+capture's label, URL, capture time and full SHA-256. The file stays self-contained: no network,
+no build step, and it prints for the audit file.
+
 ![Findings section](docs/images/report-findings.png)
+
+---
+
+## The reviewer workbench
+
+`python verify.py serve` puts the same pipeline behind a local web page, so a reviewer never
+has to touch a terminal after setup.
+
+![A review running in the workbench](docs/images/workbench-run-demo.gif)
+
+Recorded in demo mode (`PROOFPACK_FAKE_RUN=1`), so the run is scripted — no website is visited
+and no model is called — while the trail, the gates and the findings board are the real ones.
+
+Three views:
+
+| View | What it does |
+|---|---|
+| **Queue** | Drag in an application PDF (or pick a sample — already-reviewed ones offer **Open package** and **Re-review**), see the jobs in flight, and browse every finished package in a sortable table — participant, category, rate verdict, a found / not-found bar, warnings and the run's cost |
+| **Run** | The live agent trail, streamed while the review happens: every page opened, every search, every capture (with thumbnails), every finding as it lands — beside a findings board that flips each checklist item from *pending* to its status, and an evidence strip. If the form has no usable URL the run pauses and asks |
+| **Package** | The finished report in a frame, plus **Verify integrity** (re-hashes every capture against the manifest on demand), the raw `run.log`, a re-run button, a link that opens the report in its own tab, and the plain-language reviewer chat beside it |
+
+![The live run view](docs/images/workbench-run.png)
+
+The run view is where the honesty machinery becomes visible: when the tool layer refuses a
+claim — a "Found" with no capture, a quote that isn't on any page the agent read — the trail
+shows a red **GATE** row with the reason, followed by the agent correcting itself. That is the
+same rejection path [`tests/test_agent_gates.py`](tests/test_agent_gates.py) asserts, only
+watchable.
+
+![The package view](docs/images/workbench-package.png)
+
+**Without an API key**, the workbench still opens every committed package, verifies integrity
+and shows the reports; set `PROOFPACK_FAKE_RUN=1` before `serve` to walk the whole interface on
+a scripted demo review that visits no website, calls no model and writes its output to a
+separate `<slug>-demo` package.
+
+**It is localhost software.** It binds to `127.0.0.1`, has **no authentication**, and serves
+report packages that in production would contain participant names (PHI) — so don't put it on a
+network. Hosting it is the next step, and it needs auth first: see
+[docs/KNOWN-GAPS.md](docs/KNOWN-GAPS.md). Full tour, HTTP API and security notes:
+**[docs/WORKBENCH.md](docs/WORKBENCH.md)**.
 
 ---
 
@@ -438,11 +508,14 @@ guidance.
 "The agent said it worked" is not validation. Four independent layers, none of which take the
 agent's word for anything:
 
-**1 · Unit tests (45, no API key or browser needed)** — every integrity-gate rejection path
-(fabricated quote, missing capture, invented filename, internal item); the YAML configs
+**1 · Unit tests (87, no API key, browser or network needed)** — every integrity-gate rejection
+path (fabricated quote, missing capture, invented filename, internal item); the YAML configs
 (website/internal split, fee caps, exclusion lists); fee-cap and age logic; the clarification
-rules; evidence stamping/hashing; and that **tampering with a capture is detectable** against
-the manifest. They run in CI on Python 3.11–3.13.
+rules; evidence stamping/hashing; report rendering; the job queue's full state machine
+(queued → running → needs input → done, plus skip and failure) against a stubbed pipeline; and
+the workbench API, including that a path-traversal request for a file outside a package is
+refused. Plus the one that matters most: **tampering with a capture is detectable** against the
+manifest. They run in CI on Python 3.11–3.13.
 
 ```bash
 .venv/bin/python -m pytest tests/
@@ -467,7 +540,7 @@ confirm that.
 **4 · The sample set spans the outcomes that matter.** The seven synthetic forms in
 [`samples/`](samples/) (fictional participants, real public providers; regenerate with
 `tools/make_sample_forms.py`) were chosen to exercise a clean match, price discrepancies, an
-exclusion-list trap, an appeal, and honest negatives — across five of the seven form types:
+exclusion-list trap, an appeal, and honest negatives — across six of the seven form types:
 
 | # | Sample | Result | Why that's correct | Cost |
 |---|---|---|---|---|
@@ -518,8 +591,9 @@ A working prototype. Production would need:
   with retention rules.
 - **An anti-bot strategy** for retail links: a licensed product-data API or an allow-listed
   capture service instead of scraping.
-- **Queue integration + auth** (a watched Drive/SharePoint folder or an API), with an audit log
-  of reviewer overrides.
+- **Auth + queue integration.** The local workbench is deliberately single-user and has no
+  login; a hosted one needs sign-in, per-agency isolation, and intake from a watched
+  Drive/SharePoint folder or an API — with an audit log of reviewer overrides.
 - **Observability**: per-run token/cost accounting (already in every report), failure alerting,
   and periodic spot-checks of "Found" findings against their captures — cheap, because of the hashes.
 - **Model pinning + a golden-set regression suite** before any model upgrade. The samples are
@@ -530,7 +604,7 @@ A working prototype. Production would need:
 ## Repo map
 
 ```
-verify.py                 entry point — review / review-all / chat
+verify.py                 entry point — review / review-all / chat / serve / render
 preapproval/
   llm.py                  Gemini client + the function-calling loop (AFC disabled: we execute tools)
   extraction.py           PDF → validated fields (Gemini + JSON response schema)
@@ -540,14 +614,17 @@ preapproval/
   pipeline.py             orchestration + deterministic checks
   report.py               HTML/JSON rendering
   chat.py                 plain-language report editing
+  audit.py                package integrity audit (used by the tests and the workbench)
+  server.py · jobs.py     the localhost workbench: HTTP API + the background review worker
   config.py · models.py   config/checklist loading · data models
 checklists/               one YAML per category — the rulebook (edit these, not code)
-templates/                report.html.j2
+templates/                report.html.j2 · workbench.html.j2
+static/                   theme.css (shared by both) · app.js · app.css — no build step
 samples/                  synthetic test forms (fictional participants, real public providers)
 tools/                    make_sample_forms.py — regenerates samples/
 output/                   committed report packages for the samples
 tests/                    offline test suite + the package integrity auditor
-docs/                     BUSINESS.md · ADDING-A-CHECKLIST.md · KNOWN-GAPS.md
+docs/                     BUSINESS.md · WORKBENCH.md · ADDING-A-CHECKLIST.md · KNOWN-GAPS.md
 ```
 
 ## License

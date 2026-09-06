@@ -24,6 +24,7 @@ Priority key: **P1** = fix before anyone relies on this · **P2** = needed for p
 | **Re-running left stale evidence behind** | `EvidenceStore` starts each run clean; the auditor checks disk→manifest as well as manifest→disk |
 | **Unfriendly failure with no API key** | Clear message pointing at `.env.example` instead of an SDK traceback |
 | **No CI** | [`.github/workflows/tests.yml`](../.github/workflows/tests.yml) runs the offline suite on 3.11/3.12/3.13 plus the package audit |
+| **Reviewers had only a CLI** (was E5, the P1 product gap) | A **local reviewer workbench**: `verify.py serve` — drop a PDF, watch the agent trail stream live over SSE (including the tool layer's `REJECTED` gates), then open the package with a one-click integrity re-hash, the `run.log`, a re-run button and the plain-language reviewer chat. Plus `verify.py render` to rebuild `report.html` from `report.json`, and `PROOFPACK_FAKE_RUN=1` to walk the whole interface with no key, no website and no cost. See [WORKBENCH.md](WORKBENCH.md). **Hosted intake is still open** — this is localhost-only and unauthenticated (E6 below) |
 
 ---
 
@@ -52,6 +53,9 @@ Priority key: **P1** = fix before anyone relies on this · **P2** = needed for p
 | C6 | **Provider fee sheets published as PDFs can't be read.** Playwright returns no text for a PDF URL, so a linked price list is invisible to the agent — a genuinely common provider pattern. | **P2** | Detect `.pdf` / `content-type: application/pdf` on navigation and send the bytes to Gemini as a PDF part, exactly like the application form. Evidence capture would need the same treatment. |
 | C8 | **One shared browser context per run, no proxy/pool.** Fine for a prototype; retail sites will block a datacentre IP at volume. | P2 | Pairs with the anti-bot strategy in the README's production section. |
 | C9 | **No explicit context caching on the agent loop.** A measured run of sample 01 used **333k input tokens across 37 requests** for ~6,200 output tokens: the loop resends the whole conversation each turn. Gemini's implicit caching recovered ~24k of that automatically; the rest is re-billed. | **P2** | Create an explicit cached content for the system prompt + checklist (identical across every turn of a run, and across runs of the same category) and cap the agent's page reads. Cached reads bill at ~25% of input, so this is the single biggest cost lever — a run like the one above should drop well under $0.10. |
+| C10 | **The workbench has no authentication and no concept of a user.** It binds to `127.0.0.1`, and anyone who can reach the port can read every package, start reviews that spend API credit, and edit reports through the chat. Fine as a local tool; a blocker the moment it is hosted. | **P1 (before any hosting)** | Sign-in + per-agency isolation + PHI-safe storage, in that order. The API is already a clean seam: every route is JSON on a package or a job, so auth is middleware plus an owner column, not a rewrite. |
+| C11 | **One worker thread, so reviews are strictly serial.** A second submission waits for the first to finish (~3 min). Each open SSE stream also occupies a threadpool thread for as long as it is connected. | P3 | Same fix as C5: a small process pool, one browser per worker. The single thread is what keeps Playwright's sync API legal; workers must stay processes or loop-free threads. |
+| C12 | **The reviewer chat runs inline in the HTTP request.** A chat message that triggers a re-run blocks that request for the length of the run, and one chat session per package is held in server memory for the process's lifetime. | P3 | Route chat re-runs through the job queue (they are already the same `rerun_review` call) and give the frontend the job id instead of a long-held connection. |
 
 ### D. Unused data
 
@@ -67,14 +71,15 @@ Priority key: **P1** = fix before anyone relies on this · **P2** = needed for p
 | E2 | **The rate comparison is a model-authored string,** not a structured numeric comparison — no automatic tolerance ("$80" vs "$80.00 + tax") or period normalisation. | **P2** | Have the agent emit the published amount and unit as structured fields, compare numerically in Python, and let the model write only the explanation. Moves one more judgment from the model into code. |
 | E3 | **One review = one provider site** — no cross-referencing third-party sources. | By design | An audit file should show the provider's *own* published claims. Revisit only with a reviewer in the loop. |
 | E4 | **No multi-item applications.** One form → one requested item is assumed. | P3 | Not present in the sample set; would need a findings-per-item report structure. |
-| E5 | **No hosted intake.** Reviewers run a CLI; agencies want to drop PDFs in a shared folder or post to an API and get the package back. | **P1 (product)** | A watched Google Drive folder is the smallest step that matches how FI staff already work; a Cloud Run service with a queue is the production shape. |
+| E6 | **Still no *hosted* intake.** The workbench runs on the reviewer's own machine; agencies want to drop PDFs in a shared folder or post to an API and get the package back — which means putting this app on a server, and therefore behind a login (C10). | **P1 (product)** | Cloud Run + auth is the smallest honest hosting step now that the UI exists; a watched Google Drive folder on top of it matches how FI staff already move forms. Nothing in the pipeline is machine-local — the blockers are auth, PHI-safe storage and a job queue that outlives one process. |
 
 ---
 
 ## Next
 
-1. **E5** — hosted intake (watched Drive folder → Cloud Run queue), so a pilot agency can
-   use this without a terminal.
+1. **E6 + C10** — hosted intake: put the workbench behind auth on Cloud Run (then a watched
+   Drive folder in front of it), so a pilot agency can use it without a machine of their own.
+   The screens exist now; sign-in, per-agency isolation and PHI-safe storage are what's left.
 2. **C9** — cache the agent's system prompt with explicit context caching. Now that runs are
    measured, this is the clearest cost win available.
 3. **C6** — read PDF-hosted price sheets. The most common real-world evidence source the tool
@@ -83,5 +88,5 @@ Priority key: **P1** = fix before anyone relies on this · **P2** = needed for p
    rather than judgment.
 5. **B2 + B4** — a golden extraction test and an offline end-to-end test against a fixture
    site, so the whole pipeline is regression-protected without an API key.
-6. **C5** — parallelise `review-all`, which is what makes a golden-set regression run practical
-   as a routine check rather than a ten-minute event.
+6. **C5 + C11** — parallelise `review-all` and the workbench's single worker, which is what
+   makes a golden-set regression run practical as a routine check rather than a ten-minute event.

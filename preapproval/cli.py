@@ -1,8 +1,10 @@
 """Command-line interface.
 
+  python verify.py serve                                  # reviewer workbench (localhost)
   python verify.py review samples/Sample-01---....pdf     # review one application
   python verify.py review-all                             # review every sample
   python verify.py chat output/sample-01---...            # adjust a finished report
+  python verify.py render --all                           # re-render report.html
 """
 
 from __future__ import annotations
@@ -119,6 +121,103 @@ def cmd_chat(args: argparse.Namespace) -> int:
     return 0
 
 
+LOOPBACK_HOSTS = {"127.0.0.1", "localhost", "::1", "0:0:0:0:0:0:0:1"}
+
+
+def cmd_serve(args: argparse.Namespace) -> int:
+    import uvicorn
+
+    from .config import REPO_ROOT as _root
+    from .server import create_app
+
+    cfg = load_config()
+    if args.model:
+        cfg.model = args.model
+    if args.headed:
+        cfg.headless = False
+    if args.out:
+        cfg.output_dir = Path(args.out)
+
+    checklists = load_checklists(cfg.checklist_dir)
+    load_dotenv(_root / ".env")
+    client_factory = None
+    if os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY"):
+        from .llm import make_client
+
+        client_factory = make_client
+
+    app = create_app(
+        cfg,
+        checklists,
+        client_factory,
+        samples_dir=_root / "samples",
+        uploads_dir=_root / "uploads",
+    )
+
+    url = f"http://{args.host}:{args.port}/"
+    print(f"\nProofPack reviewer workbench: {url}")
+    print(f"  model:   {cfg.model}")
+    print(f"  output:  {cfg.output_dir}")
+    if client_factory is None:
+        print("  API key: NOT FOUND — reviews and chat are disabled until you set "
+              "GEMINI_API_KEY in .env")
+    else:
+        print("  API key: found")
+    if os.getenv("PROOFPACK_FAKE_RUN", "").strip() not in ("", "0", "false", "no"):
+        print("  PROOFPACK_FAKE_RUN=1 — reviews are FAKE: no website, no model, no cost.")
+    if args.host not in LOOPBACK_HOSTS:
+        print(
+            "\n  *** WARNING: binding to a non-loopback address. The workbench has NO "
+            f"\n  *** authentication and serves report packages containing participant "
+            f"\n  *** names. Anyone who can reach {args.host}:{args.port} can read them."
+        )
+    print("\nPress Ctrl+C to stop.\n")
+
+    if args.open:
+        import threading
+        import webbrowser
+
+        threading.Timer(1.0, lambda: webbrowser.open(url)).start()
+
+    uvicorn.run(app, host=args.host, port=args.port, log_level="warning")
+    return 0
+
+
+def cmd_render(args: argparse.Namespace) -> int:
+    try:
+        from .report import render_package
+    except ImportError:
+        print(
+            "ERROR: preapproval.report.render_package is not available in this build.\n"
+            "It is provided by the report/design chunk; update preapproval/report.py.",
+            file=sys.stderr,
+        )
+        return 2
+
+    cfg = load_config()
+    if args.out:
+        cfg.output_dir = Path(args.out)
+    if args.all:
+        dirs = [p for p in sorted(cfg.output_dir.glob("*")) if (p / "report.json").exists()]
+        if not dirs:
+            print(f"No report packages in {cfg.output_dir}", file=sys.stderr)
+            return 1
+    elif args.package:
+        dirs = [Path(p) for p in args.package]
+    else:
+        print("Give one or more package directories, or --all.", file=sys.stderr)
+        return 2
+
+    failures = 0
+    for package_dir in dirs:
+        try:
+            print(render_package(package_dir))
+        except Exception as e:  # noqa: BLE001 — keep going through the rest
+            print(f"ERROR rendering {package_dir}: {type(e).__name__}: {e}", file=sys.stderr)
+            failures += 1
+    return 1 if failures else 0
+
+
 def main(argv: list[str] | None = None) -> int:
     # Windows consoles default to cp1252; page text and reports are UTF-8.
     for stream in (sys.stdout, sys.stderr):
@@ -153,6 +252,23 @@ def main(argv: list[str] | None = None) -> int:
     p_chat.add_argument("package", help="path to a report package (e.g. output/sample-01---...)")
     p_chat.add_argument("--model", help="override the Gemini model id")
     p_chat.set_defaults(func=cmd_chat)
+
+    p_serve = sub.add_parser(
+        "serve", help="run the reviewer workbench in a browser (localhost only)"
+    )
+    p_serve.add_argument("--host", default="127.0.0.1", help="bind address (default 127.0.0.1)")
+    p_serve.add_argument("--port", type=int, default=8765, help="port (default 8765)")
+    p_serve.add_argument("--out", help="override the output directory")
+    p_serve.add_argument("--model", help="override the Gemini model id")
+    p_serve.add_argument("--headed", action="store_true", help="show the browser window")
+    p_serve.add_argument("--open", action="store_true", help="open the workbench in a browser")
+    p_serve.set_defaults(func=cmd_serve)
+
+    p_render = sub.add_parser("render", help="re-render report.html for report packages")
+    p_render.add_argument("package", nargs="*", help="package director(ies) to re-render")
+    p_render.add_argument("--all", action="store_true", help="every package in the output dir")
+    p_render.add_argument("--out", help="override the output directory (with --all)")
+    p_render.set_defaults(func=cmd_render)
 
     args = parser.parse_args(argv)
     return args.func(args)
