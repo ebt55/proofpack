@@ -10,8 +10,10 @@ evidence. It is built for the staff who approve purchases from self-directed Med
 In New York that is a Pre-Approvals Reviewer at a Fiscal Intermediary (FI), a non-profit in
 the OPWDD Self-Direction program.
 
-Status: a working prototype, version 0.2.0, with no paying customers yet. The reviewer
-workbench is localhost-only and has no authentication. Do not put it on a network.
+Status: a project, not a product. I built it from a challenge brief in July 2026 to see
+whether an agent could do this review without inventing evidence. Version 0.2.0. Nobody uses
+it, and I am not planning to run it as a service. The reviewer workbench is localhost-only
+and has no authentication. Do not put it on a network.
 
 In Self-Direction, a participant controls their own government-funded budget. Before they
 spend it on something non-routine (a riding class, a gym membership, a grab bar), staff must
@@ -43,16 +45,13 @@ screenshot with the capture time and URL burned into the image:
 
 ![Stamped evidence capture](output/01-community-class-gallopnyc/evidence/03-evidence-evidence-published-fees.png)
 
-That review cost $0.19 of Gemini and a few minutes of wall-clock time. A reviewer doing it by
-hand budgets 20–40 minutes per application.
+That review cost $0.19 of Gemini and a few minutes of wall-clock time. Across the seven
+committed runs the cost was $0.02 to $0.19 per review (see the
+[validation table](#how-it-was-validated)). The challenge brief's own estimate was 20 to 40
+minutes for the same review by hand; I did not measure that myself.
 
-The customers would be Fiscal Intermediaries and support brokerage agencies, typically small
-non-profits with 5–50 reviewers. Medicaid HCBS self-direction programs exist in most US states
-and follow the same "publicly available at a published price" logic. Target pricing is $3 per
-review (about 25 times the model cost) or $149 per reviewer seat per month, with free pilots on
-20 anonymized forms. Cost to serve is $0.02 to $0.19 of Gemini per review across the seven
-committed runs (see the [validation table](#how-it-was-validated)). Market sizing and the
-pilot plan are in [docs/BUSINESS.md](docs/BUSINESS.md).
+The earlier business notes in [docs/BUSINESS.md](docs/BUSINESS.md) came with the challenge
+and are kept for the record. They are not a plan.
 
 The Gemini API (`gemini-3.7-flash`) does the form reading, the browsing agent and the reviewer
 chat. Everything that touches evidence is deterministic Python.
@@ -427,7 +426,7 @@ The full engineering audit, with what to do next and in what order, is in
 
 ### Production readiness and privacy (PHI)
 
-A working prototype. Production would need:
+A project, not a product. Running it for real would need:
 
 - PHI handling. Real applications carry participant names and ages. This prototype runs on
   synthetic data only. Production would redact participant identity before any third-party API
