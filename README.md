@@ -50,7 +50,7 @@ committed runs the cost was $0.02 to $0.19 per review (see the
 [validation table](#how-it-was-validated)). The challenge brief's own estimate was 20 to 40
 minutes for the same review by hand; I did not measure that myself.
 
-The earlier business notes in [docs/BUSINESS.md](docs/BUSINESS.md) came with the challenge
+The earlier business notes in [docs/BUSINESS.md](docs/BUSINESS.md) were written for the challenge submission
 and are kept for the record. They are not a plan.
 
 The Gemini API (`gemini-3.7-flash`) does the form reading, the browsing agent and the reviewer
@@ -472,3 +472,7 @@ docs/                     BUSINESS.md · WORKBENCH.md · ADDING-A-CHECKLIST.md �
 ## License
 
 MIT. See [LICENSE](LICENSE).
+
+The screenshots in `output/*/evidence/` (one is shown above) are captures of third-party
+websites, kept as review evidence. Those pages, names and marks belong to their owners and are not
+covered by the MIT licence. ProofPack is not affiliated with any of them.
